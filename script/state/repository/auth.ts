@@ -45,7 +45,7 @@ export async function fetchLogin (credentials:{referral:string,pin:string}) {
 
 export async function fetchLogout (jwt:string) {
   try {
-    const reqRes = await fetch(api_url+ROUTES.logout,{
+    const reqRes = await fetch(api_url+"/logout",{
       method:"DELETE", headers: {
         "Content-Type":"application/json",
         Authorization: 'Bearer ' + jwt,
@@ -57,19 +57,3 @@ export async function fetchLogout (jwt:string) {
   }
 }
 
-export async function fetchUser (jwt:string) {
-  try {
-    
-    const reqRes = await fetch(api_url+"/auth/verify",{
-      headers: {
-        "Content-Type":"application/json",
-        Authorization: 'Bearer ' + jwt,
-      },
-    })
-    let resData = (await reqRes.clone().json()).data
-    return resData
-
-  } catch (e:any) {
-    return null
-  }
-}

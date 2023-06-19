@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
 
 
-import { JWTNAME, USERCOOKIENAME, fetchUser } from "@/../script/state/repository/auth";
+import { JWTNAME, USERCOOKIENAME } from "@/../script/state/repository/auth";
 import { GRANTTREE } from "@/../script/constant";
 
 export const DEFAULT_SESSION_OBJ = {jwt:null,user:null,can:null}
@@ -28,7 +28,7 @@ export const fetchSession = async (isFetching:boolean = false) => {
   const foundJWT:any = getJWTCookie()
   const cookieUser:any = getUserCookie()
   if (!foundJWT) return DEFAULT_SESSION_OBJ
-  let foundUser:any = isFetching ? await fetchUser(foundJWT) : cookieUser
+  let foundUser:any = cookieUser
   let can = GRANTTREE[foundUser.apiname || "sp"][foundUser.rolname || "root"]
   return {
     jwt: foundJWT,

@@ -2,7 +2,7 @@ const LOCAL_API_URL = "/api/"
 
 async function login (credentials:any) {
   try {
-    const reqRes = await fetch(LOCAL_API_URL+"/auth/login",{
+    const reqRes = await fetch(LOCAL_API_URL+"/login",{
       method:"POST", headers:{"Content-Type":"application/json"},
       body: JSON.stringify(credentials),
     })
@@ -12,20 +12,9 @@ async function login (credentials:any) {
   }
 }
 
-async function verify () {
-  try {
-    const reqRes = await fetch(LOCAL_API_URL+"/auth/verify",{
-      method:"POST", headers:{"Content-Type":"application/json"},
-    })
-    return await reqRes.json()
-  } catch (e:any) {
-    return null
-  }
-}
-
 async function logout () {
   try {
-    const reqRes = await fetch(LOCAL_API_URL+"/auth/logout",{
+    const reqRes = await fetch(LOCAL_API_URL+"/logout",{
       method:"DELETE", headers:{"Content-Type":"application/json"},
     })
     return await reqRes.json()
@@ -48,7 +37,6 @@ async function demo () {
 
 export default {
   login,
-  verify,
   logout,
   demo,
 }

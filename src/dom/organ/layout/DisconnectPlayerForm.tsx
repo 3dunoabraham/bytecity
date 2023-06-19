@@ -18,7 +18,7 @@ const DisconnectPlayerForm = ({
     console.log("res",res)
     app.alert("neutral","Logged out, clearing local storage...")
     s__LS_rpi("user:0000")
-    window.location.reload()
+    // window.location.reload()
   }
 
 
