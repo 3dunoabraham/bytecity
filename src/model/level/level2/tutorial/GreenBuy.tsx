@@ -1,19 +1,19 @@
-import FontText from '@/model/core/FontText';
-import { Text } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
 import { useRef } from 'react';
 import { MeshStandardMaterial } from 'three';
 
 
+import FontText from '@/model/core/FontText';
+
 function GreenBuy ({}) {
   const $textGroup:any = useRef()
-
   useFrame((ctx, delta)=>{
     if (!$textGroup.current) return
-
     $textGroup.current.position.y = Math.sin(Date.now()/500)/10-0.48
   })
 
+
+  
   return (
     <group position={[-1.2,-0.24,-0.75]} scale={0.35}  rotation={[0,0.2,0]}>
       <group ref={$textGroup} position={[-0.5,0,0.9]} rotation={[-0.5,0,0]}>

@@ -1,7 +1,9 @@
-import FontText from '@/model/core/FontText';
 import { useFrame } from '@react-three/fiber';
 import { useRef } from 'react';
 import { MeshStandardMaterial } from 'three';
+
+
+import FontText from '@/model/core/FontText';
 
 function SetDemoOff ({}) {
   const $textGroup:any = useRef()
@@ -11,6 +13,8 @@ function SetDemoOff ({}) {
 
       $textGroup.current.position.z = Math.sin(Date.now()/500)/10 + 1.3
   })
+
+
 
   return (
     <group position={[-0.42,-0.35,-0.5]} scale={0.3} >

@@ -1,20 +1,19 @@
-import FontText from '@/model/core/FontText';
-import { Text } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
 import { useRef } from 'react';
 import { MeshStandardMaterial } from 'three';
 
 
+import FontText from '@/model/core/FontText';
+
 function SellHigh ({}) {
     const $textGroup:any = useRef()
-
     useFrame((ctx, delta)=>{
         if (!$textGroup.current) return
-
-        // $textGroup.current.position.z = Math.sin(Date.now()/500)/10 + 1.15
         $textGroup.current.position.y = Math.cos(Date.now()/500)/10 + 0.0
     })
 
+
+    
     return (
         <group position={[-0.8,-0.24,-0.75]} scale={0.35} >
             <group ref={$textGroup} position={[3.3,0,1.21]} rotation={[-1,0,0]}>

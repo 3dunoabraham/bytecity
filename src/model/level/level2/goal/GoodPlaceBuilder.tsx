@@ -45,7 +45,7 @@ function Component ({calls, state, projectionMode, s__projectionMode}:any) {
     {/* <Box>
 
     </Box> */}
-    <Cylinder position={[0,-0.2,2]} args={[3.02,3.02,0.02,7]} >
+    <Cylinder position={[0,-0.2,2]} args={[3.02,3.02,0.02,6]} >
               <meshStandardMaterial color={"#66ff65"}/>
             </Cylinder>
 

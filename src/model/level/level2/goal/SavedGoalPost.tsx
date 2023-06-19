@@ -3,7 +3,7 @@ import { Box, Cylinder } from "@react-three/drei"
 import { useFrame } from "@react-three/fiber"
 import { useContext, useMemo, useRef, useState } from "react"
 import { useAuth } from "@/../script/state/context/AuthContext"
-import { AppContext } from "../../../../../script/state/context/AppContext"
+import { AppContext } from "@/../script/state/context/AppContext"
 
 function getCompleteTrades(transactionString: string): any[] {
   const transactions: string[] = transactionString.split('&&&').filter(Boolean);

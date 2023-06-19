@@ -1,7 +1,7 @@
 import { Box } from "@react-three/drei"
 import { useFrame } from "@react-three/fiber"
 import { useContext, useRef, useState } from "react"
-import { AppContext } from "../../../../../script/state/context/AppContext"
+import { AppContext } from "@/../script/state/context/AppContext"
 
 
 function MovingScoreCar ({ calls }:any) {
