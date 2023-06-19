@@ -4,6 +4,7 @@ import { Plane } from "@react-three/drei"
 
 
 import DynaText from "@/model/core/DynaText"
+import StandardColor from "@/model/level/level2/core/StandardColor"
 
 function MiniCitySign({ tokensArrayArray, state, calls }: any) {
   const [translation, s__translation]: any = useState({
@@ -33,8 +34,9 @@ function MiniCitySign({ tokensArrayArray, state, calls }: any) {
         <boxGeometry args={[0.03, 0.6, 0.02]} />
         <meshStandardMaterial color={"#9c9999"} />
       </mesh>
-      <Plane rotation={[0, Math.PI / 2, 0]} position={[-0.001, -0.0, 0]} args={[0.35, 0.18]}>
-        <meshStandardMaterial color={!!tokensArrayArray ? "#222222" : "#89827a"} />
+      <Plane rotation={[0, Math.PI / 2, 0]} position={[-0.001, -0.0, 0]} args={[0.35, 0.18]}
+        material={StandardColor(!!tokensArrayArray ? "#222222" : "#89827a")}
+      >
       </Plane>
 
       {!!tokensArrayArray && // CURRENT PRICE
