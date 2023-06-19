@@ -1,0 +1,24 @@
+:root {
+    --secondary: #7C3AED;
+    --tertiary: #ED7C3A;
+  
+    --primary-sat: #027A48;
+    --primary: #3E5F58;
+    --primary-desat: #B5CFC9;
+    --primary-light: #ECFDF3;
+    
+    --bg-faded: #F5F7F6;
+    --bg-lightest: #F9FAFB;
+    
+    --tx-error: #B91C1C;
+    --tx-link: #026AA2;
+    --tx-faded: #667085;
+    --tx-dark: #101828;
+    --tx-lightdark: #344054;
+  
+    --border-faded: #D0D5DD;
+  }
+
+  
+  
+  body {font-family: "Inter";}
