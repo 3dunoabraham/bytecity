@@ -1,4 +1,4 @@
-import FontText from '@/model/npc/TradingBox/FontText';
+import FontText from '@/model/core/FontText';
 import { useFrame } from '@react-three/fiber';
 import { useRef } from 'react';
 import { MeshStandardMaterial } from 'three';

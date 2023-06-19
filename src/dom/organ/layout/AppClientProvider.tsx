@@ -66,15 +66,15 @@ function AppClientProvider({ session, children, }: { session: any, children: Rea
 
               <AlertContainer {...{ s__msg: (val:any)=>(alertMap__do.set("neutral", val)), msg:alertMap.get("neutral")}} />
               <AlertContainer {...{ s__msg: (val:any)=>(alertMap__do.set("success", val)), msg:alertMap.get("success")}}
-                  badgeClass="ims-badge-success"
+                  badgeClass="bg-green-25 tx-green"
               />
               <AlertContainer {...{
                   s__msg: (val:any)=>(alertMap__do.set("warn", val)), msg:alertMap.get("warn")}}
-                  badgeClass="ims-badge-secondary" 
+                  badgeClass="bg-b-10 tx-bold-8" 
               />
               <AlertContainer {...{
                   s__msg: (val:any)=>(alertMap__do.set("error", val)), msg:alertMap.get("error")}}
-                  badgeClass="ims-badge-error" 
+                  badgeClass="bg-red-10 tx-red" 
               />
               
               <AudioContainer

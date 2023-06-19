@@ -1,6 +1,6 @@
 import { Vector3 } from "three"
-import DynaText from "../DynaText"
 import { Torus } from "@react-three/drei"
+import DynaText from "@/model/core/DynaText"
 
 function TrendTree ({ tokensArrayArray, state, calls }:any) {
     return ( <group position={[0,-0.445,0]}>

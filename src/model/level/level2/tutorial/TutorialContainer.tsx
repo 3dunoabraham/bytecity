@@ -4,7 +4,7 @@ import SetDemoOff from "./SetDemoOff"
 import TutorialGoal from "./TutorialGoal"
 import ClickToStart from "./ClickToStart"
 import TutorialFee from "./TutorialFee"
-import FontText from "@/model/npc/TradingBox/FontText"
+import FontText from "@/model/core/FontText"
 import { MeshStandardMaterial } from "three"
 
 function Component ({state}:any) {

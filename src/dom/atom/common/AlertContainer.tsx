@@ -24,7 +24,7 @@ function Component({
 }
 
 export function AlertNotification ({
-    onHide=()=>{}, delay=4000, badgeClass="ims-badge-faded", alertMsg="",s__msg,
+    onHide=()=>{}, delay=4000, badgeClass="bg-w-50", alertMsg="",s__msg,
 }: any) {
     const [visible, setVisible] = useState(true)
 
@@ -39,7 +39,7 @@ export function AlertNotification ({
     if (alertMsg == "") return <></>
     return (
         <div className={
-                `${visible ? "appear-once-4 " : ""} appear-hiding pos-fixed top-0 left-50p mt-3 z-999 translate-x--50`
+                `${visible ? "appear-once-4 " : ""} appear-hiding pos-fixed top-0 left-50p mt-3 z-999 translate-x--50 bg-white`
             }
         >
             <div className={` ${badgeClass} px-3 py-2`}>

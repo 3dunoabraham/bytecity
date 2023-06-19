@@ -2,7 +2,7 @@ import { Vector3 } from "three"
 import { useState } from "react"
 import { Cylinder, Plane, Torus } from "@react-three/drei"
 import DynaText from "@/model/core/DynaText"
-import BankRoofContainer from "@/3d/BankRoofContainer"
+import BankRoofContainer from "./BankRoofContainer"
 
 function Component ({tokensArrayArray, state, calls}:any) {
   const [translation,s__translation]:any = useState({
