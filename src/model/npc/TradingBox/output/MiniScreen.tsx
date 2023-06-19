@@ -1,7 +1,7 @@
 import { Vector3 } from "three"
-import DynaText from "../DynaText"
 import { useState } from "react"
 import { Cylinder, Plane, Torus } from "@react-three/drei"
+import DynaText from "@/model/core/DynaText"
 
 function Component ({tokensArrayArray, state, calls}:any) {
   const [translation,s__translation]:any = useState({
