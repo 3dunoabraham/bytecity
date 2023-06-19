@@ -9,7 +9,7 @@ import Computer from "./parts/Computer";
 import Bank from "./parts/Bank";
 import Tower from "./parts/Tower";
 import TableLegs from "./parts/TableLegs";
-import { AppContext } from "../../../../script/state/context/AppContext";
+import { AppContext } from "@/../script/state/context/AppContext";
 import TimeframeButtons from "./input/TimeframeButtons";
 import TrendTree from "./input/TrendTree";
 import PowerLock from "./input/PowerLock";

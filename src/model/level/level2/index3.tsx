@@ -1,8 +1,8 @@
 "use client";
 
 import { useContext } from "react";
-import { useAuth } from "../../../../script/state/context/AuthContext";
-import { AppContext } from "../../../../script/state/context/AppContext";
+import { useAuth } from "@/../script/state/context/AuthContext";
+import { AppContext } from "@/../script/state/context/AppContext";
 import MainRoadEastWest from "./core/MainRoadEastWest";
 import MovingScoreCar from "./npc/MovingScoreCar";
 import MovingStaticCar from "./npc/MovingStaticCar";

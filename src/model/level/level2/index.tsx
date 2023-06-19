@@ -1,26 +1,26 @@
 "use client";
 import { useContext, useEffect, useMemo, useState } from "react";
-import { Box, Cylinder } from "@react-three/drei";
+import { Cylinder } from "@react-three/drei";
 import { useLocalStorage } from "usehooks-ts";
+import { useRouter } from "next/navigation";
 
 
-import Scene from "@/model/core/Scene"
+import { getComputedLevels } from "@/../script/util/helper";
+import { countProfitableTrades, createTradeObject, handleFirstTutorialStages, handleSellSide, updateProfitHistory } from "@/model/scripts";
+import { useAuth } from "@/../script/state/context/AuthContext";
+import { AppContext } from "@/../script/state/context/AppContext";
 import TradingBox, { DEFAULT_TIMEFRAME_ARRAY } from "@/model/npc/TradingBox";
-import { useUnloadHandler } from "../../../../script/util/hook/useHooksHelper";
+import { useUnloadHandler } from "@/../script/util/hook/useHooksHelper";
 import { fetchPost } from "@/../script/util/helper/fetchHelper";
 import Level1_Index1  from "./index1";
 import MovingBoxAndPipe from "./npc/MovingBoxAndPipe";
-import { AppContext } from "@/../script/state/context/AppContext";
+import Scene from "@/model/core/Scene"
 import SavedGoalPost from "./goal/SavedGoalPost";
-import { useAuth } from "@/../script/state/context/AuthContext";
 import RoadNorthSouth from "./core/RoadNorthSouth";
 import GoodPlaceGoal from "./goal/GoodPlaceGoal";
-import { useRouter } from "next/navigation";
 import Level1_Index2 from "./index2";
 import Level1_Index3 from "./index3";
-import { countProfitableTrades, createTradeObject, handleFirstTutorialStages, handleSellSide, updateProfitHistory } from "@/model/scripts";
 import GoodPlaceBuilder from "./goal/GoodPlaceBuilder";
-import { getComputedLevels } from "../../../../script/util/helper";
 
 const DEFAULT_TOKEN_OBJ = {
   mode:0,state:0,buy:0,sell:0, floor:0,ceil:0,
@@ -39,9 +39,6 @@ const chartRotLookup:any = {
 function Component ({}) {
   const app:any = useContext(AppContext)
   const { user, superuser, do:{login, logout, fetchSupaPlayer, demo,},  jwt }:any = useAuth()
-  
-
-  
   const [chartPos, s__chartPos]:any = useState(chartPosLookup["btc"])
   const [chartRot, s__chartRot]:any = useState(chartRotLookup["btc"])
   const [LS_rpi, s__LS_rpi] = useLocalStorage('rpi', "user:0000")
@@ -74,36 +71,26 @@ function Component ({}) {
     return interestCount.length == 4
   },[tokensArrayObj])
   const [LH_superuser, s__LH_superuser]:any = useLocalStorage("superuser","{}")
-  // const [live_superuser, s__live_superuser] = useState()
   const [notSaved,s__notSaved] = useState(false)
-
   const router = useRouter()
 
+
   useUnloadHandler(router, notSaved,)
-
-  const isSelectedTokenDowntrend = useMemo(()=>{
-    let tokensArrayArray = tokensArrayObj[selectedToken]
-    return !!tokensArrayArray && !!tokensArrayArray[selectedTimeframeIndex] && !!tokensArrayArray[selectedTimeframeIndex].mode
-  },[tokensArrayObj, selectedToken,selectedTimeframeIndex])
-
-
-
   const realProfitCount = useMemo(()=>{
     return profitHistory.filter((atrade:any, index:any) => {
       return !!atrade[1] && atrade[1] == "profit"
     }).length
   },[profitHistory])
-
-  useEffect(()=>{
-    s__tokensArrayObj(JSON.parse(LS_tokensArrayObj))
-    s__savedString(LH_superuser)
-  },[user, superuser])
-
   const isDefaultUser = useMemo(()=>{
     const splitKey = rpi.split(":")
     if (splitKey[0] == "user" && splitKey[1] == "0000") { return true }
     return false
   },[rpi])
+  const isSelectedTokenDowntrend = useMemo(()=>{
+    let tokensArrayArray = tokensArrayObj[selectedToken]
+    return !!tokensArrayArray && !!tokensArrayArray[selectedTimeframeIndex] && !!tokensArrayArray[selectedTimeframeIndex].mode
+  },[tokensArrayObj, selectedToken,selectedTimeframeIndex])
+
 
 
 
@@ -209,6 +196,10 @@ function Component ({}) {
 
 
 
+  useEffect(()=>{
+    s__tokensArrayObj(JSON.parse(LS_tokensArrayObj))
+    s__savedString(LH_superuser)
+  },[user, superuser])
 
 
 

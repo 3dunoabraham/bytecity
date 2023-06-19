@@ -1,10 +1,10 @@
 "use client";
 
 import { useContext } from "react";
-import { useAuth } from "../../../../script/state/context/AuthContext";
+import { useAuth } from "@/../script/state/context/AuthContext";
 import GoalPost from "./goal/GoalPost";
 import TutorialContainer from "./tutorial/TutorialContainer";
-import { AppContext } from "../../../../script/state/context/AppContext";
+import { AppContext } from "@/../script/state/context/AppContext";
 import TradingBox from "@/model/npc/TradingBox";
 
 function Level1_Index2 ({state, calls, }:any) {

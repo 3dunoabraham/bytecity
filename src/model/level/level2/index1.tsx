@@ -11,7 +11,7 @@ import ByteCityEnv from "./core/ByteCityEnv";
 import ConnectPlayerToggle from "./core/ConnectPlayerToggle";
 import ResetLocalStorage from "./core/ResetLocalStorage";
 import { AppContext } from "@/../script/state/context/AppContext";
-import { useAuth } from "../../../../script/state/context/AuthContext";
+import { useAuth } from "@/../script/state/context/AuthContext";
 import { useCopyToClipboard } from "usehooks-ts";
 
 function Level1_Index1 ({state, calls, }:any) {
