@@ -26,12 +26,14 @@ function Component ({}) {
     return (<>
         
 
-        <div className='pos-abs bottom-0 translate-y-100 z-999   tx-start   tx-white gap-1 flex-center flex-justify-start'
+        <div className='pos-abs bottom-0 mb-100 ml-1 z-999   tx-start   tx-white gap-1 flex-center flex-justify-start'
             >
-            <button className="pos-rel tx-white py-1 my-1 px-4 tx-mdl opaci-chov--75 bg-black "
+            <button className="pos-rel tx-white py-1 my-1 px-4 opaci-chov--75 bord-r-25 tx-lg tx-altfont-4 flex-col"
                 onClick={handleHide}
-                style={{boxShadow:"inset 0 0 0 1px #777777", border: "1px solid #5090f0"}}
+                style={{boxShadow:"inset 0 -5px 10px 5px rgb(61, 91, 18), 0 5px 5px #00000077", border: "0 solid transparent", 
+                    background:"linear-gradient(180deg, rgb(85,147,6), rgb(81, 111, 38))"}}
             >
+                <FaUser className="pos-abs top-0 translate-y--100 tx-xxl " style={{color:"rgba(85,147,6,0.5)"}} />
                 {isHidden ? <>Show</> : <>Hide</>} <br /> Profile
             </button>
             {!isHidden && 

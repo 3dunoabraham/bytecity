@@ -207,14 +207,14 @@ const selectedHasArray = useMemo(()=>{
           }}
           isSelectedId={isSelectedId} token={token} clicked={clicked}
         />
-        {!!tokensArrayArray && selectedHasArray &&
+        {/* {!!tokensArrayArray && selectedHasArray &&
           <group position={[-0.18,0,0.2]}>
             <TimeframeButtons tokensArrayArray={tokensArrayArray}
               state={{isSelectedId, score, token, selectedTimeframe, selectedTimeframeIndex}}
               calls={{onTimeframeClick,onTextClick,}}
             />
           </group>
-        }
+        } */}
         
         
         {/* toggles sync join trend */}
@@ -279,7 +279,7 @@ const selectedHasArray = useMemo(()=>{
         </group>
       </>}
       {/* mini  yellow button */}
-      {isSelectedId && !!tokensArrayArray &&
+      {/* {isSelectedId && !!tokensArrayArray &&
           <group position={position}>
           <mesh castShadow receiveShadow scale={score.score ? 1 : 3}
           position={[  - 0.23,  - 0.28,  + 0.2]}
@@ -288,7 +288,7 @@ const selectedHasArray = useMemo(()=>{
           <meshStandardMaterial color={ !!tokensArrayArray &&  clicked ? "#ffa066" : "#FEEA4D"} />
         </mesh>
         </group>
-      }
+      } */}
 
 
     </group>

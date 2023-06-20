@@ -9,7 +9,7 @@ function PowerLock ({ tokensArrayArray, state, calls }:any) {
             position={[0,-0.47,0]}
         >
         {/* KEY */}
-        <group position={[!tokensArrayArray ? 0 : -0.25,0,0]}>
+        <group position={[!tokensArrayArray ? 0 : -0.2,0,0]} >
             <mesh castShadow receiveShadow 
                 rotation={[0,0,0]} scale={state.score.score ? 1 : 3}
                 position={[  0.64,  0,  0,]}

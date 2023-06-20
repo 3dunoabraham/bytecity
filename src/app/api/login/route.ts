@@ -22,13 +22,13 @@ export async function POST(request: NextRequest) {
     status: 200,
     headers: {
       'Set-Cookie': [
-        `${JWTNAME}=${jwt}; Path=/; Secure; HttpOnly; SameSite=None; Max-Age=80000`,
+        `${JWTNAME}=${jwt}; Path=/; Secure; HttpOnly; SameSite=None; Max-Age=604800`, // 604800
       ].join('; ') // Convert array to string
     }
   });
   fullRes.headers.append(
     'Set-Cookie',
-    `user=${JSON.stringify(bodyResponse.user)}; Path=/; Secure; HttpOnly; SameSite=None; Max-Age=80000`
+    `user=${JSON.stringify(bodyResponse.user)}; Path=/; Secure; HttpOnly; SameSite=None; Max-Age=604800` // 604800
   );
     return fullRes
   

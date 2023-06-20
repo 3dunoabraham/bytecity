@@ -38,8 +38,13 @@ const AuthProvider:FC<{
   useEffect( () => {
     if (!LH_rpi || LH_rpi == "user:0000") return
     let [referral, pin] = LH_rpi.split(":")
+    // console.log("sesss", session, props.session.user, props.session.jwt, )
     
     if (!pin) return
+    if (!props.session.jwt) {
+      s__LH_rpi("user:0000")
+      window.location.reload()
+    }
     fetchUserByRPI(referral,pin)
   }, []);
   useEffect( () => {

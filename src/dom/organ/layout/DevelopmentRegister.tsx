@@ -20,16 +20,18 @@ function Component ({}) {
     return (<>
         
         {asd == "landing" && <>
-            <div className="w-100 z-1001 h-min-100vh  75 bg-glass-5 pos-fixed flex-col flex-justify-start top-0"
-                style={{background:"linear-gradient(185deg, #34AEFB77, #8FD5F4 80%, #34AEFB 100%)"}}
+            <div className="w-100 z-1001 h-min-100vh  75 bg-glass-5 pos-fixed flex-col flex-justify-start top-0 bg-b-90"
+                style={{background:"radial-gradient(#34AEFB77, #000000)"}}
+                // style={{background:"linear-gradient(185deg, #34AEFB77, #8FD5F4 80%, #34AEFB 100%)"}}
             >
                 
 
                 <div onClick={()=>{setFullscreen()}} className="opaci-chov--50">
 
-                <div className="tx-lg tx-bold-2 bg-white tx-white py-1 px-4 bord-r-50 mt-2  tx-lgx tx-shadow-5" style={{color:"#00ff00"}}>
-                    Set FullScreen
-                </div>
+                    <div className="tx-lg tx-bold-6 box-shadow-i-5-b bg-white tx-white  px-2 bord-r-50 mt-2  tx-lg tx-shadow-5" style={{color:"#00ff00"}}>
+                        <span className="Q_sm_x py-1">Full-Screen</span>
+                        <span className="Q_xs tx-sm pb-1 tx-ls-1 block tx-center">Full <br /> Screen</span>
+                    </div>
                 </div>
                 <div className="py-4 Q_sm_x"></div>
 
@@ -94,12 +96,12 @@ function Component ({}) {
                             
                         </a>
                 </div>
-                    <details>
+                    <details className="Q_md_x">
                         <summary className="pt-6 pb-2 opaci-chov--50 ">
-                            <button className="noclick tx-white">Controls</button>
+                            <button className="noclick tx-black">Controls</button>
                         </summary>
-                        <div className="tx-shadow-5 flex-col box-shadow-5-b left-50p translate-x--50 bord-r-50  pos-abs w-80 bg-b-5 noverflow  w-max-600px" >
-                            <div className="flex-1 flex-col w-100 gap-2 box-shadow-i-2-t pa-8  flex-align-stretch ">
+                        <div className=" tx-shadow-5 flex-col box-shadow-5-b left-50p translate-x--50 bord-r-50  pos-abs w-80 bg-b-5 noverflow  w-max-600px" >
+                            <div className="flex-1 flex-col w-100 gap-2 box-shadow-i-2-t pa-8  flex-align-stretch bg-b-90">
                                 <div className="flex-center gap-3 ">
                                     <div className="gap-1 flex-col">
                                         ←
@@ -128,9 +130,8 @@ function Component ({}) {
                         </div>
                     </details>
                     
-                    <div onClick={()=>{s__asd("")}} className="opaci-chov--50 bg-w-50 tx-center bord-r-l-100  noverflow pos-abs bottom-0 mb-8 box-shadow-2-b right-0 flex-col-stretch">
+                    {/* <div onClick={()=>{s__asd("")}} className="opaci-chov--50 bg-w-50 tx-center bord-r-l-100  noverflow pos-abs bottom-0 mb-8 box-shadow-2-b right-0 flex-col-stretch">
                         <div className="pt-4 pb-2 px-8  tx-shadow-5 box-shadow-5-b tx-lx flex-center gap-2 bg-white ">
-                            {/* <FaArrowDown /> */}
                             <div style={{color:"black "}} className="tx-roman">Back</div>
                             <div className="box-shadow-5-b  py-0 pa-1 block bord-r-10" style={{background:"#ffffff"}}>
                                 <Image src={"/bytecity.png"} alt="bytecity" width={50} height={50} />
@@ -141,19 +142,53 @@ function Component ({}) {
                                 Resume Game
                             </span>
                         </div>
+                    </div> */}
+                    <div className="pos-abs top-0 left-0 pa-3 opaci-chov--75"
+                        onClick={()=>{s__asd("")}} 
+                    >
+                        <div className="flex-center box-shadow-2-b pa-1 block bord-r-10" style={{background:"#ffffff"}}
+                            
+                        >
+                            <Image src={"/bytecity.png"} alt="bytecity" width={32} height={32} />
+                            <small className="tx-black">Back</small>
+                        </div>
+                    </div>
+                    <div className="pos-abs bottom-0 right-0 pa-3 opaci-chov--75"
+                        onClick={()=>{s__asd("")}} 
+                    >
+                        <div className="flex-center box-shadow-2-b pa-1 block bord-r-10" style={{background:"#ffffff"}}
+                            
+                        >
+                            <Image src={"/bytecity.png"} alt="bytecity" width={32} height={32} />
+                            <small className="tx-black">Back</small>
+                        </div>
                     </div>
                 </div>
             </div>
         </>}
         {asd !== "landing" && <>
-            <div className='pos-abs top-0 left-0 translate-y--20 z-999  tx-center   tx-white '
+            <div className='pos-abs top-0 left-0 ml- translate-y--20 z-999  tx-center   tx-white '
+                style={{marginLeft:"62px"}}
             >
+                
+<button className="pos-rel tx-white py-2 ma-1 px-4   flex-center nowrap opaci-chov--75 bord-r-25 tx-lg tx-altfont-4 flex-col"
+                onClick={()=>{s__asd("landing")}}
+                style={{boxShadow:"inset 0 -5px 10px 5px rgb(91, 61, 18), 0 5px 5px #00000077", border: "0 solid transparent", 
+                    background:"linear-gradient(180deg, rgb(255,140,6), rgb(200, 111, 0))",transform:"scale(0.9) rotate(-2deg)"
+                }}
+            >
+                <small className="tx-sm ">Byte City ALPHA</small>
+                <span className="shake-2 tx-shadow-5">
+                    {"> Register"}
+                </span>
+            </button>
+{/*             
             <button className="pos-rel tx-white pb-1  px-4 tx-mdl opaci-chov--75 bg-black scale-hov-150"
                 onClick={()=>{s__asd("landing")}}
                 style={{boxShadow:"inset 0 0 0 2px #ff9900",transform:"scale(0.9) rotate(-2deg)"}}
             >
                 <small>OPEN ALPHA</small> | Register
-            </button>
+            </button> */}
             </div>
         </>}
     </>)
