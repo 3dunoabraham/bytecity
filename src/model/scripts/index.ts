@@ -37,21 +37,16 @@ export const createTradeObject = (x:any, y:any) => {
     return newprofithi;
   };
   
-  export const handleSellSide = (
-    newTradeObj: { price: number },
-    form: { id: string },
-    projectionMode: boolean,
-    app: any,
-    s__profitHistory: (arg1:any)=>void,
-    projectVirtualOrder: (id: string, tradeObj: { price: number }) => void
-  ): any => {
-    if (!!projectionMode) {
-      projectVirtualOrder(form.id, newTradeObj);
-      app.alert("success", "Sending SELL order with synced API keys");
-    }
-  
-    return s__profitHistory;
-  };
+  // export const handleSellSide = (
+  //   newTradeObj: { price: number },
+  //   form: { id: string },
+  //   projectionMode: boolean,
+  //   app: any,
+  //   projectVirtualOrder: (id: string, tradeObj: { price: number }) => void
+  // ): any => {
+
+  //     projectVirtualOrder(form.id, newTradeObj);
+  // };
   
   export const countProfitableTrades = (newprofithi: any[]): number => {
     let counting = newprofithi.filter((atrade) => atrade[1] == "profit").length;

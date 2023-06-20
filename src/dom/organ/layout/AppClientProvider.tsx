@@ -8,7 +8,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { DEFAULT_ALERT_MAPARRAY, INSTITUTION } from "@/../script/constant";
 import AuthProvider from '@/../script/state/context/AuthContext'
 import { AppContext } from "@/../script/state/context/AppContext";
-import AlertContainer from '@/dom/atom/common/AlertContainer';
+import AlertContainer from '@/dom/atom/overlay/AlertContainer';
 import { InventoryProvider } from '@/../script/state/context/InventoryContext';
 import AudioContainer from '@/dom/atom/common/AudioContainer';
 

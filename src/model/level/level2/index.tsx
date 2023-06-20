@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 
 
 import { getComputedLevels } from "@/../script/util/helper";
-import { countProfitableTrades, createTradeObject, handleFirstTutorialStages, handleSellSide, updateProfitHistory } from "@/model/scripts";
+import { countProfitableTrades, createTradeObject, handleFirstTutorialStages, updateProfitHistory } from "@/model/scripts";
 import { useAuth } from "@/../script/state/context/AuthContext";
 import { AppContext } from "@/../script/state/context/AppContext";
 import TradingBox, { DEFAULT_TIMEFRAME_ARRAY } from "@/model/npc/TradingBox";
@@ -264,10 +264,11 @@ function Component ({}) {
       let counting = countProfitableTrades(newprofithi);
       if (counting >= 4) {
         setTutoStage(5);
-        // app.audio("neutral","./sound/aaa.wav")
       }
   
-      handleSellSide(newTradeObj, form, projectionMode, app, s__profitHistory, projectVirtualOrder);
+      if (!!projectionMode) {
+        projectVirtualOrder(form.id,newTradeObj);
+      }
     }
   
     delete oldOrders[form.id];
