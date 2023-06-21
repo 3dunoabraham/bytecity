@@ -195,7 +195,7 @@ function DevelopmentProfile ({foundUser, foundJWT}:any) {
                 </details>
             </div> */}
 
-<button className="pos-abs top-0 right-0 tx-white py-1 ma-1 px-4 opaci-chov--75 bord-r-25 tx-lg tx-altfont-4 flex-col"
+<button className="pos-abs bottom-25p right-0 tx-white py-1 ma-1 px-4 opaci-chov--75 bord-r-25 tx-lg tx-altfont-4 flex-col"
                 onClick={()=>{s__asd("landing")}}
                 style={{boxShadow:"inset 0 -5px 10px 5px rgb(91, 61, 18), 0 5px 5px #00000077", border: "0 solid transparent", 
                     background:"linear-gradient(180deg, rgb(147,85,6), rgb(111, 81, 38))"}}
