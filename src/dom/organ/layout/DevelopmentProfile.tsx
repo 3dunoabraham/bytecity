@@ -194,8 +194,9 @@ function DevelopmentProfile ({foundUser, foundJWT}:any) {
                     </div>
                 </details>
             </div> */}
+            <div className="pos-abs bottom-0 mb-4 right-0">
 
-<button className="pos-abs bottom-0 mb-100 right-0 pb-4 tx-white py-1 ma-1 px-4 opaci-chov--75 bord-r-25 tx-lg tx-altfont-4 flex-col"
+            <button className=" mb-100 right-0  tx-white py-1 ma-1 px-4 opaci-chov--75 bord-r-25 tx-lg tx-altfont-4 flex-col"
                 onClick={()=>{s__asd("landing")}}
                 style={{boxShadow:"inset 0 -5px 10px 5px rgb(91, 61, 18), 0 5px 5px #00000077", border: "0 solid transparent", 
                     background:"linear-gradient(180deg, rgb(147,85,6), rgb(111, 81, 38))"}}
@@ -203,6 +204,7 @@ function DevelopmentProfile ({foundUser, foundJWT}:any) {
                 MENU
             </button>
 
+            </div>
             {/* <div className=' right-0 pos-abs top-0  z-999  tx-center   tx-white '
             >
             <button className="pos-rel tx-white py-1 my-1 px-2 tx-lgx opaci-chov--75 bg-black "
