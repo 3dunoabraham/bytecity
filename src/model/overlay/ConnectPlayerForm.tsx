@@ -89,11 +89,11 @@ const ConnectPlayerForm = ({
                 Hide
             </div>
           }
-          <button className='tx-mdl tx-green bg-white opaci-chov--75 h-80px w-80px  noborder  z-100 tx-altfont-4'
-            style={{  clipPath: "polygon(50% 0%, 90% 20%, 100% 60%, 75% 100%, 25% 100%, 0% 60%, 10% 20%)"}}
+          <button className='tx-mdl tx-green bg-white opaci-chov--75 h-80px w-80px  noborder bord-r-100p z-100 tx-altfont-4 box-shadow-i-2-b '
+            // style={{  clipPath: "polygon(50% 0%, 90% 20%, 100% 60%, 75% 100%, 25% 100%, 0% 60%, 10% 20%)"}}
             onClick={forms.isForm ? triggerLogin : triggerIsForm}
           >
-            Connect
+            <span className="block rot-45">Sign In</span>
           </button>
         </div>
       }

@@ -21,6 +21,7 @@ import BouncingThing from "./output/BouncingThing";
 import TextContainer from "./output/TextContainer";
 import MiniScreen from "./output/MiniScreen";
 import MiniCitySign from "./output/MiniCitySign";
+import RedButton from "./input/RedButton";
 
 export const DEFAULT_TIMEFRAME_ARRAY = ["3m","15m","4h","1d","1w"]  
 export const tokenColors:any = {
@@ -218,7 +219,11 @@ const selectedHasArray = useMemo(()=>{
         
         
         {/* toggles sync join trend */}
-        <PowerLock state={{score, isSelectedId, selectedHasArray,isDowntrend,}}
+        {/* <PowerLock state={{score, isSelectedId, selectedHasArray,isDowntrend,}}
+            tokensArrayArray={tokensArrayArray}
+            calls={{join, leaveAsset, onTextClick, turnOff, turnOn,trendDown,trendUp}}
+          /> */}
+          <RedButton state={{score, isSelectedId, selectedHasArray,isDowntrend,}}
             tokensArrayArray={tokensArrayArray}
             calls={{join, leaveAsset, onTextClick, turnOff, turnOn,trendDown,trendUp}}
           />

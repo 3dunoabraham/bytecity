@@ -31,7 +31,7 @@ function ConnectPlayerToggle ({calls, state}: any) {
     return (<>
       {/* CONNECT BUTTON */}
       {state.isDefaultUser && <>
-        <Cylinder args={[0.12,0.12,0.21,7]} position={[0,-1,0]} 
+        <Cylinder args={[0.12,0.12,0.21,16]} position={[0,-1,0]} 
           castShadow receiveShadow onClick={()=>{ calls.triggerLogin() }}
         >
           <meshStandardMaterial color={ "#eee"}/>
@@ -44,7 +44,7 @@ function ConnectPlayerToggle ({calls, state}: any) {
   <meshStandardMaterial color="#eee" />
 </mesh> */}
         
-<DynaText text={"Connect"} color={"#5a5"} font={0.05} 
+<DynaText text={"Sign In"} color={"#5a5"} font={0.05} 
           position={[0,-0.89,0]}
         />        
          {/* <DynaText text={"Connect"} color={"#5a5"} font={0.09} 
