@@ -7,6 +7,7 @@ import { AppContext } from "@/../script/state/context/AppContext"
 import StandardColor from "../core/StandardColor"
 
 function getCompleteTrades(transactionString: string): any[] {
+  if (!transactionString) return []
   const transactions: string[] = transactionString.split('&&&').filter(Boolean);
   const trades: { [symbol: string]: any[] } = {};
   const completeTrades: any[] = [];
@@ -60,6 +61,7 @@ function SavedGoalPost({ calls, state, projectionMode, s__projectionMode }: any)
   }
   const userDatabaseArray = useMemo(() => {
     try {
+      if (!superuser.trades) return []
       let fullarray = getCompleteTrades(superuser.trades)
       return fullarray
     } catch (e: unknown) {

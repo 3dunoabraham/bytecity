@@ -9,13 +9,13 @@ function RedButton ({ tokensArrayArray, state, calls }:any) {
             position={[0,-0.47,0]}
         >
         {/* KEY */}
-        <group position={[!tokensArrayArray ? 0 : -0.2,0.1,0]} >
+        <group position={[0,0.1,0]} >
             <mesh castShadow receiveShadow 
                 rotation={[0,0,0]} scale={state.score.score ? 1 : 3}
-                position={[  0.39,  0,  0,]}
+                position={[  0.39,  -0.04,  0,]}
             >
-                <boxGeometry args={[0.04, 0.02, 0.04]} />
-                <meshStandardMaterial color={!tokensArrayArray ? "#ff0000" : "#bb9955"} />
+                <boxGeometry args={[0.04, 0.03, 0.04]} />
+                <meshStandardMaterial color={!tokensArrayArray ? "#ff0000" : "#009900"} />
             </mesh>
             
             {/* <mesh castShadow receiveShadow 
@@ -48,7 +48,7 @@ function RedButton ({ tokensArrayArray, state, calls }:any) {
             <boxGeometry args={[0.06, 0.04, 0.06]} />
             <meshStandardMaterial color={"#888"} />
         </mesh>
-        {state.selectedHasArray &&
+        {/* {state.selectedHasArray &&
             <mesh castShadow receiveShadow onClick={!tokensArrayArray ? calls.join : calls.leaveAsset}
                 scale={3}
                 position={[  0.41, 0.01,  0,]}
@@ -56,7 +56,7 @@ function RedButton ({ tokensArrayArray, state, calls }:any) {
                 <boxGeometry args={[0.065, 0.04, 0.075]} />
                 <meshStandardMaterial color={"#46a740"} />
             </mesh>
-        }
+        } */}
         </group>
 
     </>)

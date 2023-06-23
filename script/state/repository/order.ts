@@ -435,54 +435,32 @@ export async function sendSupabaseStartBattle(
 
   
 
-  if (newMode == -1 ) {
-    if (oppo_userObj.mode < 0 ) {
-      // throw new Error("oppo user already in game")
-      // console.log("jkkkkkkkkkkkkkkk")
-    }
-  }
   if (newMode == 0 ) {
       let asdasd:any = await getLast3minCandles("PEPE")
-      // console.log("asdasd",   asdasd)
       let lastLocalUnix:any =  parseInt(asdasd[0][0])
-      console.log("lastLocalUnix",   lastLocalUnix)
+      // oppo already in game
       if (oppo_userObj.mode >= 0 ) {
-        console.log("oppo_userObj",   oppo_userObj)
-        // console.log("oppo_userObj.href == playerHash", oppo_userObj.href , playerHash)
+        // oppo in game with me (accept match)
         if (oppo_userObj.href == playerHash) {
-          // do continue to connect battle mode
-          // check if same unicode
-          console.log("oppo_userObj.src",   oppo_userObj.src)
-          // console.log("lastLocalUnix accept",   lastLocalUnix, GetMinsSince(lastLocalUnix))
           let minsSince = GetMinsSince(parseInt(`${oppo_userObj.src}`))
-          console.log("reqqqq", minsSince)
-          console.log("GetMinsSince(lastLocalUnix) - minsSince", GetMinsSince(lastLocalUnix) , minsSince, GetMinsSince(lastLocalUnix) - minsSince)
+          sentunix = oppo_userObj.src
           if (GetMinsSince(lastLocalUnix) - minsSince < 3) {
             throw new Error("request not ready yet")
           }
           if (GetMinsSince(lastLocalUnix) - minsSince > 3) {
             throw new Error("request too late")
           }
-        
-          // reversed
-          // let succesfulPut = await fetchPutPlayerBattleMode(supabase,oppo_userObj, playerHash,1,playerHash,null)
-          // if (!succesfulPut) { throw new Error("cound set oppo player mode") }
-
         } else {
           throw new Error("oppo user already in game")
         }
       } else {
-        if (playerObj.mode >= 0) { throw new Error("player already in game") }
-        // do start match request
-        console.log("lastLocalUnix request",   lastLocalUnix, GetMinsSince(lastLocalUnix))
+        if (playerObj.mode >= 0) { throw new Error("own player already in game") }
         sentunix = lastLocalUnix
       }
-    
     }
   if (newMode == 1) {
     let thesrc = oppo_userObj.src || playerObj.src
     let asdasd:any = await getLast3minCandles("PEPE")
-    // console.log("asdasd",   asdasd)
     let lastLocalUnix:any =  parseInt(asdasd[0][0])
     console.log("lastLocalUnix",   lastLocalUnix)
     if (oppo_userObj.mode > 0 ) {
@@ -492,23 +470,46 @@ export async function sendSupabaseStartBattle(
       throw new Error("oppo user note in game")
     } else {
       // oppo mode is 0
-
       let minsSince = GetMinsSince(parseInt(`${thesrc}`))
-      console.log("reqqqq", minsSince)
-      console.log("GetMinsSince(lastLocalUnix) - minsSince", GetMinsSince(lastLocalUnix) , minsSince, GetMinsSince(lastLocalUnix) - minsSince)
       if (GetMinsSince(lastLocalUnix) - minsSince > 5) {
         throw new Error("action too late")
       }
-
-
       // continue without errors
     }
   }
-
-  // console.log("qqjkkkkkkkkkkkkkkk")
-
-
-  // console.log("putting player", playerObj)
+  if (newMode == -1 ) {
+    // oppo user not in game
+    if (oppo_userObj.mode < 0 ) {
+      // oppo user is my opponent hash
+      console.log("kokokokokokoko")
+      if (playerObj.href == oppo) {
+        let asdasd:any = await getLast3minCandles("PEPE")
+        let lastLocalUnix:any =  parseInt(asdasd[0][0])
+        let minsSince = GetMinsSince(parseInt(`${playerObj.src}`))
+        console.log("herhererererer", minsSince)
+        if (GetMinsSince(lastLocalUnix) - minsSince < 3) {
+          throw new Error("cant quit too early")
+        }
+        // if (minsSince < 6) {
+        //   throw new Error("cant quit too early")
+        // }
+      } else {
+        throw new Error("oppo not correct")
+      }
+    } else {
+      
+      let asdasd:any = await getLast3minCandles("PEPE")
+      let lastLocalUnix:any =  parseInt(asdasd[0][0])
+      let minsSince = GetMinsSince(parseInt(`${playerObj.src}`))
+      if (GetMinsSince(lastLocalUnix) - minsSince < 6) {
+        throw new Error("cant resolve too early")
+      }
+      let oppoAttacked = oppo_userObj.mode
+      let playerAttacked = playerObj.mode
+      
+    }
+  }
+  
   let succesfulPut = await fetchPutPlayerBattleMode(supabase,playerObj, playerHash,newMode,oppo,sentunix)
   if (!succesfulPut) { throw new Error("fetchPutPlayerBattleMode") }
   
@@ -517,12 +518,15 @@ export async function sendSupabaseStartBattle(
 }
 
 
-const getLast3minCandles = async (theToken:any, ) =>{
+const getLast3minCandles = async (theToken:any,startUnixDate:any=null ) =>{
   let t = "3m"
   // let startUnixDate = getRandomUnixDate()
     // let urlBase = `https://api.binance.com/api/v3/klines?interval=${t}&startTime=${startUnixDate}&symbol=`
     let urlBase = `https://api.binance.com/api/v3/klines?interval=${t}&symbol=`
     urlBase += (theToken || "btc").toUpperCase()+"USDT"
+    if (!!startUnixDate) {
+      urlBase += `&startTime=${startUnixDate}`
+    }
     const theListRes = await fetch(urlBase)
     let theList = await theListRes.json()
     // s__initUnix(theList[0][0])

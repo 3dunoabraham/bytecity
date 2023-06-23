@@ -109,6 +109,10 @@ export function BitCrush({calls}:any) {
     calls.toggleBattleMode(-1)
     s__battleLife(-1)
   }
+  const endBattle = () => {
+    calls.toggleBattleMode(-1)
+    s__battleLife(-1)
+  }
 
 const getBattleAttack = () => {
   let newMode = superuser.mode+1
@@ -177,7 +181,8 @@ const triggerAttack = ()=>{
         }
         {superuser.mode > 0 &&
         <Box args={[0.3, 0.2, 0.3]} castShadow receiveShadow position={[1.2, -1.01, -0.1]}
-          // onClick={getBattleAttack}
+        onClick={()=>{checkOppo()}}
+        // onClick={getBattleAttack}
         >
           <meshStandardMaterial color={"#ff9999"}  />
         </Box>
@@ -186,7 +191,11 @@ const triggerAttack = ()=>{
 {superuser.mode >= 0 &&
   <group>
 
-    <LiveGame {...{calls:{quitBattle, startGame, getBattleAttack}}} />
+    <LiveGame {...{calls:{quitBattle, endBattle, startGame, getBattleAttack},
+      state:{},
+    }} 
+      
+    />
     </group>
         }
 

@@ -6,7 +6,7 @@ import { AppContext } from "@/../script/state/context/AppContext";
 import { useState, useContext, useEffect, useMemo } from "react"
 
 export function LiveGame ({state, calls}:any) {
-  const { user, superuser, do:{login, logout, demo, fetchSupaPlayer},  jwt }:any = useAuth()
+  const { user, superuser, superoppo, do:{login, logout, demo, fetchSupaPlayer},  jwt }:any = useAuth()
 
   const [theToken, s__theToken] = useState("pepe")
   const [initUnix, s__initUnix] = useState(0)
@@ -73,6 +73,24 @@ export function LiveGame ({state, calls}:any) {
   return (
     <group>
     <group>
+      {!!superuser && !!superoppo &&
+    <group>
+
+<Box args={[0.15, 0.3, 0.15]} castShadow receiveShadow position={[1.7, -1.01, -1]}
+          onClick={calls.endBattle}
+        >
+          <meshStandardMaterial color={"#ff33ff"}  />
+        </Box>
+        
+        <DynaText color={"#ff33ff"} text={"End Battle"}
+          onClick={calls.startGame} font={0.1} 
+          rotation={[-Math.PI / 2, 0, Math.PI/2]}
+          position={[1.5, -0.98, -1]}
+        />
+    </group>
+      }
+
+
 
 <Box args={[0.15, 0.3, 0.15]} castShadow receiveShadow position={[2, -1.01, -0.1]}
           onClick={calls.quitBattle}

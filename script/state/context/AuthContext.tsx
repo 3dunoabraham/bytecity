@@ -31,6 +31,7 @@ const AuthProvider:FC<{
 
   const fetchUserByRPI = async (referral:any,pin:any) => {
     let thePlayer = await PlayerService.getPlayer(referral,pin)
+    console.log("thePlayer res", thePlayer)
     s__superuser(thePlayer)
     return thePlayer
   }
