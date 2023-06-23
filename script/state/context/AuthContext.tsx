@@ -51,6 +51,7 @@ const AuthProvider:FC<{
         let secret  = creds[1]
         let ownplayer = await fetchUserByRPI(key, secret)
         let oppoUser = await fetchOppoUserByHash(ownplayer.href)
+        return oppoUser
         console.log("ownplayer", ownplayer)
         console.log("oppoUser", oppoUser)
       }
@@ -108,7 +109,7 @@ const AuthProvider:FC<{
   return (
     <Auth.Provider value={{
       jwt: session.jwt,  user, 
-      superuser,
+      superuser, superoppo,
       do:{login, demo, logout, fetchSupaPlayer, fetchSupaOppoUser },
       can,
 
@@ -137,6 +138,7 @@ interface IAuthContext {
   jwt: string | undefined;
   user: IUser | undefined;
   superuser: any;
+  superoppo: any;
   do:any;
   can:any;
 }

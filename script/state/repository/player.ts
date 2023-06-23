@@ -16,17 +16,17 @@ export async function fetchPostPlayer(supabase:any, playerObj:any) {
 
 export async function fetchPlayer(supabase:any, playerHash:any) {
     const { data: player, error: selectError } = await supabase.from('player')
-        .select('name, href, src, attempts, totalAttempts, goodAttempts, trades, mode, jwt, binancekeys, subscription, referral')
+        .select('name, href, src, attempts, totalAttempts, goodAttempts, trades, mode, hash, jwt, binancekeys, subscription, referral')
         .match({ hash: playerHash })
         .single()
     return player
 }
 export async function fetchPlayerSimple(supabase:any, playerHash:any) {
     const { data: player, error: selectError } = await supabase.from('player')
-        .select('name, href, src, attempts, totalAttempts, goodAttempts, trades, mode, subscription, referral')
+        .select('name, href, src, attempts, totalAttempts, goodAttempts, trades, mode, subscription, referral,hash')
         .match({ hash: playerHash })
         .single()
-    return player
+    return !!player ? {...player,...{hash:playerHash}} : player
 }
 
 export async function fetchSameIPCount(supabase:any, ipAddress:any) {
