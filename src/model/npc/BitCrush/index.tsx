@@ -111,7 +111,7 @@ export function BitCrush({calls}:any) {
   }
 
 const getBattleAttack = () => {
-  let newMode = battleLife+1
+  let newMode = superuser.mode+1
   calls.toggleBattleMode(newMode)
   s__battleLife(newMode)
   
@@ -169,7 +169,7 @@ const triggerAttack = ()=>{
         }
         {superuser.mode == 0 && superoppo && superoppo.href == superuser.hash &&
         <Box args={[0.5, 0.2, 0.5]} castShadow receiveShadow position={[2.2, -1.01, -1.1]}
-        onClick={()=>{checkOppo()}}
+        onClick={()=>{getBattleAttack()}}
           // onClick={()=>(q__asd.refetch())}
         >
           <meshStandardMaterial color={"#ff000"}  />
