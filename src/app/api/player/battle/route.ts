@@ -3,7 +3,7 @@ import { getSupabasePlayer, sendSupabaseStartBattle } from '@/../script/state/re
   
 export async function POST(request: any) {
   const body:any = await request.json()
-  const { referral, pin, newMode } = body;
+  const { referral, pin, newMode, oppo } = body;
 
   // TELEGRAM MESSAGE DOESNT SEND IN VERCEL
   // sendTelegramMessageVirtualOrder(request,
@@ -17,10 +17,10 @@ export async function POST(request: any) {
   //   }
   // )
 
-  console.log("asdasd", referral, pin, newMode)
+  // console.log("asdasd", referral, pin, oppo)
   
 
-  let rrreeesss = await sendSupabaseStartBattle(request, referral, pin,newMode)
+  let rrreeesss = await sendSupabaseStartBattle(request, referral, pin,newMode, oppo)
   if (!rrreeesss) {
     throw new Error("Coudlnt start mmo battle")
   }

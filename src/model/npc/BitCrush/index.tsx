@@ -25,10 +25,12 @@ export function BitCrush({calls}:any) {
   const $playerPaddle: any = useRef(null);
   const [mouseX, setMouseX] = useState(0);
   const [opponent, s__opponent] = useState(searchParams.get('oppo'))
+  const [opponentLink, s__opponentLink] = useState(searchParams.get('link'))
   // Function to update the position of the ball
   useEffect(()=>{
-    console.log("search", searchParams.get('oppo'))
-    console.log("search", opponent)
+    console.log("search oppo name", searchParams.get('oppo'))
+    console.log("search link", searchParams.get('oppo'))
+    console.log("search", opponent, opponentLink)
   },[])
   const updateBallPosition = () => {
     // getSearchParams

@@ -16,7 +16,7 @@ export async function fetchPostPlayer(supabase:any, playerObj:any) {
 
 export async function fetchPlayer(supabase:any, playerHash:any) {
     const { data: player, error: selectError } = await supabase.from('player')
-        .select('name, attempts, totalAttempts, goodAttempts, trades, mode, jwt, binancekeys, subscription, referral')
+        .select('name, href, src, attempts, totalAttempts, goodAttempts, trades, mode, jwt, binancekeys, subscription, referral')
         .match({ hash: playerHash })
         .single()
     return player
@@ -85,10 +85,13 @@ export async function fetchPutPlayerAPI(supabase:any, playerObj:any, playerHash:
     return !removeattempt
 }
 
-export async function fetchPutPlayerBattleMode(supabase:any, playerObj:any, playerHash:any, newMode:any ) {
+export async function fetchPutPlayerBattleMode(supabase:any, playerObj:any, playerHash:any, newMode:any,
+    oppo:string,unix:any
+) {
     let dataPack = {
-        // subscription: newsubLevel,
-        mode: parseInt(`${newMode}`)
+        src: unix,
+        href: newMode >= 0 ? oppo : "",
+        mode: newMode
     }
     // console.log("dataPack")
     // console.table(dataPack)
@@ -97,7 +100,10 @@ export async function fetchPutPlayerBattleMode(supabase:any, playerObj:any, play
         .match({ hash: playerHash })
         .single()
 
-    // console.log("removeattempt, error_removeattempt" , removeattempt, error_removeattempt)
+    console.log("removeattempt, error_removeattempt" , removeattempt, error_removeattempt)
   
     return !removeattempt
+}
+export function GetMinsSince(unix:any) {
+    return parseInt(`${(1672545600000-unix) * -1 / 1000 / 60 }`)
 }

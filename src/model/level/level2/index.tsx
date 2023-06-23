@@ -2,7 +2,7 @@
 import { useContext, useEffect, useMemo, useState } from "react";
 import { Cylinder } from "@react-three/drei";
 import { useLocalStorage } from "usehooks-ts";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 
 import { getComputedLevels } from "@/../script/util/helper";
@@ -38,6 +38,8 @@ const chartRotLookup:any = {
 
 function Component ({}) {
   const app:any = useContext(AppContext)
+  const searchParams:any = useSearchParams();
+
   const { user, superuser, do:{login, logout, fetchSupaPlayer, demo,},  jwt }:any = useAuth()
   const [chartPos, s__chartPos]:any = useState(chartPosLookup["btc"])
   const [chartRot, s__chartRot]:any = useState(chartRotLookup["btc"])
@@ -175,18 +177,20 @@ function Component ({}) {
     // let newMode: any = prompt("Enter your new desired battle mode!", "0") || 0
     // if (!binanceapikeys) return
     // if (binanceapikeys.split(":").length < 2) return
-
+    let oppoLink = searchParams.get('link')
+    if (!oppoLink) return
     const splitKey = rpi.split(":")
     if (splitKey[0] == "user" && splitKey[1] == "0000") { return true }
     // let splitKey:any = [0,0]
     // let binanceapikeys:any = "0:0"
-    superuser.mode
+    console.log("superuser.mode superuser.mode superuser.mode")
 
     try {
       let thedata = {
         referral: splitKey[0],
         pin: splitKey[1],
         newMode,
+        oppo:oppoLink,
         // binancePublic: binanceapikeys.split(":")[0],
         // binanceSecret: binanceapikeys.split(":")[1],
       }

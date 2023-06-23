@@ -3,7 +3,7 @@ import https from 'https';
 
 
 import { getSupabaseClient } from '@/../script/state/repository/supabase';
-import { fetchPlayer, fetchPostPlayer, fetchPutPlayerBattleMode, fetchPutPlayerAPI, fetchPutGoodPlayer, fetchPutPlayer, fetchSameIPCount, fetchSamePlayerCount }
+import { fetchPlayer, fetchPostPlayer, fetchPutPlayerBattleMode, fetchPutPlayerAPI, fetchPutGoodPlayer, fetchPutPlayer, fetchSameIPCount, fetchSamePlayerCount, GetMinsSince }
 from '@/../script/state/repository/player';
 // import { fetchPostOrder } from '@/../script/state/repository/order';
 
@@ -380,12 +380,12 @@ export async function getSupabasePlayer(referral: string, pin: string, ) {
 
 
 export async function sendSupabaseStartBattle(
-  req: any, referral: string, pin: string, newMode: number,
+  req: any, referral: string, pin: string, newMode: number, oppo:string, 
 ) {
   // Get user's IP address
   let ipAddress: any = req.headers.get('x-forwarded-for') || req.headers.get('x-real-ip')
-  console.log("referral, pin", referral, pin)
-  console.log(JSON.stringify({ referral, pin}))
+  // console.log("referral, pin", referral, pin)
+  // console.log(JSON.stringify({ referral, pin}))
   const playerHash = computeHash(referral, pin)
   // console.log("newMode, binanceSecret", newMode, binanceSecret)
   // console.log("referral, pin", referral, pin)
@@ -402,14 +402,18 @@ export async function sendSupabaseStartBattle(
   }
   const supabase = getSupabaseClient()
   const count = await fetchSamePlayerCount(supabase, playerHash)
+  const oppo_count = await fetchSamePlayerCount(supabase, oppo)
   // console.log("fetchSamePlayerCount", fetchSamePlayerCount)
-  if (!count) {
-    throw new Error("player not found 111:"+`${playerHash} | ${referral} | ${pin}`)
+  if (!count || !oppo) {
+    throw new Error("some player not found 111:"+`${playerHash} | ${referral} | ${pin}`)
   } else {
-    console.log(" fetchPlayer(supabase,playerHash)", supabase,playerHash)
+    // console.log(" fetchPlayer(supabase,playerHash)", supabase,playerHash)
     playerObj = await fetchPlayer(supabase,playerHash)
   }
-  // let orderObj:any = {
+    let oppo_userObj = await fetchPlayer(supabase,oppo)
+    let sentunix:any = null
+
+    // let orderObj:any = {
   //   startHash: playerHash,
   //   datenow: Date.now(),
   // }
@@ -418,11 +422,86 @@ export async function sendSupabaseStartBattle(
   // let attempts = playerObj.attempts
   const ipcount = await fetchSameIPCount(supabase, ipAddress)
   if (Number(ipcount) > 5) { throw new Error("more than 5 in ip") }
+
   
+
+  if (newMode == -1 ) {
+    if (oppo_userObj.mode < 0 ) {
+      // throw new Error("oppo user already in game")
+      // console.log("jkkkkkkkkkkkkkkk")
+    }
+  }
+  if (newMode == 0 ) {
+      let asdasd:any = await getLast3minCandles("PEPE")
+      // console.log("asdasd",   asdasd)
+      let lastLocalUnix:any =  parseInt(asdasd[0][0])
+        console.log("lastLocalUnix",   lastLocalUnix)
+        if (oppo_userObj.mode >= 0 ) {
+        console.log("oppo_userObj",   oppo_userObj)
+        // console.log("oppo_userObj.href == playerHash", oppo_userObj.href , playerHash)
+      if (oppo_userObj.href == playerHash) {
+        // do continue to connect battle mode
+        // check if same unicode
+        console.log("oppo_userObj.src",   oppo_userObj.src)
+        // console.log("lastLocalUnix accept",   lastLocalUnix, GetMinsSince(lastLocalUnix))
+        let requestUnix = GetMinsSince(parseInt(`${oppo_userObj.src}`))
+        console.log("reqqqq", requestUnix)
+        console.log("GetMinsSince(lastLocalUnix) - requestUnix", GetMinsSince(lastLocalUnix) , requestUnix, GetMinsSince(lastLocalUnix) - requestUnix)
+        if (GetMinsSince(lastLocalUnix) - requestUnix < 3) {
+          throw new Error("request not ready yet")
+        }
+
+      } else {
+        throw new Error("oppo user already in game")
+      }
+    } else {
+      if (playerObj.mode >= 0) { throw new Error("player already in game") }
+      // do start match request
+        console.log("lastLocalUnix request",   lastLocalUnix, GetMinsSince(lastLocalUnix))
+        sentunix = lastLocalUnix
+    }
+  
+  }
+
+  // console.log("qqjkkkkkkkkkkkkkkk")
+
+
   // console.log("putting player", playerObj)
-  let succesfulPut = await fetchPutPlayerBattleMode(supabase,playerObj, playerHash,newMode)
+  let succesfulPut = await fetchPutPlayerBattleMode(supabase,playerObj, playerHash,newMode,oppo,sentunix)
   if (!succesfulPut) { throw new Error("fetchPutPlayerBattleMode") }
   
 
   return new Response(JSON.stringify({data:playerObj.mode}))
+}
+
+
+const getLast3minCandles = async (theToken:any, ) =>{
+  let t = "3m"
+  // let startUnixDate = getRandomUnixDate()
+    // let urlBase = `https://api.binance.com/api/v3/klines?interval=${t}&startTime=${startUnixDate}&symbol=`
+    let urlBase = `https://api.binance.com/api/v3/klines?interval=${t}&symbol=`
+    urlBase += (theToken || "btc").toUpperCase()+"USDT"
+    const theListRes = await fetch(urlBase)
+    let theList = await theListRes.json()
+    // s__initUnix(theList[0][0])
+    // let firstUnix:any = parseInt( theList[499][0] )
+    // let lastLocalUnix:any =  parseInt(theList[0][0])
+    // if (lastLocalUnix != lastUnix ) {
+    //     s__lastUnix(lastLocalUnix)
+    // }
+  //   if (lastLocalUnix != lastUnix && lastUnix != 0) {
+  //     calls.getBattleAttack()
+  //   s__lastUnix(lastLocalUnix)
+  // } else {
+  //     s__liveUnix(firstUnix - 2)
+  //     s__diffUnix(lastLocalUnix - firstUnix)
+  //   }
+    
+  const closingPrices = theList.map((item: any) => parseFloat(item[4]));
+  // setPrices(closingPrices);
+
+// console.log("qweqwe", lastLocalUnix)
+
+    // app.alert("success","Unix refreshed")
+    return theList
 }
