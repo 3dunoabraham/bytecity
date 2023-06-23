@@ -10,7 +10,7 @@ import { useAuth } from "@/../script/state/context/AuthContext";
 import LiveGame from "./LiveGame";
 
 export function BitCrush({calls}:any) {
-  const { user, superuser, do:{login, logout, demo,},  jwt }:any = useAuth()
+  const { user, superuser, do:{login, logout, demo, fetchSupaOppoUser},  jwt }:any = useAuth()
 
   const [battleLife, s__battleLife] = useState(-1)
   const searchParams:any = useSearchParams();
@@ -116,7 +116,17 @@ const getBattleAttack = () => {
   s__battleLife(newMode)
   
 }
+const checkOppo = async () => {
+  let oppo = await fetchSupaOppoUser()
+  console.log("oppo", oppo)
 
+  // q__asd.refetch()
+}
+const triggerAttack = ()=>{
+  if (prompt("Confirm attack? (Buy)","yes") != "yes") return
+  
+  calls.getBattleAttack()
+}
 
   return (
     <>
@@ -134,7 +144,12 @@ const getBattleAttack = () => {
         >
           <meshStandardMaterial color={"#0099ff"} />
         </Box>
-        {superuser.mode <= 0 &&
+
+
+
+
+        {/* BATTLE MODE */}
+        {superuser.mode < 0 &&
         <Box args={[0.3, 0.2, 0.3]} castShadow receiveShadow position={[1.2, -1.01, -0.1]}
           onClick={getBattleReady}
         >
@@ -143,14 +158,15 @@ const getBattleAttack = () => {
         }
         {superuser.mode == 0 &&
         <Box args={[0.3, 0.2, 0.3]} castShadow receiveShadow position={[1.2, -1.01, -0.1]}
-          // onClick={getBattleContinue}
+        onClick={()=>{checkOppo()}}
+          // onClick={()=>(q__asd.refetch())}
         >
           <meshStandardMaterial color={"#ff9900"}  />
         </Box>
         }
         {superuser.mode > 0 &&
         <Box args={[0.3, 0.2, 0.3]} castShadow receiveShadow position={[1.2, -1.01, -0.1]}
-          onClick={getBattleAttack}
+          // onClick={getBattleAttack}
         >
           <meshStandardMaterial color={"#ff9999"}  />
         </Box>

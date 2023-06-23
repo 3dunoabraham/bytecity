@@ -17,14 +17,22 @@ const AuthProvider:FC<{
   const [user, setUser] = useState<IUser | undefined>(session.user);
   const [userInfo, s__userInfo] = useState<IUser>(session.user)
   const [superuser, s__superuser] = useState()
+  const [superoppo, s__superoppo] = useState()
 
   const [LH_rpi, s__LH_rpi]:any = useLocalStorage("rpi","user:0000")
   const [localuser, __localuser] = useState()
 
 
+  const fetchOppoUserByHash = async (hash:any) => {
+    let thePlayer = await PlayerService.getPlayerByHash(hash)
+    s__superoppo(thePlayer)
+    return thePlayer
+  }
+
   const fetchUserByRPI = async (referral:any,pin:any) => {
     let thePlayer = await PlayerService.getPlayer(referral,pin)
     s__superuser(thePlayer)
+    return thePlayer
   }
   const fetchSupaPlayer = () => {
     
@@ -33,6 +41,18 @@ const AuthProvider:FC<{
         let key = creds[0]
         let secret  = creds[1]
         fetchUserByRPI(key,secret)        
+      }
+  }
+  const fetchSupaOppoUser = async () => {
+    
+    if (LH_rpi != "user:0000") {
+        let creds = LH_rpi.split(":")
+        let key = creds[0]
+        let secret  = creds[1]
+        let ownplayer = await fetchUserByRPI(key, secret)
+        let oppoUser = await fetchOppoUserByHash(ownplayer.href)
+        console.log("ownplayer", ownplayer)
+        console.log("oppoUser", oppoUser)
       }
   }
   useEffect( () => {
@@ -89,7 +109,7 @@ const AuthProvider:FC<{
     <Auth.Provider value={{
       jwt: session.jwt,  user, 
       superuser,
-      do:{login, demo, logout, fetchSupaPlayer },
+      do:{login, demo, logout, fetchSupaPlayer, fetchSupaOppoUser },
       can,
 
     }}>

@@ -3,7 +3,7 @@ import https from 'https';
 
 
 import { getSupabaseClient } from '@/../script/state/repository/supabase';
-import { fetchPlayer, fetchPostPlayer, fetchPutPlayerBattleMode, fetchPutPlayerAPI, fetchPutGoodPlayer, fetchPutPlayer, fetchSameIPCount, fetchSamePlayerCount, GetMinsSince }
+import { fetchPlayer, fetchPostPlayer, fetchPutPlayerBattleMode, fetchPutPlayerAPI, fetchPutGoodPlayer, fetchPutPlayer, fetchSameIPCount, fetchSamePlayerCount, GetMinsSince, fetchPlayerSimple }
 from '@/../script/state/repository/player';
 // import { fetchPostOrder } from '@/../script/state/repository/order';
 
@@ -369,6 +369,16 @@ export async function setSupabasePlayerAPIKeys(
 }
   
 
+export async function getSupabasePlayerByHash(hash: string, ) {
+  const userHash = hash
+  const supabase = getSupabaseClient()
+  let playerObj = await fetchPlayerSimple(supabase,userHash)
+  if (!playerObj) { throw new Error("player not found 444:"+`${userHash} `) }
+
+  return new Response(JSON.stringify(playerObj))
+}
+
+
 export async function getSupabasePlayer(referral: string, pin: string, ) {
   const playerHash = computeHash(referral, pin)
   const supabase = getSupabaseClient()
@@ -450,6 +460,10 @@ export async function sendSupabaseStartBattle(
         if (GetMinsSince(lastLocalUnix) - requestUnix < 3) {
           throw new Error("request not ready yet")
         }
+        
+        // reversed
+        // let succesfulPut = await fetchPutPlayerBattleMode(supabase,oppo_userObj, playerHash,1,playerHash,null)
+        // if (!succesfulPut) { throw new Error("cound set oppo player mode") }
 
       } else {
         throw new Error("oppo user already in game")

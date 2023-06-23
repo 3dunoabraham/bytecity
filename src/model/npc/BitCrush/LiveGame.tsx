@@ -6,7 +6,7 @@ import { AppContext } from "@/../script/state/context/AppContext";
 import { useState, useContext, useEffect, useMemo } from "react"
 
 export function LiveGame ({state, calls}:any) {
-  const { user, superuser, do:{login, logout, demo,},  jwt }:any = useAuth()
+  const { user, superuser, do:{login, logout, demo, fetchSupaPlayer},  jwt }:any = useAuth()
 
   const [theToken, s__theToken] = useState("pepe")
   const [initUnix, s__initUnix] = useState(0)
@@ -39,15 +39,17 @@ export function LiveGame ({state, calls}:any) {
           let firstUnix:any = parseInt( theList[499][0] )
           let lastLocalUnix:any =  parseInt(theList[0][0])
           if (lastLocalUnix != lastUnix ) {
-              s__lastUnix(lastLocalUnix)
+              fetchSupaPlayer()
+
           }
-          if (lastLocalUnix != lastUnix && lastUnix != 0) {
-            calls.getBattleAttack()
           s__lastUnix(lastLocalUnix)
-        } else {
-            s__liveUnix(firstUnix - 2)
-            s__diffUnix(lastLocalUnix - firstUnix)
-          }
+          //   if (lastLocalUnix != lastUnix && lastUnix != 0) {
+        //     calls.getBattleAttack()
+        //   s__lastUnix(lastLocalUnix)
+        // } else {
+        //     s__liveUnix(firstUnix - 2)
+        //     s__diffUnix(lastLocalUnix - firstUnix)
+        //   }
           
         const closingPrices = theList.map((item: any) => parseFloat(item[4]));
         setPrices(closingPrices);
@@ -59,11 +61,15 @@ export function LiveGame ({state, calls}:any) {
       }
   },[theToken])
   const theUnixDayProgress = useMemo(()=>{
-    console.log("lastUnix-firstUnixOfDay", lastUnix, firstUnixOfDay)
-    console.log("lastUnix-firstUnixOfDay", parseInt(`${lastUnix/1000000}`), parseInt(`${firstUnixOfDay/1000000}`))
+    // console.log("lastUnix-firstUnixOfDay", lastUnix, firstUnixOfDay)
+    // console.log("lastUnix-firstUnixOfDay", parseInt(`${lastUnix/1000000}`), parseInt(`${firstUnixOfDay/1000000}`))
     return parseInt(`${(1672545600000-lastUnix) * -1 / 1000 / 60 }`)
     return (lastUnix-firstUnixOfDay) * -1
   },[lastUnix,firstUnixOfDay])
+
+
+
+
   return (
     <group>
     <group>
@@ -80,7 +86,8 @@ export function LiveGame ({state, calls}:any) {
           position={[2.2, -0.98, -0.1]}
         />
         <DynaText color={"#ff9900"} text={`T:${theUnixDayProgress}` }
-          onClick={()=>q__asd.refetch()} font={0.2} 
+          onClick={()=>q__asd.refetch()} 
+          font={0.2} 
           rotation={[-Math.PI / 2, 0, Math.PI/2]}
           position={[1.7, -0.98, -0.1]}
         />
