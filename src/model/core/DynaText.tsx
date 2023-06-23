@@ -2,7 +2,7 @@ import { Text } from '@react-three/drei';
 import { MeshBasicMaterial, MeshStandardMaterial, Vector3 } from 'three';
 import FontText from './FontText';
 
-export default function Component ({
+export function DynaText ({
   onClick= ()=> {},
   text="asd", position=new Vector3(), color , emissive="#000000", isSelected = false,font=0.35,
   ...props
@@ -34,3 +34,4 @@ export default function Component ({
       </FontText>
   );
 };
+export default DynaText

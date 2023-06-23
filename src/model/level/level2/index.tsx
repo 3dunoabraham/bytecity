@@ -171,6 +171,43 @@ function Component ({}) {
       app.alert("error", "Failed api setting!")
     }
   }
+  const toggleBattleMode = async (newMode:number) => {
+    // let newMode: any = prompt("Enter your new desired battle mode!", "0") || 0
+    // if (!binanceapikeys) return
+    // if (binanceapikeys.split(":").length < 2) return
+
+    const splitKey = rpi.split(":")
+    if (splitKey[0] == "user" && splitKey[1] == "0000") { return true }
+    // let splitKey:any = [0,0]
+    // let binanceapikeys:any = "0:0"
+    superuser.mode
+
+    try {
+      let thedata = {
+        referral: splitKey[0],
+        pin: splitKey[1],
+        newMode,
+        // binancePublic: binanceapikeys.split(":")[0],
+        // binanceSecret: binanceapikeys.split(":")[1],
+      }
+      console.log("thedata", thedata)
+      app.alert("neutral", "Setting battle mode")
+      let fetchRes: any = await fetchPost("/api/player/battle", thedata)
+      console.log("fetchRes", fetchRes)
+
+      
+      if (fetchRes.status >= 400)
+      {
+        return app.alert("error", "Failed to Set battle mode")
+      }
+      app.alert("success", "Successfully set battle mode!")
+
+      fetchSupaPlayer()
+    } catch (e: unknown) {
+      console.log("e", e)
+      app.alert("error", "Failed battle mode!")
+    }
+  }
   const triggerSyncGoodPlace = async () => {
     const splitKey = rpi.split(":")
     if (splitKey[0] == "user" && splitKey[1] == "0000") { return true }
@@ -472,7 +509,7 @@ function Component ({}) {
       {/* Loyal Player */}
       {hasAnyToken &&  (tutoStage.lvl > 3 && !!superuser && superuser.goodAttempts > 0) && !isDefaultUser &&
         <group position={[0,0,6]}>
-          <GoodPlaceGoal calls={{triggerSyncGoodPlace,setAPIKeys, claim:claimOrSyncDatabase, s__projectionMode}} {...{projectionMode, s__projectionMode: _s__projectionMode}}
+          <GoodPlaceGoal calls={{triggerSyncGoodPlace,setAPIKeys,toggleBattleMode, claim:claimOrSyncDatabase, s__projectionMode}} {...{projectionMode, s__projectionMode: _s__projectionMode}}
             state={{hasAnyToken, profitHistory, savedString, projectionMode }}
           />
         </group>

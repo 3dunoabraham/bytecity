@@ -84,3 +84,20 @@ export async function fetchPutPlayerAPI(supabase:any, playerObj:any, playerHash:
   
     return !removeattempt
 }
+
+export async function fetchPutPlayerBattleMode(supabase:any, playerObj:any, playerHash:any, newMode:any ) {
+    let dataPack = {
+        // subscription: newsubLevel,
+        mode: parseInt(`${newMode}`)
+    }
+    // console.log("dataPack")
+    // console.table(dataPack)
+    const { data: removeattempt, error:error_removeattempt } = await supabase.from('player')
+        .update(dataPack)
+        .match({ hash: playerHash })
+        .single()
+
+    // console.log("removeattempt, error_removeattempt" , removeattempt, error_removeattempt)
+  
+    return !removeattempt
+}

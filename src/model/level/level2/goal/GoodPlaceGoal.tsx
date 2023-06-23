@@ -27,7 +27,7 @@ function Component({ calls, state, projectionMode, s__projectionMode }: any) {
   return (<>
     <Cylinder position={[0, -0.27, 6]} args={[3, 3, 0.15, 6]} material={StandardColor("#996644")} />
     <group rotation={[0, 0, 0]} position={[0, 0.8, 1]}>
-      <BitCrush/>
+      <BitCrush calls={{toggleBattleMode:calls.toggleBattleMode}}/>
     </group>
     {/* ROAD */}
     <group position={[0, -0.5, -2.1]} ref={$bridgeRoad} rotation={[bridgeZRot, 0, 0]}>

@@ -7,7 +7,6 @@ import {Screen, Frame} from "./FrameScreen"
 import TextContainer from "./TextContainer"
 import DynaText from "@/model/core/DynaText"
 import { useAuth } from "@/../script/state/context/AuthContext";
-import LiveGame from "./LiveGame";
 
 export function BitCrush({calls}:any) {
   const { user, superuser, do:{login, logout, demo,},  jwt }:any = useAuth()
@@ -19,7 +18,7 @@ export function BitCrush({calls}:any) {
   const [ballYVelocity, setBallYVelocity] = useState(0.02);
   const [ballXVelocity, setBallZVelocity] = useState(0);
   const [playerPaddlePosition, setPlayerPaddlePosition] = useState(new THREE.Vector3(0, -0.8, 0));
-  const [score, s__score] = useState(superuser.mode)
+  const [score, s__score] = useState(-1)
   const [lastScore, s__Lastscore] = useState(0)
   const $theBall: any = useRef(null);
   const $playerPaddle: any = useRef(null);
@@ -141,7 +140,7 @@ const getBattleAttack = () => {
         }
         {superuser.mode == 0 &&
         <Box args={[0.3, 0.2, 0.3]} castShadow receiveShadow position={[1.2, -1.01, -0.1]}
-          // onClick={getBattleContinue}
+          onClick={getBattleContinue}
         >
           <meshStandardMaterial color={"#ff9900"}  />
         </Box>
@@ -156,12 +155,19 @@ const getBattleAttack = () => {
 
 {superuser.mode >= 0 &&
   <group>
-
-    <LiveGame {...{calls:{quitBattle, startGame, getBattleAttack}}} />
-    </group>
-        }
-
+        <Box args={[0.15, 0.3, 0.15]} castShadow receiveShadow position={[2, -1.01, -0.1]}
+          onClick={quitBattle}
+        >
+          <meshStandardMaterial color={"#ff0000"}  />
+        </Box>
         
+        <DynaText color={"#ff0000"} text={"Quit"}
+          onClick={calls.startGame} font={0.1} 
+          rotation={[-Math.PI / 2, 0, Math.PI/2]}
+          position={[2.2, -0.98, -0.1]}
+        />
+        </group>
+        }
 
 
         {/* BALL */}

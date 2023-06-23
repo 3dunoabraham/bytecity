@@ -3,7 +3,7 @@ import https from 'https';
 
 
 import { getSupabaseClient } from '@/../script/state/repository/supabase';
-import { fetchPlayer, fetchPostPlayer, fetchPutPlayerAPI, fetchPutGoodPlayer, fetchPutPlayer, fetchSameIPCount, fetchSamePlayerCount }
+import { fetchPlayer, fetchPostPlayer, fetchPutPlayerBattleMode, fetchPutPlayerAPI, fetchPutGoodPlayer, fetchPutPlayer, fetchSameIPCount, fetchSamePlayerCount }
 from '@/../script/state/repository/player';
 // import { fetchPostOrder } from '@/../script/state/repository/order';
 
@@ -376,4 +376,53 @@ export async function getSupabasePlayer(referral: string, pin: string, ) {
   if (!playerObj) { throw new Error("player not found 444:"+`${playerHash} | ${referral} | ${pin}`) }
 
   return new Response(JSON.stringify(playerObj))
+}
+
+
+export async function sendSupabaseStartBattle(
+  req: any, referral: string, pin: string, newMode: number,
+) {
+  // Get user's IP address
+  let ipAddress: any = req.headers.get('x-forwarded-for') || req.headers.get('x-real-ip')
+  console.log("referral, pin", referral, pin)
+  console.log(JSON.stringify({ referral, pin}))
+  const playerHash = computeHash(referral, pin)
+  // console.log("newMode, binanceSecret", newMode, binanceSecret)
+  // console.log("referral, pin", referral, pin)
+  // console.log("playerHash", playerHash)
+  let playerObj:any = {
+    name: referral,
+    ipv4: ipAddress,
+    hash: playerHash,
+    attempts: 12,
+    totalAttempts: 0,
+    goodAttempts: 0,
+    trades:"",
+    datenow: Date.now(),
+  }
+  const supabase = getSupabaseClient()
+  const count = await fetchSamePlayerCount(supabase, playerHash)
+  // console.log("fetchSamePlayerCount", fetchSamePlayerCount)
+  if (!count) {
+    throw new Error("player not found 111:"+`${playerHash} | ${referral} | ${pin}`)
+  } else {
+    console.log(" fetchPlayer(supabase,playerHash)", supabase,playerHash)
+    playerObj = await fetchPlayer(supabase,playerHash)
+  }
+  // let orderObj:any = {
+  //   startHash: playerHash,
+  //   datenow: Date.now(),
+  // }
+  // console.log("playerObj", playerObj)
+  
+  // let attempts = playerObj.attempts
+  const ipcount = await fetchSameIPCount(supabase, ipAddress)
+  if (Number(ipcount) > 5) { throw new Error("more than 5 in ip") }
+  
+  // console.log("putting player", playerObj)
+  let succesfulPut = await fetchPutPlayerBattleMode(supabase,playerObj, playerHash,newMode)
+  if (!succesfulPut) { throw new Error("fetchPutPlayerBattleMode") }
+  
+
+  return new Response(JSON.stringify({data:playerObj.mode}))
 }
