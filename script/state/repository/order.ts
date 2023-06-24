@@ -4,7 +4,7 @@ import https from 'https';
 
 import { getSupabaseClient } from '@/../script/state/repository/supabase';
 import { fetchPlayer, fetchPostPlayer, fetchPutPlayerBattleMode, fetchPutPlayerAPI, fetchPutGoodPlayer, fetchPutPlayer, fetchSameIPCount, fetchSamePlayerCount, GetMinsSince, fetchPlayerSimple, fetchPutEloBattle, getEloWTLObj }
-from '@/../script/state/repository/player';
+  from '@/../script/state/repository/player';
 // import { fetchPostOrder } from '@/../script/state/repository/order';
 
 export const generalLookupTable: { [key: string]: number } = {
@@ -49,8 +49,8 @@ export const priceLookupTable: { [key: string]: number } = {
   'UNIUSDT': 4,
   'SOLUSDT': 4,
 };
-export function computeHash (firstValue:any, secondValue:any) {
-  
+export function computeHash(firstValue: any, secondValue: any) {
+
   const hash = crypto.createHash('sha256');
 
   hash.update(firstValue.toLowerCase().replace(" ", ""));
@@ -70,9 +70,9 @@ type LimitOrderParams = {
   timestamp?: number
 }
 
-export function adjustOrderParams({ side, symbol, quantity, price }: LimitOrderParams): { quantity: number; price: number } {  
+export function adjustOrderParams({ side, symbol, quantity, price }: LimitOrderParams): { quantity: number; price: number } {
   const pricedecimalPlaces = priceLookupTable[symbol.toUpperCase()] || 2;
-  const adjustedQuantity = parseQuantity(symbol.toUpperCase(),quantity/price);
+  const adjustedQuantity = parseQuantity(symbol.toUpperCase(), quantity / price);
   const adjustedPrice = Number((parseFloat(`${price}`)).toFixed(pricedecimalPlaces));
 
   return { quantity: adjustedQuantity, price: adjustedPrice };
@@ -97,7 +97,7 @@ export async function sendTelegramMessageVirtualOrder(req: any, { side, symbol, 
     const playerHash = hash.digest('hex');
 
     const message = `📈 Demo API Key @${chatId} | 🔑 ${token} \n\n👤 User ID: ${playerHash}\n\n💰 Placed an order:\nSide: ${side}\nSymbol: ${symbol}\nQuantity: ${quantity}\nPrice: ${price}\n`;
-    const url = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(message)}`;    
+    const url = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(message)}`;
     let sendmesres = await fetch(url)
     callback(await sendmesres.json());
   }
@@ -107,7 +107,7 @@ export async function sendTelegramMessageVirtualOrder(req: any, { side, symbol, 
 export function getCryptoPriceDecimals(symbol: string): number {
   return generalLookupTable[symbol] || 2;
 }
-export function makeLimitOrder({ side, symbol, quantity, price, recvWindow = 5000, timestamp = Date.now() }:any, apiKey: string, apiSecret: string, callback: Function) {
+export function makeLimitOrder({ side, symbol, quantity, price, recvWindow = 5000, timestamp = Date.now() }: any, apiKey: string, apiSecret: string, callback: Function) {
   if (apiKey === "user") {
     const chatId = process.env.TELEGRAM_CHAT_ID;
     const token = process.env.TELEGRAM_BOT_TOKEN;
@@ -138,10 +138,10 @@ export function makeLimitOrder({ side, symbol, quantity, price, recvWindow = 500
   const data = `${params}&signature=${signature}`;
   const req = https.request(options, (res) => {
     let result = '';
-    res.on('data', (data) => { 
+    res.on('data', (data) => {
       console.log("data callbakc make limit order")
       result += data;
-     });
+    });
     res.on('end', () => {
       console.log("end callback make limit order error")
       callback(JSON.parse(result));
@@ -149,17 +149,18 @@ export function makeLimitOrder({ side, symbol, quantity, price, recvWindow = 500
   });
   req.on('error', (err) => {
     console.log("console make limit order error")
-    callback(err); });
+    callback(err);
+  });
   req.write(data);
   req.end();
 }
 
-export async function fetchPostOrder(supabase:any, orderObj:any) {
-  const { data: order, error:error2 } = await supabase
+export async function fetchPostOrder(supabase: any, orderObj: any) {
+  const { data: order, error: error2 } = await supabase
     .from('order')
     .insert(orderObj)
     .single()
-    
+
   return !error2
 }
 
@@ -169,24 +170,24 @@ export async function sendSupabaseVirtualOrder(
   // Get user's IP address
   let ipAddress: any = req.headers.get('x-forwarded-for') || req.headers.get('x-real-ip')
   const playerHash = computeHash(apiKey, apiSecret)
-  let playerObj:any = {
+  let playerObj: any = {
     name: apiKey,
     ipv4: ipAddress,
     hash: playerHash,
     attempts: 12,
     totalAttempts: 0,
     goodAttempts: 0,
-    trades:"",
+    trades: "",
     datenow: Date.now(),
   }
   const supabase = getSupabaseClient()
   const count = await fetchSamePlayerCount(supabase, playerHash)
   if (!count) {
-    throw new Error("player not found 222:"+`${playerHash} | ${apiKey} | ${apiSecret}`)
+    throw new Error("player not found 222:" + `${playerHash} | ${apiKey} | ${apiSecret}`)
   } else {
-    playerObj = await fetchPlayer(supabase,playerHash)
+    playerObj = await fetchPlayer(supabase, playerHash)
   }
-  let orderObj:any = {
+  let orderObj: any = {
     symbol: symbol,
     price: price,
     qty: quantity,
@@ -195,13 +196,13 @@ export async function sendSupabaseVirtualOrder(
     startHash: playerHash,
     datenow: Date.now(),
   }
-  
+
   let attempts = playerObj.attempts
   const ipcount = await fetchSameIPCount(supabase, ipAddress)
   if (Number(ipcount) > 5) { throw new Error() }
   if (!!attempts) {
-    let playerRes = await fetchPutPlayer(supabase,playerObj, playerHash, orderObj)
-    let orderRes = await fetchPostOrder(supabase,orderObj)
+    let playerRes = await fetchPutPlayer(supabase, playerObj, playerHash, orderObj)
+    let orderRes = await fetchPostOrder(supabase, orderObj)
     if (!orderRes) { throw new Error() }
   } else {
     throw new Error()
@@ -239,11 +240,12 @@ function getCompleteTrades(transactionString: string): any[] {
           buyTrade.profitLoss = profitLoss;
           trade.profitLoss = profitLoss;
 
-          completeTrades.push({...trade,
+          completeTrades.push({
+            ...trade,
             entryPrice: buyTrade.price,
             closePrice: trade.price,
           });
-          
+
           if (trades[symbol] && trades[symbol].length == 0) {
             delete trades[symbol];
           }
@@ -258,52 +260,51 @@ function getCompleteTrades(transactionString: string): any[] {
   return completeTrades;
 }
 export async function sendSupabaseGoodAttempt(
-  req: any, referral: string, pin: string, 
+  req: any, referral: string, pin: string,
 ) {
   // Get user's IP address
   let ipAddress: any = req.headers.get('x-forwarded-for') || req.headers.get('x-real-ip')
   const playerHash = computeHash(referral, pin)
   console.log("playerHash", playerHash)
-  let playerObj:any = {
+  let playerObj: any = {
     name: referral,
     ipv4: ipAddress,
     hash: playerHash,
     attempts: 12,
     totalAttempts: 0,
     goodAttempts: 0,
-    trades:"",
+    trades: "",
     datenow: Date.now(),
   }
   const supabase = getSupabaseClient()
   const count = await fetchSamePlayerCount(supabase, playerHash)
   console.log("fetchSamePlayerCount", fetchSamePlayerCount)
   if (!count) {
-    throw new Error("player not found 333:"+`${playerHash} | ${referral} | ${pin}`)
+    throw new Error("player not found 333:" + `${playerHash} | ${referral} | ${pin}`)
   } else {
-    playerObj = await fetchPlayer(supabase,playerHash)
+    playerObj = await fetchPlayer(supabase, playerHash)
   }
-  let orderObj:any = {
+  let orderObj: any = {
     startHash: playerHash,
     datenow: Date.now(),
   }
   console.log("playerObj", playerObj)
-  
+
   let attempts = playerObj.attempts
   const ipcount = await fetchSameIPCount(supabase, ipAddress)
   if (Number(ipcount) > 5) { throw new Error() }
   if (!!attempts) {
     let tradesString = playerObj.trades
     let tradesList = getCompleteTrades(tradesString)
-    let profitTradeList = tradesList.filter((aTrade:any)=>(aTrade.profitLoss > 0))
+    let profitTradeList = tradesList.filter((aTrade: any) => (aTrade.profitLoss > 0))
     console.log("profitTradeList", profitTradeList.length)
-    if (profitTradeList.length > 3)
-    {
+    if (profitTradeList.length > 3) {
       console.log("profitTradeList > 3")
       try {
         console.log("pre playerRes fetchPutGoodPlayer")
-        let playerRes = await fetchPutGoodPlayer(supabase,playerObj, playerHash)
+        let playerRes = await fetchPutGoodPlayer(supabase, playerObj, playerHash)
         console.log("playerRes fetchPutGoodPlayer")
-      } catch (e:unknown) {
+      } catch (e: unknown) {
         throw new Error("failed at last stage")
       }
     } else {
@@ -316,156 +317,154 @@ export async function sendSupabaseGoodAttempt(
   } else {
     throw new Error()
   }
-  return new Response(JSON.stringify(playerObj.goodAttempts+1))
+  return new Response(JSON.stringify(playerObj.goodAttempts + 1))
 }
-  
+
 
 export async function setSupabasePlayerAPIKeys(
-  req: any, referral: string, pin: string, binancePublic: string, binanceSecret: string, 
+  req: any, referral: string, pin: string, binancePublic: string, binanceSecret: string,
 ) {
   // Get user's IP address
   let ipAddress: any = req.headers.get('x-forwarded-for') || req.headers.get('x-real-ip')
   console.log("referral, pin", referral, pin)
-  console.log(JSON.stringify({ referral, pin}))
+  console.log(JSON.stringify({ referral, pin }))
   const playerHash = computeHash(referral, pin)
   // console.log("binancePublic, binanceSecret", binancePublic, binanceSecret)
   // console.log("referral, pin", referral, pin)
   // console.log("playerHash", playerHash)
-  let playerObj:any = {
+  let playerObj: any = {
     name: referral,
     ipv4: ipAddress,
     hash: playerHash,
     attempts: 12,
     totalAttempts: 0,
     goodAttempts: 0,
-    trades:"",
+    trades: "",
     datenow: Date.now(),
   }
   const supabase = getSupabaseClient()
   const count = await fetchSamePlayerCount(supabase, playerHash)
   // console.log("fetchSamePlayerCount", fetchSamePlayerCount)
   if (!count) {
-    throw new Error("player not found 111:"+`${playerHash} | ${referral} | ${pin}`)
+    throw new Error("player not found 111:" + `${playerHash} | ${referral} | ${pin}`)
   } else {
-    console.log(" fetchPlayer(supabase,playerHash)", supabase,playerHash)
-    playerObj = await fetchPlayer(supabase,playerHash)
+    console.log(" fetchPlayer(supabase,playerHash)", supabase, playerHash)
+    playerObj = await fetchPlayer(supabase, playerHash)
   }
   // let orderObj:any = {
   //   startHash: playerHash,
   //   datenow: Date.now(),
   // }
   // console.log("playerObj", playerObj)
-  
+
   // let attempts = playerObj.attempts
   const ipcount = await fetchSameIPCount(supabase, ipAddress)
   if (Number(ipcount) > 5) { throw new Error("more than 5 in ip") }
-  
+
   // console.log("putting player", playerObj)
-  let succesfulPut = await fetchPutPlayerAPI(supabase,playerObj, playerHash,binancePublic, binanceSecret)
+  let succesfulPut = await fetchPutPlayerAPI(supabase, playerObj, playerHash, binancePublic, binanceSecret)
   if (!succesfulPut) { throw new Error("fetchPutPlayerAPI") }
-  
 
-  return new Response(JSON.stringify({data:playerObj.goodAttempts+1}))
+
+  return new Response(JSON.stringify({ data: playerObj.goodAttempts + 1 }))
 }
-  
 
-export async function getSupabasePlayerByHash(hash: string, ) {
+
+export async function getSupabasePlayerByHash(hash: string,) {
   const userHash = hash
   const supabase = getSupabaseClient()
-  let playerObj = await fetchPlayerSimple(supabase,userHash)
-  if (!playerObj) { throw new Error("player not found 444:"+`${userHash} `) }
+  let playerObj = await fetchPlayerSimple(supabase, userHash)
+  if (!playerObj) { throw new Error("player not found 444:" + `${userHash} `) }
 
   return new Response(JSON.stringify(playerObj))
 }
 
 
-export async function getSupabasePlayer(referral: string, pin: string, ) {
+export async function getSupabasePlayer(referral: string, pin: string,) {
   const playerHash = computeHash(referral, pin)
   const supabase = getSupabaseClient()
-  let playerObj = await fetchPlayer(supabase,playerHash)
-  if (!playerObj) { throw new Error("player not found 444:"+`${playerHash} | ${referral} | ${pin}`) }
+  let playerObj = await fetchPlayer(supabase, playerHash)
+  if (!playerObj) { throw new Error("player not found 444:" + `${playerHash} | ${referral} | ${pin}`) }
 
   return new Response(JSON.stringify(playerObj))
 }
 
 
-export async function sendSupabaseStartBattle(
-  req: any, referral: string, pin: string, newMode: number, oppo:string, 
+export async function transitionSupaBattle(
+  req: any, referral: string, pin: string, newMode: number, oppo: string,
 ) {
-  // Get user's IP address
   let ipAddress: any = req.headers.get('x-forwarded-for') || req.headers.get('x-real-ip')
-  // console.log("referral, pin", referral, pin)
-  // console.log(JSON.stringify({ referral, pin}))
   const playerHash = computeHash(referral, pin)
-  // console.log("newMode, binanceSecret", newMode, binanceSecret)
-  // console.log("referral, pin", referral, pin)
-  // console.log("playerHash", playerHash)
-  let playerObj:any = {
-    name: referral,
-    ipv4: ipAddress,
-    hash: playerHash,
-    attempts: 12,
-    totalAttempts: 0,
-    goodAttempts: 0,
-    trades:"",
-    datenow: Date.now(),
-  }
+  let playerObj: any = null
   const supabase = getSupabaseClient()
-  const count = await fetchSamePlayerCount(supabase, playerHash)
-  const oppo_count = await fetchSamePlayerCount(supabase, oppo)
-  // console.log("fetchSamePlayerCount", fetchSamePlayerCount)
-  if (!count || !oppo) {
-    throw new Error("some player not found 111:"+`${playerHash} | ${referral} | ${pin}`)
-  } else {
-    // console.log(" fetchPlayer(supabase,playerHash)", supabase,playerHash)
-    playerObj = await fetchPlayer(supabase,playerHash)
-  }
-    let oppo_userObj = await fetchPlayer(supabase,oppo)
-    let sentunix:any = null
+  playerObj = await fetchPlayer(supabase, playerHash)
+  let oppo_userObj = await fetchPlayer(supabase, oppo)
+  let sentunix: any = null
 
-    // let orderObj:any = {
-  //   startHash: playerHash,
-  //   datenow: Date.now(),
-  // }
-  console.log("playerObj", playerObj)
-  
-  // let attempts = playerObj.attempts
-  const ipcount = await fetchSameIPCount(supabase, ipAddress)
-  if (Number(ipcount) > 5) { throw new Error("more than 5 in ip") }
-
-  
-
-  if (newMode == 0 ) {
-      let asdasd:any = await getLast3minCandles("PEPE")
-      let lastLocalUnix:any =  parseInt(asdasd[0][0])
-      // oppo already in game
-      if (oppo_userObj.mode >= 0 ) {
-        // oppo in game with me (accept match)
-        if (oppo_userObj.href == playerHash) {
-          let minsSince = GetMinsSince(parseInt(`${oppo_userObj.src}`))
-          console.log("sentunix = oppo_userObj.src")
-          sentunix = oppo_userObj.src
-          console.log(sentunix , oppo_userObj.src)
-          if (GetMinsSince(lastLocalUnix) - minsSince < 3) {
-            throw new Error("request not ready yet")
-          }
-          if (GetMinsSince(lastLocalUnix) - minsSince > 3) {
-            throw new Error("request too late")
-          }
-        } else {
-          throw new Error("oppo user already in game")
+  if (newMode == 0) {
+    let asdasd: any = await getLast3minCandles("PEPE")
+    let lastLocalUnix: any = parseInt(asdasd[0][0])
+    // oppo already in game
+    if (oppo_userObj.mode >= 0) {
+      // oppo in game with me (accept match)
+      if (oppo_userObj.href == playerHash) {
+        let minsSince = GetMinsSince(parseInt(`${oppo_userObj.src}`))
+        console.log("sentunix = oppo_userObj.src")
+        sentunix = oppo_userObj.src
+        console.log(sentunix, oppo_userObj.src)
+        if (GetMinsSince(lastLocalUnix) - minsSince < 3) {
+          throw new Error("request not ready yet")
+        }
+        if (GetMinsSince(lastLocalUnix) - minsSince > 3) {
+          throw new Error("request too late")
         }
       } else {
-        if (playerObj.mode >= 0) { throw new Error("own player already in game") }
-        sentunix = lastLocalUnix
+        throw new Error("oppo user already in game")
       }
+    } else {
+      if (playerObj.mode >= 0) { throw new Error("own player already in game") }
+      sentunix = lastLocalUnix
     }
+
+    
+  console.log("333", "prewait")
+  let succesfulPut = await fetchPutPlayerBattleMode(supabase,playerObj, playerHash,newMode,oppo,sentunix)
+  console.log("369369", "wait")
+  if (!succesfulPut) { throw new Error("fetchPutPlayerBattleMode") }
+  console.log("999999999999999999999", "at last")
+
+  return new Response(JSON.stringify({data:playerObj.mode}))
+
+
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   if (newMode == 1) {
     let thesrc = oppo_userObj.src || playerObj.src
-    let asdasd:any = await getLast3minCandles("PEPE")
-    let lastLocalUnix:any =  parseInt(asdasd[0][0])
-    console.log("5 | lastLocalUnix",   lastLocalUnix)
-    if (oppo_userObj.mode > 0 ) {
+    let asdasd: any = await getLast3minCandles("PEPE")
+    let lastLocalUnix: any = parseInt(asdasd[0][0])
+    console.log("5 | lastLocalUnix", lastLocalUnix)
+    if (oppo_userObj.mode > 0) {
       throw new Error("oppo user already bought, please wait")
 
     } else if (oppo_userObj.mode < 0) {
@@ -478,7 +477,38 @@ export async function sendSupabaseStartBattle(
       }
       // continue without errors
     }
+
+    
+  console.log("333", "prewait")
+  let succesfulPut = await fetchPutPlayerBattleMode(supabase,playerObj, playerHash,newMode,oppo,sentunix)
+  console.log("369369", "wait")
+  if (!succesfulPut) { throw new Error("fetchPutPlayerBattleMode") }
+  console.log("999999999999999999999", "at last")
+
+  return new Response(JSON.stringify({data:playerObj.mode}))
+
+
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   let oppoAttacked = oppo_userObj.mode
   let playerAttacked = playerObj.mode
   let someoneBought = oppoAttacked > 0 || playerAttacked > 0
@@ -487,285 +517,213 @@ export async function sendSupabaseStartBattle(
   let oppoID = ""
   let oppoSend = ""
   console.log("6 | {oppoAttacked,playerAttacked,someoneBought}")
-  console.table({oppoAttacked,playerAttacked,someoneBought})
-  if (newMode == -1 ) {
-      let asdasd:any = await getLast3minCandles("PEPE")
-      let correctContextCandles:any = await getLast3minCandles("PEPE",playerObj.src)
-      let restLength = correctContextCandles.length
-      console.log("7 | playerObj.name,  oppo_userObj.mode < 0", playerObj.name, oppo_userObj.mode )
-      let lastLocalUnix:any =  parseInt(asdasd[0][0])
-      
-      let secondlast_price:any =  parseFloat(asdasd[restLength-1][4])
-      let thirdlast_price:any =  parseFloat(asdasd[restLength-2][4])
-      
-      let minsSince = GetMinsSince(parseInt(`${playerObj.src}`))
-      console.log("8 | playerObj.src, GetMinsSince(lastLocalUnix), minsSince", playerObj.src, GetMinsSince(lastLocalUnix), minsSince)
-      console.log("9 | GetMinsSince(lastLocalUnix) - minsSince", GetMinsSince(lastLocalUnix) - minsSince)
-      // oppo user not in game
-    if (oppo_userObj.mode < 0 ) {
+  console.table({ oppoAttacked, playerAttacked, someoneBought })
+
+  if (newMode == -1) {
+    let asdasd: any = await getLast3minCandles("PEPE")
+    let correctContextCandles: any = await getLast3minCandles("PEPE", playerObj.src)
+    let restLength = correctContextCandles.length
+    console.log("7 | playerObj.name,  oppo_userObj.mode < 0", playerObj.name, oppo_userObj.mode)
+    let lastLocalUnix: any = parseInt(asdasd[0][0])
+
+    let secondlast_price: any = parseFloat(asdasd[restLength - 1][4])
+    let thirdlast_price: any = parseFloat(asdasd[restLength - 2][4])
+
+    let minsSince = GetMinsSince(parseInt(`${playerObj.src}`))
+    console.log("8 | playerObj.src, GetMinsSince(lastLocalUnix), minsSince", playerObj.src, GetMinsSince(lastLocalUnix), minsSince)
+    console.log("9 | GetMinsSince(lastLocalUnix) - minsSince", GetMinsSince(lastLocalUnix) - minsSince)
+    // oppo user not in game
+    if (oppo_userObj.mode < 0) {
       // oppo user is my opponent hash
       console.log("10 | kokokokokokoko")
       if (playerObj.href == oppo) {
-        // let asdasd:any = await getLast3minCandles("PEPE")
-        // let lastLocalUnix:any =  parseInt(asdasd[0][0])
-        // let minsSince = GetMinsSince(parseInt(`${playerObj.src}`))
-        // console.log("11 | herhererererer", minsSince)
-        
-        // // only evaluate before too late, this now will affect elo rating
-        // if (GetMinsSince(lastLocalUnix) - minsSince < 9) {
-          
-        //   if (GetMinsSince(lastLocalUnix) - minsSince < 3) {
-        //     throw new Error("cant quit too early")
-        //   }
-
-
-
-
-
-
-
-          
-        // if (someoneBought) {
-        //   if (correctContextCandles.length < 3) { throw new Error("cant resolve too early") }
-        //   console.log("12 | secondlast_price, thirdlast_price",secondlast_price, thirdlast_price)
-          
-        //   if (secondlast_price > thirdlast_price) {
-            
-        //   console.log("13 | *****************\n\n",secondlast_price,
-        //     thirdlast_price,
-        //       "secondlast_price,          thirdlast_price \n\n"
-        //   )
-        //     if (playerAttacked) {
-        //       // me win battle
-        //       if (!oppoAttacked) {
-        //         playerID = playerHash
-        //         let eloWTL = playerObj.eloWTL
-        //         let playerWTL = getEloWTLObj(eloWTL)
-        //         let newPlayerWTL = {...eloWTL,
-        //           win: parseInt(eloWTL.win)+1,
-        //           // tie: 0,
-        //           // l: 0,
-        //         }
-        //         playerSend = Object.values(newPlayerWTL).join(",")
-        //         console.log("23 | // me win battle playerSend playerSend playerSend", playerSend)
-        //         let succesfulEloUpdate = await fetchPutEloBattle(supabase,playerID,playerSend, oppoID, oppoSend)
-        //         if (!succesfulEloUpdate) { throw new Error("logic not ready") }
-        //         console.log("14 | // me win battle succesfulEloUpdate", succesfulEloUpdate)
-
-        //       } else {
-        //         // * both attacked *
-        //         // not possible yet
-        //       }
-
-        //     }
-        //     if (oppoAttacked) {
-        //       console.log("15 | oppoAttacked")
-        //       // me fail and loss
-        //       if (!playerAttacked) {
-                
-        //         playerID = playerHash
-        //         let eloWTL = playerObj.eloWTL
-        //         let playerWTL = getEloWTLObj(eloWTL)
-        //         let newPlayerWTL = {...eloWTL,
-        //           l: parseInt(eloWTL.l)+1,
-        //         }
-        //         playerSend = Object.values(newPlayerWTL).join(",")
-        //         console.log("16 | oppoAttacked me fail and loss playerSend playerSend playerSend", playerSend)
-        //         let succesfulEloUpdate = await fetchPutEloBattle(supabase,playerID,playerSend, oppoID, oppoSend)
-        //         if (!succesfulEloUpdate) { throw new Error("logic not ready") }
-        //         console.log("17 |  oppoAttacked me fail and loss succesfulEloUpdate", succesfulEloUpdate)
-
-        //       } else {
-        //         // * both attacked *
-        //         // not possible yet
-        //       }
-  
-        //     }
-        //   }
-        // }
-
-
-
-
-
-
-
-
-        // }
-        
-
-        // // if (minsSince < 6) {
-        // //   throw new Error("cant quit too early")
-        // // }
-        // throw new Error("unkown error correct 777777777777")
+        throw new Error("unknown error")
       } else {
-        throw new Error("oppo not correct")
+        throw new Error("oppo not found")
       }
     } else {
-      
+
       if (GetMinsSince(lastLocalUnix) - minsSince < 6) {
         throw new Error("cant resolve too early")
       }
-      
-      if (GetMinsSince(lastLocalUnix) - minsSince < 9) {
-        // resolve not too late, affect elo rating
 
-        if (someoneBought) {
-          if (correctContextCandles.length < 3) { throw new Error("cant resolve too early") }
-          console.log("18 | secondlast_price, thirdlast_price",secondlast_price, thirdlast_price)
-          
-          if (secondlast_price <= thirdlast_price) {
-            // failed buy
+      // if not enoungh context candles throw error
+      if (correctContextCandles.length < 3) { throw new Error("cant resolve too early") }
+      console.log("18 | secondlast_price, thirdlast_price", secondlast_price, thirdlast_price)
 
+      // if (GetMinsSince(lastLocalUnix) - minsSince < 9) {
+      // resolve not too late, affect elo rating
 
-            if (playerAttacked) {
-              // me loss the attack
-              if (!oppoAttacked) {
-                playerID = playerHash
-                let eloWTL = playerObj.eloWTL
-                let playerWTL = getEloWTLObj(eloWTL)
-                console.log("30 | elowtl, playerWTL, ", eloWTL, playerWTL)
-                let newPlayerWTL = {...playerWTL,
-                  l: parseInt(playerWTL.l)+1,
-                  // tie: 0,
-                  // l: 0,
-                }
-                playerSend = Object.values(newPlayerWTL).join(",")
-                console.log("31 | playerSend playerSend playerSend", playerSend)
-                let oppoWTL = getEloWTLObj(oppo_userObj.eloWTL)
-                let newoppoWTL = {...oppoWTL,
-                  // l: parseInt(oppoWTL.l)+1,
-                  // tie: 0,
-                  // l: 0,
-                }
-                oppoID = oppo
-                oppoSend = Object.values(newoppoWTL).join(",")
-
-                let succesfulEloUpdate = await fetchPutEloBattle(supabase,playerID,playerSend, oppoID, oppoSend)
-                if (!succesfulEloUpdate) { throw new Error("logic not ready") }
-                console.log("32 | succesfulEloUpdate", succesfulEloUpdate)
-
-              } else {
-                // * both attacked *
-                // not possible yet
-              }
+      if (someoneBought) {
+        if (playerAttacked) {
+          // me did attack | me bought
+          if (!oppoAttacked) {
+            // opponent didnt attack
+            if (thirdlast_price <= secondlast_price) {
+              // failed buy | red candle
+              playerID = playerHash
+              let eloWTL = playerObj.eloWTL
+              let playerWTL = getEloWTLObj(eloWTL)
+              console.log("30 | elowtl, playerWTL, ", eloWTL, playerWTL)
+              let newPlayerWTL = { ...playerWTL, l: parseInt(playerWTL.l) + 1, }
+              playerSend = Object.values(newPlayerWTL).join(",")
+              console.log("31 | playerSend playerSend playerSend", playerSend)
+              let oppoWTL = getEloWTLObj(oppo_userObj.eloWTL)
+              let newoppoWTL = { ...oppoWTL, win: parseInt(oppoWTL.win)+1 }
+              oppoID = oppo
+              oppoSend = Object.values(newoppoWTL).join(",")
+              let succesfulEloUpdate = await fetchPutEloBattle(supabase, playerID, playerSend, oppoID, oppoSend)
+              if (!succesfulEloUpdate) { throw new Error("logic not ready") }
+              console.log("32 | succesfulEloUpdate", succesfulEloUpdate)
+            } else {
+              // green candle | i win
+              playerID = playerHash
+              let eloWTL = playerObj.eloWTL
+              let playerWTL = getEloWTLObj(eloWTL)
+              console.log("30 | elowtl, playerWTL, ", eloWTL, playerWTL)
+              let newPlayerWTL = { ...playerWTL, win: parseInt(playerWTL.win) + 1, }
+              playerSend = Object.values(newPlayerWTL).join(",")
+              console.log("31 | playerSend playerSend playerSend", playerSend)
+              let oppoWTL = getEloWTLObj(oppo_userObj.eloWTL)
+              let newoppoWTL = { ...oppoWTL, l: parseInt(oppoWTL.l)+1 }
+              oppoID = oppo
+              oppoSend = Object.values(newoppoWTL).join(",")
+              let succesfulEloUpdate = await fetchPutEloBattle(supabase, playerID, playerSend, oppoID, oppoSend)
+              if (!succesfulEloUpdate) { throw new Error("logic not ready") }
+              console.log("32 | succesfulEloUpdate", succesfulEloUpdate)
 
             }
+          } else {
+            // * both attacked *
+            // not possible yet
+          }
+        } else {
+          // opponent did attack me | the other bought
+          if (!playerAttacked) {
+            // me didnt attack
+            
 
+            if (secondlast_price <= thirdlast_price) {
+              // oppo failed buy | red candle
+              playerID = playerHash
+              let eloWTL = playerObj.eloWTL
+              let playerWTL = getEloWTLObj(eloWTL)
+              console.log("30 | elowtl, playerWTL, ", eloWTL, playerWTL)
+              let newPlayerWTL = { ...playerWTL, win: parseInt(playerWTL.win) + 1, }
+              playerSend = Object.values(newPlayerWTL).join(",")
+              console.log("31 | playerSend playerSend playerSend", playerSend)
+              let oppoWTL = getEloWTLObj(oppo_userObj.eloWTL)
+              let newoppoWTL = { ...oppoWTL, l: parseInt(oppoWTL.l)+1 }
+              oppoID = oppo
+              oppoSend = Object.values(newoppoWTL).join(",")
+              let succesfulEloUpdate = await fetchPutEloBattle(supabase, playerID, playerSend, oppoID, oppoSend)
+              if (!succesfulEloUpdate) { throw new Error("logic not ready") }
+              console.log("32 | succesfulEloUpdate", succesfulEloUpdate)
+            } else {
+              // green candle | oppo wins, means i lose 
+              playerID = playerHash
+              let eloWTL = playerObj.eloWTL
+              let playerWTL = getEloWTLObj(eloWTL)
+              console.log("30 | elowtl, playerWTL, ", eloWTL, playerWTL)
+              let newPlayerWTL = { ...playerWTL, l: parseInt(playerWTL.l) + 1, }
+              playerSend = Object.values(newPlayerWTL).join(",")
+              console.log("31 | playerSend playerSend playerSend", playerSend)
+              let oppoWTL = getEloWTLObj(oppo_userObj.eloWTL)
+              let newoppoWTL = { ...oppoWTL, win: parseInt(oppoWTL.win)+1 }
+              oppoID = oppo
+              oppoSend = Object.values(newoppoWTL).join(",")
+              let succesfulEloUpdate = await fetchPutEloBattle(supabase, playerID, playerSend, oppoID, oppoSend)
+              if (!succesfulEloUpdate) { throw new Error("logic not ready") }
+              console.log("32 | succesfulEloUpdate", succesfulEloUpdate)
 
+            }
 
 
           } else {
-            
-          console.log("19 | *****************\n\n",secondlast_price,
-            thirdlast_price,
-              "secondlast_price,          thirdlast_price \n\n"
-          )
-            if (playerAttacked) {
-              // me win battle
-              if (!oppoAttacked) {
-                playerID = playerHash
-                let eloWTL = playerObj.eloWTL
-                let playerWTL = getEloWTLObj(eloWTL)
-                console.log("19.5 | elowtl, playerWTL", eloWTL, playerWTL)
-                let newPlayerWTL = {...playerWTL,
-                  win: parseInt(playerWTL.win)+1,
-                  // tie: 0,
-                  // l: 0,
-                }
-                playerSend = Object.values(newPlayerWTL).join(",")
-                console.log("20 | playerSend playerSend playerSend", playerSend)
-                let oppoWTL = getEloWTLObj(oppo_userObj.eloWTL)
-                let newoppoWTL = {...oppoWTL,
-                  l: parseInt(oppoWTL.l)+1,
-                  // tie: 0,
-                  // l: 0,
-                }
-                oppoID = oppo
-                oppoSend = Object.values(newoppoWTL).join(",")
 
-                let succesfulEloUpdate = await fetchPutEloBattle(supabase,playerID,playerSend, oppoID, oppoSend)
-                if (!succesfulEloUpdate) { throw new Error("logic not ready") }
-                console.log("21 | succesfulEloUpdate", succesfulEloUpdate)
-
-              } else {
-                // * both attacked *
-                // not possible yet
-              }
-
-            }
-            if (oppoAttacked) {
-              // me fail and loss
-              if (!playerAttacked) {
-                
-                oppoID = oppo
-                playerID = playerHash
-                let eloWTL = playerObj.eloWTL
-                let playerWTL = getEloWTLObj(eloWTL)
-                console.log("22-2 | oppo_eloWTL, oppo_WTL ", eloWTL, playerWTL)
-                let newPlayerWTL = {...playerWTL,
-                  l: parseInt(playerWTL.l)+1,
-                }
-                playerSend = Object.values(newPlayerWTL).join(",")
-
-                
-                let oppo_eloWTL = oppo_userObj.eloWTL
-                let oppo_WTL = getEloWTLObj(oppo_eloWTL)
-                console.log("22-1 | oppo_eloWTL, oppo_WTL ", oppo_eloWTL, oppo_WTL)
-                let oppo_newWTL = {...oppo_WTL,
-                  l: parseInt(oppo_WTL.l)+1,
-                }
-                oppoSend = Object.values(oppo_newWTL).join(",")
-
-
-                console.log("22 | playerSend playerSend playerSend", playerSend)
-                let succesfulEloUpdate = await fetchPutEloBattle(supabase,playerID,playerSend, oppoID, oppoSend)
-                if (!succesfulEloUpdate) { throw new Error("logic not ready") }
-                console.log("23 | succesfulEloUpdate", succesfulEloUpdate)
-
-              } else {
-                // * both attacked *
-                // not possible yet
-              }
-  
-            }
+            // * both attacked *
+            // not possible yet
           }
         }
-    } else {
-      // also put oppo on -1
-  let succesfulPut = await fetchPutPlayerBattleMode(supabase,playerObj, oppo,-1,oppo,"")
-}
+      } else /* then no one bought */ {
+        if (secondlast_price <= thirdlast_price) {
+          // red candle
+          // both tied
+
+          
+          oppoID = oppo
+          playerID = playerHash
+          let eloWTL = playerObj.eloWTL
+          let playerWTL = getEloWTLObj(eloWTL)
+          console.log("22-2 | oppo_eloWTL, oppo_WTL ", eloWTL, playerWTL)
+          let newPlayerWTL = { ...playerWTL, tie: parseInt(playerWTL.tie) + 1, }
+          playerSend = Object.values(newPlayerWTL).join(",")
+          let oppo_eloWTL = oppo_userObj.eloWTL
+          let oppo_WTL = getEloWTLObj(oppo_eloWTL)
+          console.log("22-1 | oppo_eloWTL, oppo_WTL ", oppo_eloWTL, oppo_WTL)
+          let oppo_newWTL = { ...oppo_WTL, tie: parseInt(oppo_WTL.tie) + 1, }
+          oppoSend = Object.values(oppo_newWTL).join(",")
+          console.log("22 | playerSend playerSend playerSend", playerSend)
+          let succesfulEloUpdate = await fetchPutEloBattle(supabase, playerID, playerSend, oppoID, oppoSend)
+          if (!succesfulEloUpdate) { throw new Error("logic not ready") }
+          console.log("23 | succesfulEloUpdate", succesfulEloUpdate)
+
+
+        } else {
+          // green candle
+          // both loose
+
+          // not yet
+        }
+      }
+      // } else {
+      // also put oppo on -1 if no errors ocurred
+      let succesfulPut = await fetchPutPlayerBattleMode(supabase, playerObj, oppo, -1, oppo, "")
+      // }
 
     }
-  }
-  
-  console.log("333", "prewait")
-  let succesfulPut = await fetchPutPlayerBattleMode(supabase,playerObj, playerHash,newMode,oppo,sentunix)
-  console.log("369369", "wait")
-  if (!succesfulPut) { throw new Error("fetchPutPlayerBattleMode") }
-  console.log("999999999999999999999", "at last")
 
-  return new Response(JSON.stringify({data:playerObj.mode}))
+    
+    console.log("333", "prewait")
+    let succesfulPut = await fetchPutPlayerBattleMode(supabase,playerObj, playerHash,newMode,oppo,sentunix)
+    console.log("369369", "wait")
+    if (!succesfulPut) { throw new Error("fetchPutPlayerBattleMode") }
+    console.log("999999999999999999999", "at last")
+
+    return new Response(JSON.stringify({data:playerObj.mode}))
+
+  }
+
+
+
+
+
+
+
+
+
+  
+  throw new Error("unknown error, missed logic path repository/order.ts")
 }
 
 
-const getLast3minCandles = async (theToken:any,startUnixDate:any=null ) =>{
+const getLast3minCandles = async (theToken: any, startUnixDate: any = null) => {
   let t = "3m"
   // let startUnixDate = getRandomUnixDate()
-    // let urlBase = `https://api.binance.com/api/v3/klines?interval=${t}&startTime=${startUnixDate}&symbol=`
-    let urlBase = `https://api.binance.com/api/v3/klines?interval=${t}&symbol=`
-    urlBase += (theToken || "btc").toUpperCase()+"USDT"
-    if (!!startUnixDate) {
-      urlBase += `&startTime=${startUnixDate}`
-    }
-    const theListRes = await fetch(urlBase)
-    let theList = await theListRes.json()
-    // s__initUnix(theList[0][0])
-    // let firstUnix:any = parseInt( theList[499][0] )
-    // let lastLocalUnix:any =  parseInt(theList[0][0])
-    // if (lastLocalUnix != lastUnix ) {
-    //     s__lastUnix(lastLocalUnix)
-    // }
+  // let urlBase = `https://api.binance.com/api/v3/klines?interval=${t}&startTime=${startUnixDate}&symbol=`
+  let urlBase = `https://api.binance.com/api/v3/klines?interval=${t}&symbol=`
+  urlBase += (theToken || "btc").toUpperCase() + "USDT"
+  if (!!startUnixDate) {
+    urlBase += `&startTime=${startUnixDate}`
+  }
+  const theListRes = await fetch(urlBase)
+  let theList = await theListRes.json()
+  // s__initUnix(theList[0][0])
+  // let firstUnix:any = parseInt( theList[499][0] )
+  // let lastLocalUnix:any =  parseInt(theList[0][0])
+  // if (lastLocalUnix != lastUnix ) {
+  //     s__lastUnix(lastLocalUnix)
+  // }
   //   if (lastLocalUnix != lastUnix && lastUnix != 0) {
   //     calls.getBattleAttack()
   //   s__lastUnix(lastLocalUnix)
@@ -773,11 +731,11 @@ const getLast3minCandles = async (theToken:any,startUnixDate:any=null ) =>{
   //     s__liveUnix(firstUnix - 2)
   //     s__diffUnix(lastLocalUnix - firstUnix)
   //   }
-    
+
   const closingPrices = theList.map((item: any) => parseFloat(item[4]));
   // setPrices(closingPrices);
 
-// console.log("qweqwe", lastLocalUnix)
+  // console.log("qweqwe", lastLocalUnix)
 
-    return theList
+  return theList
 }

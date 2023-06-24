@@ -1,6 +1,10 @@
 import DynaText from "@/model/core/DynaText"
+import { useAuth } from "../../../../../script/state/context/AuthContext"
 
 export function OppoTitle ({state, calls}:any) {
+  const { user, superuser, superoppo, do:{login, logout, demo, fetchSupaOppoUser, fetchSupaPlayer},  jwt }:any = useAuth()
+
+
   return (
     <>
     
@@ -12,10 +16,20 @@ export function OppoTitle ({state, calls}:any) {
         /> */}
 
 
+{!!superuser &&
+            <DynaText color={"#006600"} text={superuser.eloWTL} font={0.45} position={[-1.5, -0.76, 1.15]}
+              rotation={[-Math.PI / 2, 0, -Math.PI/2]}
+            />
+          }
         {!!state.opponent && <>
           <DynaText color={"#ff3300"} text={state.opponent} font={0.65} position={[0.5, -0.76, 3]}
             rotation={[-Math.PI / 2, 0, Math.PI]}
           />
+          {!!superoppo &&
+            <DynaText color={"#000000"} text={superoppo.eloWTL} font={0.95} position={[0.5, -0.76, 2.3]}
+              rotation={[-Math.PI / 2, 0, Math.PI]}
+            />
+          }
           
           <DynaText color={"#ff3300"} text={"Opponent"} font={0.25} position={[0.5, -0.76, 3.5]}
             rotation={[-Math.PI / 2, 0, Math.PI]}

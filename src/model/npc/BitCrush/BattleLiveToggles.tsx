@@ -101,13 +101,14 @@ export function BattleLiveToggles ({state, calls}:any) {
         </Box>
         
         <DynaText color={"#ff0000"} text={"Exit"}
-          onClick={calls.startGame} font={0.1} 
+          // onClick={calls.startGame}
+          font={0.1} 
           rotation={[-Math.PI / 2, 0, Math.PI/2]}
           position={[2.2, -0.98, -0.1]}
         />
         
 <Box args={[0.28, 0.1, 1.1]} castShadow receiveShadow position={[2.45, -1.035, -0.1]}
-          onClick={calls.quitBattle}
+          // onClick={calls.quitBattle}
         >
           <meshStandardMaterial color={"#eeeeee"}  />
         </Box>
