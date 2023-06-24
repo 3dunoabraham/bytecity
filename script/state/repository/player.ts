@@ -16,14 +16,14 @@ export async function fetchPostPlayer(supabase:any, playerObj:any) {
 
 export async function fetchPlayer(supabase:any, playerHash:any) {
     const { data: player, error: selectError } = await supabase.from('player')
-        .select('name, href, src, attempts, totalAttempts, goodAttempts, trades, mode, hash, jwt, binancekeys, subscription, referral')
+        .select('name, href, src, attempts, totalAttempts, goodAttempts, eloWTL, trades, mode, hash, jwt, binancekeys, subscription, referral')
         .match({ hash: playerHash })
         .single()
     return player
 }
 export async function fetchPlayerSimple(supabase:any, playerHash:any) {
     const { data: player, error: selectError } = await supabase.from('player')
-        .select('name, href, src, attempts, totalAttempts, goodAttempts, trades, mode, subscription, referral,hash')
+        .select('name, href, src, attempts, totalAttempts, goodAttempts, eloWTL, trades, mode, subscription, referral,hash')
         .match({ hash: playerHash })
         .single()
     return !!player ? {...player,...{hash:playerHash}} : player
@@ -95,11 +95,16 @@ export async function fetchPutPlayerAPI(supabase:any, playerObj:any, playerHash:
 export async function fetchPutPlayerBattleMode(supabase:any, playerObj:any, playerHash:any, newMode:any,
     oppo:string,unix:any
 ) {
-    let dataPack = {
-        src: unix,
+    let dataPack:any = {
         href: newMode >= 0 ? oppo : "",
         mode: newMode
     }
+    if (newMode == 0) {
+        dataPack.src = unix
+    } 
+    if (newMode < 0) {
+        dataPack.src = null
+    } 
     // console.log("dataPack")
     // console.table(dataPack)
     const { data: removeattempt, error:error_removeattempt } = await supabase.from('player')
@@ -111,6 +116,57 @@ export async function fetchPutPlayerBattleMode(supabase:any, playerObj:any, play
   
     return !removeattempt
 }
+export async function fetchPutEloBattle(supabase:any, playerHash:any, player_elo:any, oppo:any,
+    oppo_elo:any,
+) {
+    let player_dataPack = {
+        eloWTL: player_elo,
+        mode: -1,
+    }
+    // console.log("dataPack")
+    // console.table(dataPack)
+    const { data: removeattempt, error:error_removeattempt } = await supabase.from('player')
+        .update(player_dataPack)
+        .match({ hash: playerHash })
+        .single()
+
+    console.log("removeattempt, error_removeattempt" , removeattempt, error_removeattempt)
+
+    
+    let oppo_dataPack = {
+        eloWTL: oppo_elo,
+        mode: -1,
+    }
+    // console.log("dataPack")
+    // console.table(dataPack)
+    const { data: removeoppo, error:error_removeoppo } = await supabase.from('player')
+        .update(oppo_dataPack)
+        .match({ hash: oppo })
+        .single()
+
+    console.log("removeattempt, error_removeattempt" , removeattempt, error_removeattempt)
+
+  
+    return !removeattempt
+}
 export function GetMinsSince(unix:any) {
     return parseInt(`${(1672545600000-unix) * -1 / 1000 / 60 }`)
+}
+let defaultEloObj = {
+    win: 0,
+    tie: 0,
+    l: 0,
+}
+export function getEloWTLObj (eloString:string) {
+    let eloSlit = eloString.split(",")
+
+    let eloWins = eloSlit[0]
+    let eloTies = eloSlit[1]
+    let eloLoses = eloSlit[2]
+    
+    return {
+        win: eloWins,
+        tie: eloTies,
+        l: eloLoses,
+    }
 }

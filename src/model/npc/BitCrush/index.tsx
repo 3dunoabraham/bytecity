@@ -10,7 +10,7 @@ import { useAuth } from "@/../script/state/context/AuthContext";
 import LiveGame from "./LiveGame";
 
 export function BitCrush({calls}:any) {
-  const { user, superuser, superoppo, do:{login, logout, demo, fetchSupaOppoUser},  jwt }:any = useAuth()
+  const { user, superuser, superoppo, do:{login, logout, demo, fetchSupaOppoUser, fetchSupaPlayer},  jwt }:any = useAuth()
 
   const [battleLife, s__battleLife] = useState(-1)
   const searchParams:any = useSearchParams();
@@ -121,11 +121,15 @@ const getBattleAttack = () => {
   
 }
 const checkOppo = async () => {
+  
+  setTimeout(async ()=>{
+  await fetchSupaPlayer()
   let oppo = await fetchSupaOppoUser()
   console.log("oppo", oppo, superoppo, superuser)
   setTimeout(()=>{
     console.log("oppo", oppo, superoppo, superuser)
   },1000)
+},1000)
 
   // q__asd.refetch()
 }

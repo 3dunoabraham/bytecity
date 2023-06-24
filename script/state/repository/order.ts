@@ -3,7 +3,7 @@ import https from 'https';
 
 
 import { getSupabaseClient } from '@/../script/state/repository/supabase';
-import { fetchPlayer, fetchPostPlayer, fetchPutPlayerBattleMode, fetchPutPlayerAPI, fetchPutGoodPlayer, fetchPutPlayer, fetchSameIPCount, fetchSamePlayerCount, GetMinsSince, fetchPlayerSimple }
+import { fetchPlayer, fetchPostPlayer, fetchPutPlayerBattleMode, fetchPutPlayerAPI, fetchPutGoodPlayer, fetchPutPlayer, fetchSameIPCount, fetchSamePlayerCount, GetMinsSince, fetchPlayerSimple, fetchPutEloBattle, getEloWTLObj }
 from '@/../script/state/repository/player';
 // import { fetchPostOrder } from '@/../script/state/repository/order';
 
@@ -427,7 +427,7 @@ export async function sendSupabaseStartBattle(
   //   startHash: playerHash,
   //   datenow: Date.now(),
   // }
-  // console.log("playerObj", playerObj)
+  console.log("playerObj", playerObj)
   
   // let attempts = playerObj.attempts
   const ipcount = await fetchSameIPCount(supabase, ipAddress)
@@ -443,7 +443,9 @@ export async function sendSupabaseStartBattle(
         // oppo in game with me (accept match)
         if (oppo_userObj.href == playerHash) {
           let minsSince = GetMinsSince(parseInt(`${oppo_userObj.src}`))
+          console.log("sentunix = oppo_userObj.src")
           sentunix = oppo_userObj.src
+          console.log(sentunix , oppo_userObj.src)
           if (GetMinsSince(lastLocalUnix) - minsSince < 3) {
             throw new Error("request not ready yet")
           }
@@ -462,7 +464,7 @@ export async function sendSupabaseStartBattle(
     let thesrc = oppo_userObj.src || playerObj.src
     let asdasd:any = await getLast3minCandles("PEPE")
     let lastLocalUnix:any =  parseInt(asdasd[0][0])
-    console.log("lastLocalUnix",   lastLocalUnix)
+    console.log("5 | lastLocalUnix",   lastLocalUnix)
     if (oppo_userObj.mode > 0 ) {
       throw new Error("oppo user already bought, please wait")
 
@@ -477,42 +479,268 @@ export async function sendSupabaseStartBattle(
       // continue without errors
     }
   }
+  let oppoAttacked = oppo_userObj.mode
+  let playerAttacked = playerObj.mode
+  let someoneBought = oppoAttacked > 0 || playerAttacked > 0
+  let playerID = ""
+  let playerSend = ""
+  let oppoID = ""
+  let oppoSend = ""
+  console.log("6 | {oppoAttacked,playerAttacked,someoneBought}")
+  console.table({oppoAttacked,playerAttacked,someoneBought})
   if (newMode == -1 ) {
-    // oppo user not in game
+      let asdasd:any = await getLast3minCandles("PEPE")
+      let correctContextCandles:any = await getLast3minCandles("PEPE",playerObj.src)
+      let restLength = correctContextCandles.length
+      console.log("7 | playerObj.name,  oppo_userObj.mode < 0", playerObj.name, oppo_userObj.mode )
+      let lastLocalUnix:any =  parseInt(asdasd[0][0])
+      
+      let secondlast_price:any =  parseFloat(asdasd[restLength-1][4])
+      let thirdlast_price:any =  parseFloat(asdasd[restLength-2][4])
+      
+      let minsSince = GetMinsSince(parseInt(`${playerObj.src}`))
+      console.log("8 | playerObj.src, GetMinsSince(lastLocalUnix), minsSince", playerObj.src, GetMinsSince(lastLocalUnix), minsSince)
+      console.log("9 | GetMinsSince(lastLocalUnix) - minsSince", GetMinsSince(lastLocalUnix) - minsSince)
+      // oppo user not in game
     if (oppo_userObj.mode < 0 ) {
       // oppo user is my opponent hash
-      console.log("kokokokokokoko")
+      console.log("10 | kokokokokokoko")
       if (playerObj.href == oppo) {
-        let asdasd:any = await getLast3minCandles("PEPE")
-        let lastLocalUnix:any =  parseInt(asdasd[0][0])
-        let minsSince = GetMinsSince(parseInt(`${playerObj.src}`))
-        console.log("herhererererer", minsSince)
-        if (GetMinsSince(lastLocalUnix) - minsSince < 3) {
-          throw new Error("cant quit too early")
-        }
-        // if (minsSince < 6) {
-        //   throw new Error("cant quit too early")
+        // let asdasd:any = await getLast3minCandles("PEPE")
+        // let lastLocalUnix:any =  parseInt(asdasd[0][0])
+        // let minsSince = GetMinsSince(parseInt(`${playerObj.src}`))
+        // console.log("11 | herhererererer", minsSince)
+        
+        // // only evaluate before too late, this now will affect elo rating
+        // if (GetMinsSince(lastLocalUnix) - minsSince < 9) {
+          
+        //   if (GetMinsSince(lastLocalUnix) - minsSince < 3) {
+        //     throw new Error("cant quit too early")
+        //   }
+
+
+
+
+
+
+
+          
+        // if (someoneBought) {
+        //   if (correctContextCandles.length < 3) { throw new Error("cant resolve too early") }
+        //   console.log("12 | secondlast_price, thirdlast_price",secondlast_price, thirdlast_price)
+          
+        //   if (secondlast_price > thirdlast_price) {
+            
+        //   console.log("13 | *****************\n\n",secondlast_price,
+        //     thirdlast_price,
+        //       "secondlast_price,          thirdlast_price \n\n"
+        //   )
+        //     if (playerAttacked) {
+        //       // me win battle
+        //       if (!oppoAttacked) {
+        //         playerID = playerHash
+        //         let eloWTL = playerObj.eloWTL
+        //         let playerWTL = getEloWTLObj(eloWTL)
+        //         let newPlayerWTL = {...eloWTL,
+        //           win: parseInt(eloWTL.win)+1,
+        //           // tie: 0,
+        //           // l: 0,
+        //         }
+        //         playerSend = Object.values(newPlayerWTL).join(",")
+        //         console.log("23 | // me win battle playerSend playerSend playerSend", playerSend)
+        //         let succesfulEloUpdate = await fetchPutEloBattle(supabase,playerID,playerSend, oppoID, oppoSend)
+        //         if (!succesfulEloUpdate) { throw new Error("logic not ready") }
+        //         console.log("14 | // me win battle succesfulEloUpdate", succesfulEloUpdate)
+
+        //       } else {
+        //         // * both attacked *
+        //         // not possible yet
+        //       }
+
+        //     }
+        //     if (oppoAttacked) {
+        //       console.log("15 | oppoAttacked")
+        //       // me fail and loss
+        //       if (!playerAttacked) {
+                
+        //         playerID = playerHash
+        //         let eloWTL = playerObj.eloWTL
+        //         let playerWTL = getEloWTLObj(eloWTL)
+        //         let newPlayerWTL = {...eloWTL,
+        //           l: parseInt(eloWTL.l)+1,
+        //         }
+        //         playerSend = Object.values(newPlayerWTL).join(",")
+        //         console.log("16 | oppoAttacked me fail and loss playerSend playerSend playerSend", playerSend)
+        //         let succesfulEloUpdate = await fetchPutEloBattle(supabase,playerID,playerSend, oppoID, oppoSend)
+        //         if (!succesfulEloUpdate) { throw new Error("logic not ready") }
+        //         console.log("17 |  oppoAttacked me fail and loss succesfulEloUpdate", succesfulEloUpdate)
+
+        //       } else {
+        //         // * both attacked *
+        //         // not possible yet
+        //       }
+  
+        //     }
+        //   }
         // }
+
+
+
+
+
+
+
+
+        // }
+        
+
+        // // if (minsSince < 6) {
+        // //   throw new Error("cant quit too early")
+        // // }
+        throw new Error("unkown error correct 777777777777")
       } else {
         throw new Error("oppo not correct")
       }
     } else {
       
-      let asdasd:any = await getLast3minCandles("PEPE")
-      let lastLocalUnix:any =  parseInt(asdasd[0][0])
-      let minsSince = GetMinsSince(parseInt(`${playerObj.src}`))
       if (GetMinsSince(lastLocalUnix) - minsSince < 6) {
         throw new Error("cant resolve too early")
       }
-      let oppoAttacked = oppo_userObj.mode
-      let playerAttacked = playerObj.mode
       
+      if (GetMinsSince(lastLocalUnix) - minsSince < 9) {
+        // resolve not too late, affect elo rating
+
+        if (someoneBought) {
+          if (correctContextCandles.length < 3) { throw new Error("cant resolve too early") }
+          console.log("18 | secondlast_price, thirdlast_price",secondlast_price, thirdlast_price)
+          
+          if (secondlast_price <= thirdlast_price) {
+            // failed buy
+
+
+            if (playerAttacked) {
+              // me loss the attack
+              if (!oppoAttacked) {
+                playerID = playerHash
+                let eloWTL = playerObj.eloWTL
+                let playerWTL = getEloWTLObj(eloWTL)
+                console.log("30 | elowtl, playerWTL, ", eloWTL, playerWTL)
+                let newPlayerWTL = {...playerWTL,
+                  l: parseInt(playerWTL.l)+1,
+                  // tie: 0,
+                  // l: 0,
+                }
+                playerSend = Object.values(newPlayerWTL).join(",")
+                console.log("31 | playerSend playerSend playerSend", playerSend)
+                let oppoWTL = getEloWTLObj(oppo_userObj.eloWTL)
+                let newoppoWTL = {...oppoWTL,
+                  // l: parseInt(oppoWTL.l)+1,
+                  // tie: 0,
+                  // l: 0,
+                }
+                oppoID = oppo
+                oppoSend = Object.values(newoppoWTL).join(",")
+
+                let succesfulEloUpdate = await fetchPutEloBattle(supabase,playerID,playerSend, oppoID, oppoSend)
+                if (!succesfulEloUpdate) { throw new Error("logic not ready") }
+                console.log("32 | succesfulEloUpdate", succesfulEloUpdate)
+
+              } else {
+                // * both attacked *
+                // not possible yet
+              }
+
+            }
+
+
+
+
+          } else {
+            
+          console.log("19 | *****************\n\n",secondlast_price,
+            thirdlast_price,
+              "secondlast_price,          thirdlast_price \n\n"
+          )
+            if (playerAttacked) {
+              // me win battle
+              if (!oppoAttacked) {
+                playerID = playerHash
+                let eloWTL = playerObj.eloWTL
+                let playerWTL = getEloWTLObj(eloWTL)
+                console.log("19.5 | elowtl, playerWTL", eloWTL, playerWTL)
+                let newPlayerWTL = {...playerWTL,
+                  win: parseInt(playerWTL.win)+1,
+                  // tie: 0,
+                  // l: 0,
+                }
+                playerSend = Object.values(newPlayerWTL).join(",")
+                console.log("20 | playerSend playerSend playerSend", playerSend)
+                let oppoWTL = getEloWTLObj(oppo_userObj.eloWTL)
+                let newoppoWTL = {...oppoWTL,
+                  l: parseInt(oppoWTL.l)+1,
+                  // tie: 0,
+                  // l: 0,
+                }
+                oppoID = oppo
+                oppoSend = Object.values(newoppoWTL).join(",")
+
+                let succesfulEloUpdate = await fetchPutEloBattle(supabase,playerID,playerSend, oppoID, oppoSend)
+                if (!succesfulEloUpdate) { throw new Error("logic not ready") }
+                console.log("21 | succesfulEloUpdate", succesfulEloUpdate)
+
+              } else {
+                // * both attacked *
+                // not possible yet
+              }
+
+            }
+            if (oppoAttacked) {
+              // me fail and loss
+              if (!playerAttacked) {
+                
+                oppoID = oppo
+                playerID = playerHash
+                let eloWTL = playerObj.eloWTL
+                let playerWTL = getEloWTLObj(eloWTL)
+                console.log("22-2 | oppo_eloWTL, oppo_WTL ", eloWTL, playerWTL)
+                let newPlayerWTL = {...playerWTL,
+                  l: parseInt(playerWTL.l)+1,
+                }
+                playerSend = Object.values(newPlayerWTL).join(",")
+
+                
+                let oppo_eloWTL = oppo_userObj.eloWTL
+                let oppo_WTL = getEloWTLObj(oppo_eloWTL)
+                console.log("22-1 | oppo_eloWTL, oppo_WTL ", oppo_eloWTL, oppo_WTL)
+                let oppo_newWTL = {...oppo_WTL,
+                  l: parseInt(oppo_WTL.l)+1,
+                }
+                oppoSend = Object.values(oppo_newWTL).join(",")
+
+
+                console.log("22 | playerSend playerSend playerSend", playerSend)
+                let succesfulEloUpdate = await fetchPutEloBattle(supabase,playerID,playerSend, oppoID, oppoSend)
+                if (!succesfulEloUpdate) { throw new Error("logic not ready") }
+                console.log("23 | succesfulEloUpdate", succesfulEloUpdate)
+
+              } else {
+                // * both attacked *
+                // not possible yet
+              }
+  
+            }
+          }
+        }
+    }
+
     }
   }
   
+  console.log("333", "prewait")
   let succesfulPut = await fetchPutPlayerBattleMode(supabase,playerObj, playerHash,newMode,oppo,sentunix)
+  console.log("369369", "wait")
   if (!succesfulPut) { throw new Error("fetchPutPlayerBattleMode") }
-  
+  console.log("999999999999999999999", "at last")
 
   return new Response(JSON.stringify({data:playerObj.mode}))
 }
