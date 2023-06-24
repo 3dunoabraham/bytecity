@@ -5,7 +5,7 @@ import { useQueryPlus } from "../../../../script/util/hook/useHooksHelper"
 import { AppContext } from "@/../script/state/context/AppContext";
 import { useState, useContext, useEffect, useMemo } from "react"
 
-export function LiveGame ({state, calls}:any) {
+export function BattleLiveToggles ({state, calls}:any) {
   const { user, superuser, superoppo, do:{login, logout, demo, fetchSupaPlayer},  jwt }:any = useAuth()
 
   const [theToken, s__theToken] = useState("pepe")
@@ -39,8 +39,11 @@ export function LiveGame ({state, calls}:any) {
           let firstUnix:any = parseInt( theList[499][0] )
           let lastLocalUnix:any =  parseInt(theList[0][0])
           if (lastLocalUnix != lastUnix ) {
-              fetchSupaPlayer()
+            app.alert("success","Last block refreshed")
+            fetchSupaPlayer()
 
+          } else {
+            app.alert("error","Same block! please wait...")
           }
           s__lastUnix(lastLocalUnix)
           //   if (lastLocalUnix != lastUnix && lastUnix != 0) {
@@ -54,10 +57,9 @@ export function LiveGame ({state, calls}:any) {
         const closingPrices = theList.map((item: any) => parseFloat(item[4]));
         setPrices(closingPrices);
 
-      console.log("qweqwe", lastLocalUnix)
+        console.log("qweqwe", lastLocalUnix)
 
-          app.alert("success","Unix refreshed")
-          return theList
+        return theList
       }
   },[theToken])
   const theUnixDayProgress = useMemo(()=>{
@@ -92,26 +94,33 @@ export function LiveGame ({state, calls}:any) {
 
 
 
-<Box args={[0.15, 0.3, 0.15]} castShadow receiveShadow position={[2, -1.01, -0.1]}
+<Box args={[0.15, 0.25, 0.15]} castShadow receiveShadow position={[2.2, -1.0, -0.3]}
           onClick={calls.quitBattle}
         >
           <meshStandardMaterial color={"#ff0000"}  />
         </Box>
         
-        <DynaText color={"#ff0000"} text={"Quit"}
+        <DynaText color={"#ff0000"} text={"Exit"}
           onClick={calls.startGame} font={0.1} 
           rotation={[-Math.PI / 2, 0, Math.PI/2]}
           position={[2.2, -0.98, -0.1]}
         />
-        <DynaText color={"#ff9900"} text={`T:${theUnixDayProgress}` }
+        
+<Box args={[0.28, 0.1, 1.1]} castShadow receiveShadow position={[2.45, -1.035, -0.1]}
+          onClick={calls.quitBattle}
+        >
+          <meshStandardMaterial color={"#eeeeee"}  />
+        </Box>
+        
+        <DynaText color={"#ff33ff"} text={`T+${theUnixDayProgress}` }
           onClick={()=>q__asd.refetch()} 
           font={0.2} 
           rotation={[-Math.PI / 2, 0, Math.PI/2]}
-          position={[1.7, -0.98, -0.1]}
+          position={[2.45, -0.98, -0.1]}
         />
         </group>
     </group>
   )
 }
 
-export default LiveGame
+export default BattleLiveToggles

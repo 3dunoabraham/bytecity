@@ -40,6 +40,7 @@ function Component ({}) {
   const app:any = useContext(AppContext)
   const searchParams:any = useSearchParams();
 
+  const [opponent, s__opponent] = useState(searchParams.get('oppo'))
   const { user, superuser, do:{login, logout, fetchSupaPlayer, demo,},  jwt }:any = useAuth()
   const [chartPos, s__chartPos]:any = useState(chartPosLookup["btc"])
   const [chartRot, s__chartRot]:any = useState(chartRotLookup["btc"])
@@ -185,6 +186,8 @@ function Component ({}) {
     // let binanceapikeys:any = "0:0"
     console.log("superuser.mode superuser.mode superuser.mode")
 
+    
+
     try {
       let thedata = {
         referral: splitKey[0],
@@ -195,13 +198,15 @@ function Component ({}) {
         // binanceSecret: binanceapikeys.split(":")[1],
       }
       console.log("thedata", thedata)
-      app.alert("neutral", "Setting battle mode")
+      // app.alert("neutral", "Setting battle mode")
+      
       let fetchRes: any = await fetchPost("/api/player/battle", thedata)
       console.log("fetchRes", fetchRes)
 
       
       if (fetchRes.status >= 400)
       {
+
         return app.alert("error", "Failed to Set battle mode")
       }
       app.alert("success", "Successfully set battle mode!")

@@ -7,7 +7,8 @@ import {Screen, Frame} from "./FrameScreen"
 import TextContainer from "./TextContainer"
 import DynaText from "@/model/core/DynaText"
 import { useAuth } from "@/../script/state/context/AuthContext";
-import LiveGame from "./LiveGame";
+import BattleLiveToggles from "./BattleLiveToggles";
+import BattleButtons from "./BattleButtons";
 
 export function BitCrush({calls}:any) {
   const { user, superuser, superoppo, do:{login, logout, demo, fetchSupaOppoUser, fetchSupaPlayer},  jwt }:any = useAuth()
@@ -79,14 +80,14 @@ export function BitCrush({calls}:any) {
     if (score < 0) return;
     // Call the update functions inside the animation frame loop
     updateBallPosition();
-    handleMouseMove(mouse)
+    // handleMouseMove(mouse)
   });
   const handleMouseMove = (event: any) => {
-    let clientX = event.x / window.innerHeight
-    setMouseX(clientX);
-    let newPosition = $playerPaddle.current.position;
-    newPosition.x = clientX * 1000
-    setPlayerPaddlePosition(newPosition);
+    // let clientX = event.x / window.innerHeight
+    // setMouseX(clientX);
+    // let newPosition = $playerPaddle.current.position;
+    // newPosition.x = clientX * 1000
+    // setPlayerPaddlePosition(newPosition);
   };
 
   const [form, s__form] = useState({
@@ -145,6 +146,8 @@ const triggerAttack = ()=>{
       {/* SCORE */}
       <TextContainer calls={{startGame}} state={{score, lastScore, opponent, battleLife}} />
 
+      <BattleButtons {...{calls:{startGame, checkOppo, getBattleReady}}} state={{}} />
+
       {/* <Screen />
       <Frame /> */}
 
@@ -159,22 +162,7 @@ const triggerAttack = ()=>{
 
 
 
-        {/* BATTLE MODE */}
-        {superuser.mode < 0 &&
-        <Box args={[0.3, 0.2, 0.3]} castShadow receiveShadow position={[1.2, -1.01, -0.1]}
-          onClick={getBattleReady}
-        >
-          <meshStandardMaterial color={"#009900"}  />
-        </Box>
-        }
-        {superuser.mode == 0 &&
-        <Box args={[0.3, 0.2, 0.3]} castShadow receiveShadow position={[1.2, -1.01, -0.1]}
-        onClick={()=>{checkOppo()}}
-          // onClick={()=>(q__asd.refetch())}
-        >
-          <meshStandardMaterial color={"#ff9900"}  />
-        </Box>
-        }
+        {/* BATTLE  */}
         {superuser.mode == 0 && superoppo && superoppo.href == superuser.hash &&
         <Box args={[0.5, 0.2, 0.5]} castShadow receiveShadow position={[2.2, -1.01, -1.1]}
         onClick={()=>{getBattleAttack()}}
@@ -195,7 +183,7 @@ const triggerAttack = ()=>{
 {superuser.mode >= 0 &&
   <group>
 
-    <LiveGame {...{calls:{quitBattle, endBattle, startGame, getBattleAttack},
+    <BattleLiveToggles {...{calls:{quitBattle, endBattle, startGame, getBattleAttack},
       state:{},
     }} 
       

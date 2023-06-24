@@ -597,7 +597,7 @@ export async function sendSupabaseStartBattle(
         // // if (minsSince < 6) {
         // //   throw new Error("cant quit too early")
         // // }
-        throw new Error("unkown error correct 777777777777")
+        // throw new Error("unkown error correct 777777777777")
       } else {
         throw new Error("oppo not correct")
       }
@@ -731,7 +731,10 @@ export async function sendSupabaseStartBattle(
             }
           }
         }
-    }
+    } else {
+      // also put oppo on -1
+  let succesfulPut = await fetchPutPlayerBattleMode(supabase,playerObj, oppo,-1,oppo,"")
+}
 
     }
   }
@@ -776,6 +779,5 @@ const getLast3minCandles = async (theToken:any,startUnixDate:any=null ) =>{
 
 // console.log("qweqwe", lastLocalUnix)
 
-    // app.alert("success","Unix refreshed")
     return theList
 }

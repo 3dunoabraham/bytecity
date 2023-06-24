@@ -59,7 +59,7 @@ function LockCameraOnBox() {
         />
 
       </group>
-      <group position={[0.7, -1.05, 3.22]} rotation={[0,0,0]} >
+      <group position={[0.7, -1.05, 3.2]} rotation={[0,0,0]} >
         <DynaText color={"#994400"} rotation={[0,Math.PI,0]}
             onClick={handleBoxClick}
             text={cameraLocked ? "Unlock Camera" : "Lock Camera"} font={0.12} position={[0,0,-0.35]}
@@ -69,7 +69,7 @@ function LockCameraOnBox() {
       {!cameraLocked && (
         <>
           <Box
-            position={[-0.5, -0.17, 13.95]}
+            position={[0.5, -0.17, 12.9]}
             onClick={handleBoxClick}
             args={[0.5, 0.1, 0.2]}
           >
@@ -78,14 +78,16 @@ function LockCameraOnBox() {
         </>
       )}
       
-      <group position={[0.5, -0.159, 13.25]} rotation={[0,0,0]} >
-        <DynaText color={"#994400"} text={cameraLocked ? "Unlock Camera" : "Lock Camera"} font={0.12} position={[0,0,-0.35]}/>
+      <group position={[0.5, -0.159, 12.9]} rotation={[0,0,0]} >
+        <DynaText color={"#994400"} text={cameraLocked ? "Unlock Camera" : "Lock Camera"} font={0.12} 
+          position={[0,0,-0.25]}
+        />
 
       </group>
       {cameraLocked && (
         <>
           <Cylinder
-            position={[0.73, -0.2, 13.17]}
+            position={[0.73, -0.2, 12.9]}
             onClick={handleBoxClick}
             args={[0.15, 0.15, 0.2, 12, 3]}
           >
