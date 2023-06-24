@@ -122,6 +122,8 @@ export async function fetchPutEloBattle(supabase:any, playerHash:any, player_elo
     let player_dataPack = {
         eloWTL: player_elo,
         mode: -1,
+        href:"",
+        src:null,
     }
     // console.log("dataPack")
     // console.table(dataPack)
@@ -136,6 +138,8 @@ export async function fetchPutEloBattle(supabase:any, playerHash:any, player_elo
     let oppo_dataPack = {
         eloWTL: oppo_elo,
         mode: -1,
+        href:"",
+        src:null,
     }
     // console.log("dataPack")
     // console.table(dataPack)

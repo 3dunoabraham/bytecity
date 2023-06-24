@@ -15,16 +15,21 @@ export function TextContainer ({state, calls}:any) {
           rotation={[-Math.PI / 2, 0, -Math.PI/2]}
           position={[-0.95, -0.774, 1.6]}
         />
+        {!!state.opponent && <>
+          <DynaText color={"#ff3300"} text={state.opponent} font={0.65} position={[0.5, -0.76, 3]}
+            rotation={[-Math.PI / 2, 0, Math.PI]}
+          />
+          
+          <DynaText color={"#ff3300"} text={"Opponent"} font={0.25} position={[0.5, -0.76, 3.5]}
+            rotation={[-Math.PI / 2, 0, Math.PI]}
+          />
+        </>}
         {/* {state.lastScore > 0 &&
           <DynaText color={"#ff9900"} text={state.lastScore} font={0.65} position={[0.5, -0.76, -0.4]}
             rotation={[-Math.PI / 2, 0, Math.PI]}
           />
         }
-        {!!state.opponent &&
-          <DynaText color={"#ff3300"} text={state.opponent} font={0.65} position={[0.5, -0.76, 2.4]}
-            rotation={[-Math.PI / 2, 0, 0]}
-          />
-        } */}
+         */}
       </group>
     </>
   )
