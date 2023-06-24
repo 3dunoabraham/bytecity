@@ -71,9 +71,9 @@ export function BitCrush({calls}:any) {
     setBallPosition(newBallPosition);
   };
   const startGame = () => {
-    setBallZVelocity((Math.random() - 0.5) / 10)
-    s__score(0)
-    $theBall.current.position.set(0, 0, 0)
+    // setBallZVelocity((Math.random() - 0.5) / 10)
+    // s__score(0)
+    // $theBall.current.position.set(0, 0, 0)
   }
   useFrame(({ mouse }, delta) => {
     if (score < 0) return;
@@ -145,16 +145,16 @@ const triggerAttack = ()=>{
       {/* SCORE */}
       <TextContainer calls={{startGame}} state={{score, lastScore, opponent, battleLife}} />
 
-      <Screen />
-      <Frame />
+      {/* <Screen />
+      <Frame /> */}
 
       <group position={[0, 0, 6]}>
         {/* START BUTTON */}
-        <Box args={[0.6, 0.2, 0.3]} castShadow receiveShadow position={[0.5, -1.01, 0.95]}
+        {/* <Box args={[0.6, 0.2, 0.3]} castShadow receiveShadow position={[0.5, -1.01, 0.95]}
           onClick={startGame}
         >
           <meshStandardMaterial color={"#0099ff"} />
-        </Box>
+        </Box> */}
 
 
 
@@ -207,23 +207,18 @@ const triggerAttack = ()=>{
 
 
         {/* BALL */}
-        <Box args={[0.12, 0.12, 0.12]} castShadow receiveShadow ref={$theBall}>
+        {/* PLAYER PADDLE */}
+        {/* <Box args={[0.12, 0.12, 0.12]} castShadow receiveShadow ref={$theBall}>
           <meshStandardMaterial color="#009900" />
         </Box>
-        {/* END OF BALL */}
-
-        {/* PLAYER PADDLE */}
         <Box args={[0.4, 0.1, 0.1]} position={[playerPaddlePosition.x, playerPaddlePosition.y, 0]}
           castShadow receiveShadow ref={$playerPaddle}>
           <meshStandardMaterial color="#ff9900" />
         </Box>
-        {/* END OF PLAYER PADDLE */}
-
-        {/* COMPUTER PADDLE */}
         <Box args={[0.4, 0.1, 0.1]} castShadow position={[computerPosition.x, computerPosition.y, 0]}
           receiveShadow>
           <meshStandardMaterial color="#ff0000" />
-        </Box>
+        </Box> */}
         {/* END OF COMPUTER PADDLE */}
       </group>
     </>

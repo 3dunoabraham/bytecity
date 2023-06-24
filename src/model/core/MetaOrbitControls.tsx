@@ -13,14 +13,18 @@ function LockCameraOnBox() {
 
   useFrame(() => {
     if (controlsRef.current && cameraLocked) {
-      controlsRef.current.target.set(0, 0, 13.5); // Make the controls target the scene origin
-      controlsRef.current.object.position.set(0, 3, 16); // Set the camera position to (0, 10, 0) when cameraLocked is true
+      controlsRef.current.target.set(0, 0, 11.5); 
+      controlsRef.current.object.position.set(4, 3, 14.4); 
+
+      // PONG
+      // controlsRef.current.target.set(0, 0, 13.5); 
+      // controlsRef.current.object.position.set(0, 3, 16); 
     }
   });
 
   return (
     <group>
-      
+{/*       
       <group position={[-0.45, -0.159, 14]} rotation={[0,0,0]} >
         <DynaText color={"#994400"} text={cameraLocked ? "Unlock Camera" : "Lock Camera"} font={0.12} position={[0,0,-0.35]}/>
 
@@ -46,7 +50,54 @@ function LockCameraOnBox() {
             <meshStandardMaterial color={"#994400"} />
           </Cylinder>
         </>
+      )} */}
+      
+      <group position={[0.551, -1.05, -1.8]} rotation={[0,0,0]} >
+        <DynaText color={"#994400"} rotation={[0,Math.PI/2,0]}
+            onClick={handleBoxClick}
+            text={cameraLocked ? "Unlock Camera" : "Lock Camera"} font={0.12} position={[0,0,-0.35]}
+        />
+
+      </group>
+      <group position={[0.7, -1.05, 3.22]} rotation={[0,0,0]} >
+        <DynaText color={"#994400"} rotation={[0,Math.PI,0]}
+            onClick={handleBoxClick}
+            text={cameraLocked ? "Unlock Camera" : "Lock Camera"} font={0.12} position={[0,0,-0.35]}
+        />
+
+      </group>
+      {!cameraLocked && (
+        <>
+          <Box
+            position={[-0.5, -0.17, 13.95]}
+            onClick={handleBoxClick}
+            args={[0.5, 0.1, 0.2]}
+          >
+            <meshStandardMaterial color={"#aa6600"} />
+          </Box>
+        </>
       )}
+      
+      <group position={[0.5, -0.159, 13.25]} rotation={[0,0,0]} >
+        <DynaText color={"#994400"} text={cameraLocked ? "Unlock Camera" : "Lock Camera"} font={0.12} position={[0,0,-0.35]}/>
+
+      </group>
+      {cameraLocked && (
+        <>
+          <Cylinder
+            position={[0.73, -0.2, 13.17]}
+            onClick={handleBoxClick}
+            args={[0.15, 0.15, 0.2, 12, 3]}
+          >
+            <meshStandardMaterial color={"#994400"} />
+          </Cylinder>
+        </>
+      )}
+
+
+
+
+
       <MapControls
         ref={controlsRef}
         minPolarAngle={0.11}

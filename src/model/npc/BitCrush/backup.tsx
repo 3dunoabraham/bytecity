@@ -68,9 +68,9 @@ export function BitCrush({calls}:any) {
     setBallPosition(newBallPosition);
   };
   const startGame = () => {
-    setBallZVelocity((Math.random() - 0.5) / 10)
-    s__score(0)
-    $theBall.current.position.set(0, 0, 0)
+    // setBallZVelocity((Math.random() - 0.5) / 10)
+    // s__score(0)
+    // $theBall.current.position.set(0, 0, 0)
   }
   useFrame(({ mouse }, delta) => {
     if (score < 0) return;
