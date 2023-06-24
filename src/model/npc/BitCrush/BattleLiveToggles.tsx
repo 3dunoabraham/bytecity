@@ -75,7 +75,7 @@ export function BattleLiveToggles ({state, calls}:any) {
   return (
     <group>
     <group>
-      {!!superuser && !!superoppo &&
+      {/* {!!superuser && !!superoppo &&
     <group>
 
 <Box args={[0.15, 0.3, 0.15]} castShadow receiveShadow position={[1.7, -1.01, -1]}
@@ -90,7 +90,7 @@ export function BattleLiveToggles ({state, calls}:any) {
           position={[1.5, -0.98, -1]}
         />
     </group>
-      }
+      } */}
 
 
 

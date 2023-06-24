@@ -183,7 +183,7 @@ const triggerAttack = ()=>{
 {superuser.mode >= 0 &&
   <group>
 
-    <BattleLiveToggles {...{calls:{quitBattle, endBattle, startGame, getBattleAttack},
+    <BattleLiveToggles {...{calls:{quitBattle, endBattle,checkOppo, startGame, getBattleAttack},
       state:{},
     }} 
       

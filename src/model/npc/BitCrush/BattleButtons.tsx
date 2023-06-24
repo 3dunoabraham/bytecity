@@ -19,8 +19,13 @@ export function BattleButtons({ state, calls }: any) {
     <group>
 
       <group position={[0.5, -0.185, 7.5]} rotation={[0, Math.PI, 0]} >
-        <DynaText color={superuser.mode < 0 ? "#009900" : "#ff9900"} text={superuser.mode < 0 ? "Start Battle" : "Make Move"}
-          onClick={calls.startGame} font={0.1}
+        <DynaText color={superuser.mode < 0 ? "#009900" : "#ff9900"} 
+          text={
+            superuser.mode == 0 ? "Refresh" :
+            (superuser.mode < 0 ? "Start Battle" : "Make Move")
+          }
+          // onClick={calls.startGame}
+          font={0.1}
           rotation={[-Math.PI / 2, 0, -Math.PI / 2]}
           position={[-0.95, -0.774, 1.6]}
         />
@@ -29,7 +34,7 @@ export function BattleButtons({ state, calls }: any) {
       <group position={[0, 0, 6]}>
         {superuser.mode == 0 &&
           <Box args={[0.3, 0.2, 0.3]} castShadow receiveShadow position={[1.2, -1.01, -0.1]}
-            onClick={() => { state.checkOppo() }}
+            onClick={() => { calls.checkOppo() }}
           >
             <meshStandardMaterial color={"#ff9900"} />
           </Box>
