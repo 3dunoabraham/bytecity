@@ -92,7 +92,7 @@ function Level1_Index1 ({state, calls, }:any) {
     calls.s__LS_tokensArrayObj("{}");
 
     await logout()
-    // window.location.reload()
+    window.location.reload()
   }
   const triggerResetAll = () => {
     if (prompt("Reset local storage (yes/no)","yes") !== "yes") return
@@ -108,7 +108,7 @@ function Level1_Index1 ({state, calls, }:any) {
 
   return (<>
   
-    <MetaOrbitControls/>
+    <MetaOrbitControls state={{tutoStage:state.tutoStage}} />
 
     
     <ByteCityEnv />

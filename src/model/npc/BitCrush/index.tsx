@@ -28,11 +28,6 @@ export function BitCrush({calls}:any) {
   const [opponent, s__opponent] = useState(searchParams.get('oppo'))
   const [opponentLink, s__opponentLink] = useState(searchParams.get('link'))
   // Function to update the position of the ball
-  useEffect(()=>{
-    console.log("search oppo name", searchParams.get('oppo'))
-    console.log("search link", searchParams.get('oppo'))
-    console.log("search", opponent, opponentLink)
-  },[])
   const updateBallPosition = () => {
     // getSearchParams
     if (score < 0) return;

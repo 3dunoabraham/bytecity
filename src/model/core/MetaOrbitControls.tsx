@@ -3,7 +3,7 @@ import { Box, Cylinder, MapControls } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import DynaText from "./DynaText";
 
-function LockCameraOnBox() {
+function MetaOrbitControls({state, calls}:any) {
   const [cameraLocked, setCameraLocked] = useState(false);
   const controlsRef:any = useRef();
 
@@ -24,34 +24,7 @@ function LockCameraOnBox() {
 
   return (
     <group>
-{/*       
-      <group position={[-0.45, -0.159, 14]} rotation={[0,0,0]} >
-        <DynaText color={"#994400"} text={cameraLocked ? "Unlock Camera" : "Lock Camera"} font={0.12} position={[0,0,-0.35]}/>
-
-      </group>
-      {!cameraLocked && (
-        <>
-          <Box
-            position={[-0.5, -0.17, 13.95]}
-            onClick={handleBoxClick}
-            args={[0.5, 0.1, 0.2]}
-          >
-            <meshStandardMaterial color={"#aa6600"} />
-          </Box>
-        </>
-      )}
-      {cameraLocked && (
-        <>
-          <Cylinder
-            position={[-0.45, -0.2, 13.95]}
-            onClick={handleBoxClick}
-            args={[0.15, 0.15, 0.2, 12, 3]}
-          >
-            <meshStandardMaterial color={"#994400"} />
-          </Cylinder>
-        </>
-      )} */}
-      
+      {!!state.tutoStage && state.tutoStage > 3 && <>
       <group position={[0.551, -1.05, -1.8]} rotation={[0,0,0]} >
         <DynaText color={"#994400"} rotation={[0,Math.PI/2,0]}
             onClick={handleBoxClick}
@@ -66,6 +39,7 @@ function LockCameraOnBox() {
         />
 
       </group>
+       </>}
       {!cameraLocked && (
         <>
           <Box
@@ -114,4 +88,4 @@ function LockCameraOnBox() {
   );
 }
 
-export default LockCameraOnBox;
+export default MetaOrbitControls;

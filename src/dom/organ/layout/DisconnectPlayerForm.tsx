@@ -9,6 +9,9 @@ import { AppContext } from "@/../script/state/context/AppContext";
 
 const DisconnectPlayerForm = ({
 }: { }) => {
+  const [LS_tokensArrayObj, s__LS_tokensArrayObj] = useLocalStorage('localTokensArrayObj', "{}")
+  const [_tutoStage, s__LS_tutoStage] = useLocalStorage('level2tutorialstage', "{}")
+
   const app:any = useContext(AppContext)
   const { do:{ logout } }:any = useAuth()
   const [LS_rpi, s__LS_rpi] = useLocalStorage('rpi', "user:0000")
@@ -18,7 +21,11 @@ const DisconnectPlayerForm = ({
     console.log("res",res)
     app.alert("neutral","Logged out, clearing local storage...")
     s__LS_rpi("user:0000")
-    // window.location.reload()
+    
+    s__LS_rpi("user:0000");
+    s__LS_tutoStage("{}");
+    s__LS_tokensArrayObj("{}");
+    window.location.reload()
   }
 
 
