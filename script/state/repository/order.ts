@@ -393,6 +393,9 @@ export async function getSupabasePlayer(referral: string, pin: string,) {
 export async function transitionSupaBattle(
   req: any, referral: string, pin: string, newMode: number, oppo: string,
 ) {
+  
+  console.log("000000 \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
+  console.log("000000 \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
   let ipAddress: any = req.headers.get('x-forwarded-for') || req.headers.get('x-real-ip')
   const playerHash = computeHash(referral, pin)
   let playerObj: any = null
@@ -538,6 +541,10 @@ export async function transitionSupaBattle(
       // oppo user is my opponent hash
       console.log("10 | kokokokokokoko")
       if (playerObj.href == oppo) {
+        
+        if (GetMinsSince(lastKLineUnix) - minsSinceSaved < 6) {
+          throw new Error("cant resolve too early")
+        }
         // let succesfulPut = await fetchPutPlayerBattleMode(supabase,playerObj, playerHash,newMode,oppo,"")
         // if (!succesfulPut) { throw new Error("unknown error, fix manually on database") }
       } else {
