@@ -402,20 +402,21 @@ export async function transitionSupaBattle(
   let sentunix: any = null
 
   if (newMode == 0) {
-    let asdasd: any = await getLast3minCandles("PEPE")
-    let lastLocalUnix: any = parseInt(asdasd[0][0])
+    let kLineArray: any = await getLast3minCandles("PEPE")
+    let lastKLineUnix: any = parseInt(kLineArray[499][0])
     // oppo already in game
     if (oppo_userObj.mode >= 0) {
       // oppo in game with me (accept match)
       if (oppo_userObj.href == playerHash) {
-        let minsSince = GetMinsSince(parseInt(`${oppo_userObj.src}`))
+        let minsSinceSaved = GetMinsSince(parseInt(`${oppo_userObj.src}`))
         console.log("sentunix = oppo_userObj.src")
         sentunix = oppo_userObj.src
         console.log(sentunix, oppo_userObj.src)
-        if (GetMinsSince(lastLocalUnix) - minsSince < 3) {
+        console.log("minsSinceSaved, GetMinsSince(lastKLineUnix)", GetMinsSince(lastKLineUnix), minsSinceSaved, GetMinsSince(lastKLineUnix) - minsSinceSaved)
+        if (GetMinsSince(lastKLineUnix) - minsSinceSaved < 3) {
           throw new Error("request not ready yet")
         }
-        if (GetMinsSince(lastLocalUnix) - minsSince > 3) {
+        if (GetMinsSince(lastKLineUnix) - minsSinceSaved > 3) {
           throw new Error("request too late")
         }
       } else {
@@ -423,7 +424,7 @@ export async function transitionSupaBattle(
       }
     } else {
       if (playerObj.mode >= 0) { throw new Error("own player already in game") }
-      sentunix = lastLocalUnix
+      sentunix = lastKLineUnix
     }
 
     
@@ -461,9 +462,9 @@ export async function transitionSupaBattle(
 
   if (newMode == 1) {
     let thesrc = oppo_userObj.src || playerObj.src
-    let asdasd: any = await getLast3minCandles("PEPE")
-    let lastLocalUnix: any = parseInt(asdasd[0][0])
-    console.log("5 | lastLocalUnix", lastLocalUnix)
+    let kLineArray: any = await getLast3minCandles("PEPE")
+    let lastKLineUnix: any = parseInt(kLineArray[0][0])
+    console.log("5 | lastKLineUnix", lastKLineUnix)
     if (oppo_userObj.mode > 0) {
       throw new Error("oppo user already bought, please wait")
 
@@ -472,7 +473,7 @@ export async function transitionSupaBattle(
     } else {
       // oppo mode is 0
       let minsSince = GetMinsSince(parseInt(`${thesrc}`))
-      if (GetMinsSince(lastLocalUnix) - minsSince > 5) {
+      if (GetMinsSince(lastKLineUnix) - minsSince > 5) {
         throw new Error("action too late")
       }
       // continue without errors
@@ -520,46 +521,50 @@ export async function transitionSupaBattle(
   console.table({ oppoAttacked, playerAttacked, someoneBought })
 
   if (newMode == -1) {
-    let asdasd: any = await getLast3minCandles("PEPE")
+    let kLineArray: any = await getLast3minCandles("PEPE")
     let correctContextCandles: any = await getLast3minCandles("PEPE", playerObj.src)
     let restLength = correctContextCandles.length
     console.log("7 | playerObj.name,  oppo_userObj.mode < 0", playerObj.name, oppo_userObj.mode)
-    let lastLocalUnix: any = parseInt(asdasd[0][0])
+    let lastKLineUnix: any = parseInt(kLineArray[499][0])
 
-    let secondlast_price: any = parseFloat(asdasd[restLength - 1][4])
-    let thirdlast_price: any = parseFloat(asdasd[restLength - 2][4])
+    let startPriceAfterMatch: any = parseFloat(kLineArray[1][3])
+    let closePriceAfterMatch: any = parseFloat(kLineArray[1][4])
 
-    let minsSince = GetMinsSince(parseInt(`${playerObj.src}`))
-    console.log("8 | playerObj.src, GetMinsSince(lastLocalUnix), minsSince", playerObj.src, GetMinsSince(lastLocalUnix), minsSince)
-    console.log("9 | GetMinsSince(lastLocalUnix) - minsSince", GetMinsSince(lastLocalUnix) - minsSince)
+    let minsSinceSaved = GetMinsSince(parseInt(`${playerObj.src}`))
+    console.log("8 | playerObj.src, GetMinsSince(lastKLineUnix), minsSinceSaved", playerObj.src, GetMinsSince(lastKLineUnix), minsSinceSaved)
+    console.log("9 | GetMinsSince(lastKLineUnix) - minsSinceSaved", GetMinsSince(lastKLineUnix) - minsSinceSaved)
     // oppo user not in game
     if (oppo_userObj.mode < 0) {
       // oppo user is my opponent hash
       console.log("10 | kokokokokokoko")
       if (playerObj.href == oppo) {
-        throw new Error("unknown error")
+        // let succesfulPut = await fetchPutPlayerBattleMode(supabase,playerObj, playerHash,newMode,oppo,"")
+        // if (!succesfulPut) { throw new Error("unknown error, fix manually on database") }
       } else {
         throw new Error("oppo not found")
       }
     } else {
 
-      if (GetMinsSince(lastLocalUnix) - minsSince < 6) {
+      if (GetMinsSince(lastKLineUnix) - minsSinceSaved < 6) {
         throw new Error("cant resolve too early")
       }
 
       // if not enoungh context candles throw error
       if (correctContextCandles.length < 3) { throw new Error("cant resolve too early") }
-      console.log("18 | secondlast_price, thirdlast_price", secondlast_price, thirdlast_price)
+      console.log("18 | ************************************************** \n\n")
+      console.log("18 | startPriceAfterMatch, closePriceAfterMatch", startPriceAfterMatch, closePriceAfterMatch)
+      console.log("18 | ************************************************** \n\n")
 
-      // if (GetMinsSince(lastLocalUnix) - minsSince < 9) {
+      // if (GetMinsSince(lastKLineUnix) - minsSinceSaved < 9) {
       // resolve not too late, affect elo rating
+
 
       if (someoneBought) {
         if (playerAttacked) {
           // me did attack | me bought
           if (!oppoAttacked) {
             // opponent didnt attack
-            if (thirdlast_price <= secondlast_price) {
+            if (closePriceAfterMatch <= startPriceAfterMatch) {
               // failed buy | red candle
               playerID = playerHash
               let eloWTL = playerObj.eloWTL
@@ -603,7 +608,7 @@ export async function transitionSupaBattle(
             // me didnt attack
             
 
-            if (secondlast_price <= thirdlast_price) {
+            if (startPriceAfterMatch <= closePriceAfterMatch) {
               // oppo failed buy | red candle
               playerID = playerHash
               let eloWTL = playerObj.eloWTL
@@ -646,7 +651,7 @@ export async function transitionSupaBattle(
           }
         }
       } else /* then no one bought */ {
-        if (secondlast_price <= thirdlast_price) {
+        if (startPriceAfterMatch <= closePriceAfterMatch) {
           // red candle
           // both tied
 
@@ -720,22 +725,22 @@ const getLast3minCandles = async (theToken: any, startUnixDate: any = null) => {
   let theList = await theListRes.json()
   // s__initUnix(theList[0][0])
   // let firstUnix:any = parseInt( theList[499][0] )
-  // let lastLocalUnix:any =  parseInt(theList[0][0])
-  // if (lastLocalUnix != lastUnix ) {
-  //     s__lastUnix(lastLocalUnix)
+  // let lastKLineUnix:any =  parseInt(theList[0][0])
+  // if (lastKLineUnix != lastUnix ) {
+  //     s__lastUnix(lastKLineUnix)
   // }
-  //   if (lastLocalUnix != lastUnix && lastUnix != 0) {
+  //   if (lastKLineUnix != lastUnix && lastUnix != 0) {
   //     calls.getBattleAttack()
-  //   s__lastUnix(lastLocalUnix)
+  //   s__lastUnix(lastKLineUnix)
   // } else {
   //     s__liveUnix(firstUnix - 2)
-  //     s__diffUnix(lastLocalUnix - firstUnix)
+  //     s__diffUnix(lastKLineUnix - firstUnix)
   //   }
 
   const closingPrices = theList.map((item: any) => parseFloat(item[4]));
   // setPrices(closingPrices);
 
-  // console.log("qweqwe", lastLocalUnix)
+  // console.log("qweqwe", lastKLineUnix)
 
   return theList
 }
