@@ -24,7 +24,7 @@ function MetaOrbitControls({state, calls}:any) {
 
   return (
     <group>
-      {!!state.tutoStage && state.tutoStage > 3 && <>
+      {!!state.tutoStage && state.tutoStage.lvl > 2 && <>
       <group position={[0.551, -1.05, -1.8]} rotation={[0,0,0]} >
         <DynaText color={"#994400"} rotation={[0,Math.PI/2,0]}
             onClick={handleBoxClick}
