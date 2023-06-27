@@ -16,11 +16,14 @@ export function OppoTitle ({state, calls}:any) {
         /> */}
 
 
-{!!superuser &&
-            <DynaText color={"#006600"} text={superuser.eloWTL} font={0.45} position={[-1.5, -0.76, 1.15]}
+{!!superuser && <group>
+  <DynaText color={"#006600"} text={superuser.eloWTL} font={0.22} position={[-1.5, -0.76, 1.15]}
               rotation={[-Math.PI / 2, 0, -Math.PI/2]}
             />
-          }
+            <DynaText color={"#00bb00"} text={"W | T | L"} font={0.20} position={[-1.25, -0.76, 1.15]}
+              rotation={[-Math.PI / 2, 0, -Math.PI/2]}
+            />
+          </group>}
         {!!state.opponent && <>
           <DynaText color={"#ff3300"} text={state.opponent} font={0.65} position={[0.5, -0.76, 3]}
             rotation={[-Math.PI / 2, 0, Math.PI]}

@@ -6,6 +6,7 @@ import * as THREE from 'three'
 
 function MetaOrbitControls({ state, calls }: any) {
   const [cameraLocked, setCameraLocked] = useState(false);
+  const [cameraKindaLocked, setCameraKindaLocked] = useState(false);
   const controlsRef: any = useRef();
   const targetPosition = [0, 0, 11.5];
   const initialCameraPosition = [4, 3, 14.4];
@@ -14,10 +15,24 @@ function MetaOrbitControls({ state, calls }: any) {
 
   const handleBoxClick = () => {
     setCameraLocked(!cameraLocked);
+    setCameraKindaLocked(!cameraLocked)
   };
 
+  // const handleCenterButtonClick = () => {
+  //   if (cameraLocked) {
+  //     console.log("asd")
+  //     setCameraKindaLocked(true)
+  //     setCameraPosition(initialCameraPosition);
+  //     setCurrentTarget(new THREE.Vector3(...targetPosition));
+  //   }
+  // };
+
   useFrame(() => {
-    if (controlsRef.current && cameraLocked) {
+    if (controlsRef.current && (cameraLocked || cameraKindaLocked)) {
+      // if (cameraPosition == controlsRef.current.object.position) {
+      //   console.log("thesame")
+      // }
+      // console.log("framinnn")
       const currentPosition = controlsRef.current.object.position;
       const newPosition = currentPosition.clone().lerp(
         new THREE.Vector3(...cameraPosition),
@@ -89,6 +104,13 @@ function MetaOrbitControls({ state, calls }: any) {
           >
             <meshStandardMaterial color={"#994400"} />
           </Cylinder>
+          {/* <Cylinder
+            position={[0., -0.2, 12.9]}
+            onClick={handleCenterButtonClick}
+            args={[0.15, 0.15, 0.2, 12, 3]}
+          >
+            <meshStandardMaterial color={"#994400"} />
+          </Cylinder> */}
         </>
       )}
 
