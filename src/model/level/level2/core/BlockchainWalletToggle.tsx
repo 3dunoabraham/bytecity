@@ -1,7 +1,7 @@
 import DynaText from "@/model/core/DynaText"
 import IsConnectedBridge from "@/model/npc/DeBridge/IsConnectedBridge";
 import { Cylinder } from "@react-three/drei"
-import { useLayoutEffect, useMemo, useRef } from "react"
+import { useLayoutEffect, useMemo, useRef, useState } from "react"
 import * as THREE from "three";
 import { useAccount, useConnect, useContractRead, useEnsName } from "wagmi";
 import { InjectedConnector } from 'wagmi/connectors/injected'
@@ -38,6 +38,7 @@ export function BoxBlendGeometry({ width = 1, height = 1, radius = 0.2, depth = 
 function BlockchainWalletToggle({ calls, state }: any) {
   const { address, isConnected } = useAccount()
   const { data: ensName } = useEnsName({ address })
+  const [loading, s__loading] = useState(false)
   const { connect } = useConnect({
     connector: new InjectedConnector(),
   })
@@ -60,10 +61,10 @@ function BlockchainWalletToggle({ calls, state }: any) {
     console.log("after the mint")
   }
       
-  // Function to make a createProposal transaction in the DAO
   async function mint() {
-    // setLoading(true);
-
+    if (loading) return
+    s__loading(true);
+    console.log("im here 999", loading)
     try {
       const tx = await writeContract({
         abi: CryptoDevsNFTABI,
@@ -77,7 +78,7 @@ function BlockchainWalletToggle({ calls, state }: any) {
       console.error(error);
       window.alert(error);
     }
-    // setLoading(false);
+    s__loading(false);
   }
 
   return (<>
