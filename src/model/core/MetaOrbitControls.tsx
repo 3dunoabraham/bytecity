@@ -10,6 +10,7 @@ function MetaOrbitControls({ state, calls }: any) {
   const targetPosition = [0, 0, 11.5];
   const initialCameraPosition = [4, 3, 14.4];
   const [cameraPosition, setCameraPosition] = useState(initialCameraPosition);
+  const [currentTarget, setCurrentTarget] = useState(new THREE.Vector3(...targetPosition));
 
   const handleBoxClick = () => {
     setCameraLocked(!cameraLocked);
@@ -18,11 +19,18 @@ function MetaOrbitControls({ state, calls }: any) {
   useFrame(() => {
     if (controlsRef.current && cameraLocked) {
       const currentPosition = controlsRef.current.object.position;
-      const newPosition = currentPosition
-        .clone()
-        .lerp(new THREE.Vector3(...cameraPosition), 0.1);
-      controlsRef.current.target.set(...targetPosition);
+      const newPosition = currentPosition.clone().lerp(
+        new THREE.Vector3(...cameraPosition),
+        0.1
+      );
       controlsRef.current.object.position.copy(newPosition);
+
+      const currentTarget = controlsRef.current.target;
+      const newTarget = currentTarget.clone().lerp(
+        new THREE.Vector3(...targetPosition),
+        0.1
+      );
+      controlsRef.current.target.copy(newTarget);
     }
   });
 
