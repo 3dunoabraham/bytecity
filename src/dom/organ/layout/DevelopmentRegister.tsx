@@ -4,10 +4,22 @@ import { useState } from "react";
 import { FaExternalLinkAlt, FaPause, FaPauseCircle, FaRecycle, FaCity, FaArrowDown, FaBook, FaTwitter, FaUser, FaUserAlt, FaUserCircle, FaGoogle } from "react-icons/fa";
 import Image from 'next/image';
 import Link from "next/link";
-
+import { InjectedConnector } from 'wagmi/connectors/injected'
+import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { useAccount, useConnect, useContractRead, useEnsName } from "wagmi";
+import {
+    CryptoDevsDAOABI,
+    WebDAOAddress,
+    CryptoDevsNFTABI,
+    BitsNFTAddress,
+  } from "@/../script/constant/blockchain";
 function Component ({}) {
-    // const [asd, s__asd] = useState("")
-
+  const { address, isConnected } = useAccount();
+  // const [asd, s__asd] = useState("")
+  const { data: ensName } = useEnsName({ address })
+  const { connect } = useConnect({
+    connector: new InjectedConnector(),
+  })
     // const [asd, s__asd] = useState("")
     const [asd, s__asd] = useState("")
     
@@ -16,7 +28,14 @@ function Component ({}) {
         
       }
 
-      
+       // Fetch the CryptoDevs NFT balance of the user
+  const nftBalanceOfUser = useContractRead({
+    abi: CryptoDevsNFTABI,
+    address: BitsNFTAddress,
+    functionName: "balanceOf",
+    args: [address],
+  });
+  
     return (<>
         
         {asd == "landing" && <>
@@ -96,7 +115,15 @@ function Component ({}) {
                             
                         </a>
                 </div>
-                    <details className="Q_md_x">
+                {isConnected ? <>
+                    Your Bits NFT Balance: {!nftBalanceOfUser.data ? "-" : nftBalanceOfUser.data.toString()}
+                    
+                </> : <>
+                ConnectButton:
+                    <ConnectButton />
+                </>}
+
+                    {/* <details className="Q_md_x">
                         <summary className="pt-6 pb-2 opaci-chov--50 ">
                             <button className="noclick tx-black">Controls</button>
                         </summary>
@@ -106,11 +133,6 @@ function Component ({}) {
                                     <div className="gap-1 flex-col">
                                         ←
                                         🖱️
-                                        {/* <div className="gap-1 flex">
-                                            <div className="px-2 py-2 _ddr"></div>
-                                            <div className="px-2 py-2 bg-white"></div>
-                                        </div>
-                                        <div className="px-4 py-4 bg-white"></div> */}
                                     </div>
                                     <div className="flex-col"><span className="tx-red">Left</span> Click Drag</div>
                                     <div className="flex-1 w-min-50px opaci-75 border-red my-1"></div>
@@ -128,7 +150,7 @@ function Component ({}) {
                                 </div>
                             </div>
                         </div>
-                    </details>
+                    </details> */}
                     
                     {/* <div onClick={()=>{s__asd("")}} className="opaci-chov--50 bg-w-50 tx-center bord-r-l-100  noverflow pos-abs bottom-0 mb-8 box-shadow-2-b right-0 flex-col-stretch">
                         <div className="pt-4 pb-2 px-8  tx-shadow-5 box-shadow-5-b tx-lx flex-center gap-2 bg-white ">

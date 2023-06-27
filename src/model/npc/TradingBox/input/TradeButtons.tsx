@@ -17,8 +17,6 @@ function TradeButtons({ tokensArrayArray, state, calls }: any) {
       </mesh>
 
     </group>}
-
-    {/* BUY SELL BUTTON PLACEHOLDER */}
     {!!tokensArrayArray && state.selectedHasArray &&
       <mesh castShadow receiveShadow
         scale={3}

@@ -13,6 +13,7 @@ import ResetLocalStorage from "./core/ResetLocalStorage";
 import { AppContext } from "@/../script/state/context/AppContext";
 import { useAuth } from "@/../script/state/context/AuthContext";
 import { useCopyToClipboard } from "usehooks-ts";
+import BlockchainWalletToggle from "./core/BlockchainWalletToggle";
 
 function Level1_Index1 ({state, calls, }:any) {
   const app:any = useContext(AppContext)
@@ -108,7 +109,7 @@ function Level1_Index1 ({state, calls, }:any) {
 
   return (<>
   
-    <MetaOrbitControls state={{tutoStage:state.tutoStage}} />
+    <MetaOrbitControls state={{tutoStage:state.tutoStage, hasAnyToken: state.hasAnyToken}} />
 
     
     <ByteCityEnv />
@@ -118,6 +119,9 @@ function Level1_Index1 ({state, calls, }:any) {
     </Box>
 
     <ConnectPlayerToggle calls={{triggerLogin, triggerLogout,}}
+      state={{isDefaultUser:state.isDefaultUser, }} 
+    />
+    <BlockchainWalletToggle calls={{triggerLogin, triggerLogout,}}
       state={{isDefaultUser:state.isDefaultUser, }} 
     />
     <ResetLocalStorage calls={{triggerResetAll}} state={{isDefaultUser:state.isDefaultUser, }} />

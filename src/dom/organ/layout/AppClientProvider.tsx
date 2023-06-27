@@ -1,4 +1,10 @@
 "use client";
+import "@rainbow-me/rainbowkit/styles.css";
+import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit";
+import { configureChains, createConfig, WagmiConfig } from "wagmi";
+import { sepolia } from "wagmi/chains";
+import { publicProvider } from "wagmi/providers/public";
+
 import { useMap } from 'usehooks-ts';
 import { useState, useMemo, useEffect, useRef } from 'react';
 import { useSearchParams } from 'next/navigation';
@@ -11,6 +17,21 @@ import { AppContext } from "@/../script/state/context/AppContext";
 import AlertContainer from '@/dom/atom/overlay/AlertContainer';
 import { InventoryProvider } from '@/../script/state/context/InventoryContext';
 import AudioContainer from '@/dom/atom/common/AudioContainer';
+
+
+const { chains, publicClient } = configureChains([sepolia], [publicProvider()]);
+
+const { connectors } = getDefaultWallets({
+  appName: "WebDAO",
+  projectId: "89a152808dd3d7422c6fc305e49f9225",
+  chains,
+});
+
+const wagmiConfig = createConfig({
+  autoConnect: true,
+  connectors,
+  publicClient,
+});
 
 function AppClientProvider({ session, children, }: { session: any, children: React.ReactElement }) {
   
@@ -61,29 +82,33 @@ function AppClientProvider({ session, children, }: { session: any, children: Rea
       <AuthProvider {...{session}}>
         <QueryClientProvider client={queryClient}>
           <InventoryProvider>
-            {children}        
-            <div>
+            <WagmiConfig config={wagmiConfig}>
+              <RainbowKitProvider chains={chains}>
+                {children}        
+                <div>
 
-              <AlertContainer {...{ s__msg: (val:any)=>(alertMap__do.set("neutral", val)), msg:alertMap.get("neutral")}} />
-              <AlertContainer {...{ s__msg: (val:any)=>(alertMap__do.set("success", val)), msg:alertMap.get("success")}}
-                  badgeClass="bg-green-25 tx-green"
-              />
-              <AlertContainer {...{
-                  s__msg: (val:any)=>(alertMap__do.set("warn", val)), msg:alertMap.get("warn")}}
-                  badgeClass="bg-b-10 tx-bold-8" 
-              />
-              <AlertContainer {...{
-                  s__msg: (val:any)=>(alertMap__do.set("error", val)), msg:alertMap.get("error")}}
-                  badgeClass="bg-red-10 tx-red" 
-              />
-              
-              <AudioContainer
-                {...{
-                  s__src: (val: any) => audioNotification("neutral", val),
-                  src: "./sound/aaa.wav" // Set the audio source here
-                }}
-              />
-            </div>
+                  <AlertContainer {...{ s__msg: (val:any)=>(alertMap__do.set("neutral", val)), msg:alertMap.get("neutral")}} />
+                  <AlertContainer {...{ s__msg: (val:any)=>(alertMap__do.set("success", val)), msg:alertMap.get("success")}}
+                      badgeClass="bg-green-25 tx-green"
+                  />
+                  <AlertContainer {...{
+                      s__msg: (val:any)=>(alertMap__do.set("warn", val)), msg:alertMap.get("warn")}}
+                      badgeClass="bg-b-10 tx-bold-8" 
+                  />
+                  <AlertContainer {...{
+                      s__msg: (val:any)=>(alertMap__do.set("error", val)), msg:alertMap.get("error")}}
+                      badgeClass="bg-red-10 tx-red" 
+                  />
+                  
+                  <AudioContainer
+                    {...{
+                      s__src: (val: any) => audioNotification("neutral", val),
+                      src: "./sound/aaa.wav" // Set the audio source here
+                    }}
+                  />
+                </div>
+              </RainbowKitProvider>
+            </WagmiConfig>
           </InventoryProvider>
         </QueryClientProvider>
       </AuthProvider>

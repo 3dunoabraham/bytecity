@@ -6,7 +6,7 @@ function Component ({}) {
         <>
         
       <ambientLight intensity={0.3}  color={"#ffffff"} />
-      <pointLight intensity={2} position={[-2.5, 0.75, 1.5]} castShadow color={"#ffeedd"}  />
+      <pointLight intensity={2} position={[-1.89, 0.75, 1.5]} castShadow color={"#ffeedd"}  />
 
       <fog attach="fog" args={['#0099ff', 3, 8]} />
       <Sphere args={[3.73]}>
