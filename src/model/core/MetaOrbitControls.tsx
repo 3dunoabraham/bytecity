@@ -74,6 +74,7 @@ function MetaOrbitControls({state, calls}:any) {
 
 
       <MapControls
+        
         ref={controlsRef}
         minPolarAngle={0.11}
         maxPolarAngle={2.2}

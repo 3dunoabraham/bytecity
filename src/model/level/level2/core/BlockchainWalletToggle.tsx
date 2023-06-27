@@ -3,9 +3,15 @@ import IsConnectedBridge from "@/model/npc/DeBridge/IsConnectedBridge";
 import { Cylinder } from "@react-three/drei"
 import { useLayoutEffect, useMemo, useRef } from "react"
 import * as THREE from "three";
-import { useAccount, useConnect, useEnsName } from "wagmi";
+import { useAccount, useConnect, useContractRead, useEnsName } from "wagmi";
 import { InjectedConnector } from 'wagmi/connectors/injected'
-
+import { readContract, waitForTransaction, writeContract } from "wagmi/actions";
+import {
+  CryptoDevsDAOABI,
+  WebDAOAddress,
+  CryptoDevsNFTABI,
+  BitsNFTAddress,
+} from "@/../script/constant/blockchain";
 export function BoxBlendGeometry({ width = 1, height = 1, radius = 0.2, depth = 1 }) {
   const geometry: any = useRef()
   const shape = useMemo(() => {
@@ -40,6 +46,40 @@ function BlockchainWalletToggle({ calls, state }: any) {
     connect()
   }
 
+  
+       // Fetch the CryptoDevs NFT balance of the user
+       const nftBalanceOfUser = useContractRead({
+        abi: CryptoDevsNFTABI,
+        address: BitsNFTAddress,
+        functionName: "balanceOf",
+        args: [address],
+      });
+  const buyNFT = async ()=>{
+    console.log("before await mint()")
+    await mint()
+    console.log("after the mint")
+  }
+      
+  // Function to make a createProposal transaction in the DAO
+  async function mint() {
+    // setLoading(true);
+
+    try {
+      const tx = await writeContract({
+        abi: CryptoDevsNFTABI,
+        address: BitsNFTAddress,
+        functionName: "mint",
+        // args: [],
+      });
+
+      await waitForTransaction(tx);
+    } catch (error) {
+      console.error(error);
+      window.alert(error);
+    }
+    // setLoading(false);
+  }
+
   return (<>
     {/* CONNECT BUTTON */}
 
@@ -57,7 +97,9 @@ function BlockchainWalletToggle({ calls, state }: any) {
       position={[0, -0.89, -0.75]}
     />
     {isConnected &&
-      <IsConnectedBridge />
+      <IsConnectedBridge state={{isConnected, address, nftBalanceOfUser}}
+        calls={{buyNFT}}
+       />
     }
 
 
