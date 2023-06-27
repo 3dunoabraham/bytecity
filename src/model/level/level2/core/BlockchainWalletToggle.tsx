@@ -74,6 +74,7 @@ function BlockchainWalletToggle({ calls, state }: any) {
       });
 
       await waitForTransaction(tx);
+      nftBalanceOfUser.refetch()
     } catch (error) {
       console.error(error);
       window.alert(error);

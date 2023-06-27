@@ -26,8 +26,8 @@ export function IsConnectedBridge({state,calls}:any) {
       </Box>
 
       {!!state.nftBalanceOfUser && !!state.nftBalanceOfUser.data &&
-      <DynaText text={state.nftBalanceOfUser.data.toString()} color={"#ff00ff"} font={0.09}
-        position={[-0.825, -0, 0.05]} rotation={[0,-Math.PI/2,0]}
+      <DynaText text={state.nftBalanceOfUser.data.toString()+" bit"+(state.nftBalanceOfUser.data.toString() == "1" ? "" : "s")} color={"#ff00ff"} font={0.16}
+        position={[-0.825, -0.05, 0.1]} rotation={[0,-Math.PI/2,0]}
       />
     }
     {!!state.nftBalanceOfUser && !state.nftBalanceOfUser.data &&
