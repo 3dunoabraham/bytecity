@@ -6,7 +6,7 @@ import Image from 'next/image';
 import Link from "next/link";
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { ConnectButton } from "@rainbow-me/rainbowkit";
-import { useAccount, useConnect, useContractRead, useEnsName } from "wagmi";
+import { useAccount, useConnect, useContractRead } from "wagmi";
 import {
     CryptoDevsDAOABI,
     WebDAOAddress,
@@ -16,7 +16,6 @@ import {
 function Component ({}) {
   const { address, isConnected } = useAccount();
   // const [asd, s__asd] = useState("")
-  const { data: ensName } = useEnsName({ address })
   const { connect } = useConnect({
     connector: new InjectedConnector(),
   })

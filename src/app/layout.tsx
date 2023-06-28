@@ -5,13 +5,13 @@ import AppClientProvider from '@/dom/organ/layout/AppClientProvider'
 
 export const metadata = {
   title: 'Byte City',
-  description: 'Web Gamed App',
+  description: 'Web POV | Web Game: Byte City',
 }
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const session = await fetchSession()
 
-  return (
+  return (<>
     <html lang="en" style={{background:"black", }}>
       <head>
           <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -26,5 +26,5 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         </AppClientProvider>
       </body>
     </html>
-  )
+  </>)
 }

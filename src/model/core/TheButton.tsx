@@ -2,7 +2,7 @@ import { Box, Cylinder } from "@react-three/drei"
 
 function Component ({}) {
     return (
-        <group rotation={[0,Math.PI/5*4,0]} >
+        <group rotation={[0,Math.PI/5*4,0]} position={[0,1,0]}>
             
             <Box args={[1,1,1]} scale={0.7}  position={[0,-1,0]} >
                 <meshStandardMaterial attach="material"  color={0xff3333} />

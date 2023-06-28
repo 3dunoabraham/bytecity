@@ -18,17 +18,8 @@ export default async function Page() {
       <div className='  h-min-100vh pos-rel w-100 '>      
         
         <div className='flex '>
-          {!foundJWT &&  <>
-            <div className='py-2'></div>
-          </>
-          }
+          {!foundJWT &&  <> <div className='py-2'></div> </>}
           <a href="/" rel="noopener noreferrer" className='nodeco  w-min-80px z-800 pos-rel  flex-center ' >
-            {/* <h1 className='tx-center px-2  flex-col tx-bold-2 tx-white bg-black py-2 z-800 pos-rel bord-r-5 box-shadow-5-b '
-              style={{transform:"translateX(5px)"}}
-            >
-              <span className='tx-md'><b>Byt</b>e</span>
-              <span className='tx-sm'><b>C</b>ity</span>
-            </h1> */}
             <div className='pt-3'>
               <div className="box-shadow-2-b pa-1 block bord-r-10" style={{background:"#ffffff"}}>
                 <Image src={"/bytecity.png"} alt="bytecity" width={32} height={32} />
@@ -37,27 +28,23 @@ export default async function Page() {
           </a>
         </div>
         
-          {!foundJWT && <>
-            <div className='pos-abs top-0 right-0 '>
-              <div className='Q_xs py-5'></div>
-              <ConnectPlayerForm />
-            </div>
-          </>}
+        {!foundJWT && <>
+          <div className='pos-abs top-0 right-0 '>
+            <div className='Q_xs py-5'></div>
+            <ConnectPlayerForm />
+          </div>
+        </>}
 
       </div>
       <div className='pos-abs top-0 w-100 h-100 '  >
-        <Suspense>
-          <Level2 />
-        </Suspense>
-        {!foundJWT &&  <>
-          <DevelopmentRegister />
-        </>}
-        {!!foundJWT && !!foundUser && <div className=''>
-          <DevelopmentProfile {...{foundJWT, foundUser}} />
-          <div className=' bottom-0'>
-            <BottomStats />
+        <Suspense> <Level2 /> </Suspense>
+        {!foundJWT &&  <> <DevelopmentRegister /> </>}
+        {!!foundJWT && !!foundUser &&
+          <div className=''>
+            <DevelopmentProfile {...{foundJWT, foundUser}} />
+            <div className=' bottom-0'> <BottomStats /> </div>
           </div>
-        </div>}
+        }
       </div>
     </main>
   </>)

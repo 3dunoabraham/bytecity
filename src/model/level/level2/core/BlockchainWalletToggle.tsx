@@ -3,7 +3,7 @@ import IsConnectedBridge from "@/model/npc/DeBridge/IsConnectedBridge";
 import { Cylinder } from "@react-three/drei"
 import { useLayoutEffect, useMemo, useRef, useState } from "react"
 import * as THREE from "three";
-import { useAccount, useConnect, useContractRead, useEnsName } from "wagmi";
+import { useAccount, useConnect, useContractRead } from "wagmi";
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { readContract, waitForTransaction, writeContract } from "wagmi/actions";
 import {
@@ -37,7 +37,6 @@ export function BoxBlendGeometry({ width = 1, height = 1, radius = 0.2, depth = 
 
 function BlockchainWalletToggle({ calls, state }: any) {
   const { address, isConnected } = useAccount()
-  const { data: ensName } = useEnsName({ address })
   const [loading, s__loading] = useState(false)
   const { connect } = useConnect({
     connector: new InjectedConnector(),

@@ -50,51 +50,7 @@ function Level1_Index1 ({state, calls, }:any) {
 
 
 
-  
-  const triggerLogin = async () => {    
-    let rpiPrompt:any =  prompt("Enter your Byte City Credentials! \n\n < Referral Email : Secret PIN >","") 
-    if (!rpiPrompt) return
-    if (rpiPrompt.split(":").length < 2) return
-    app.alert("success", "Validating credentials...")
-    try {
-      let playerCredentials = {        
-        referral:rpiPrompt.split(":")[0],
-        pin:rpiPrompt.split(":")[1]
-      }
-      let playerRes = await login(playerCredentials)
-      if (!playerRes) return 
-      let playerObj = playerRes.user
-      app.alert("success", "Player connected!")   
-      completeLogin(rpiPrompt, playerObj)
-    } catch (e:any) {
-      app.alert("error", "Invalid credentials!")   
-    }
-  }
-  
-  const completeLogin = async (rpiPrompt:string, playerRes:any) => { 
-    calls.s__rpi(rpiPrompt)
-    calls.s__LS_rpi(rpiPrompt)
 
-    if (playerRes.goodAttempts > 0) {
-      calls.setTutoStage(4)
-    }
-    window.location.reload()
-  }
-
-  const triggerLogout = () => {
-    if (prompt("Sign out from: <"+state.rpi.split(":")[0]+":****> (yes/no)","yes") !== "yes") return
-    
-    quitAll()
-  }
-  const quitAll = async () => {
-
-    calls.s__LS_rpi("user:0000");
-    calls.s__LS_tutoStage("{}");
-    calls.s__LS_tokensArrayObj("{}");
-
-    await logout()
-    window.location.reload()
-  }
   const triggerResetAll = () => {
     if (prompt("Reset local storage (yes/no)","yes") !== "yes") return
 
@@ -118,12 +74,10 @@ function Level1_Index1 ({state, calls, }:any) {
       <meshStandardMaterial color={!!state.tutoStage && state.tutoStage?.lvl > 4 ? "#84BC4E" : "#fff"}/>
     </Box>
 
-    <ConnectPlayerToggle calls={{triggerLogin, triggerLogout,}}
+    {/* <ConnectPlayerToggle calls={{triggerLogin, triggerLogout,}}
       state={{isDefaultUser:state.isDefaultUser, }} 
-    />
-    <BlockchainWalletToggle calls={{triggerLogin, triggerLogout,}}
-      state={{isDefaultUser:state.isDefaultUser, }} 
-    />
+    /> */}
+    <BlockchainWalletToggle calls={{}} state={{isDefaultUser:state.isDefaultUser, }}  />
     <ResetLocalStorage calls={{triggerResetAll}} state={{isDefaultUser:state.isDefaultUser, }} />
     
     {/* START TUTORIAL */}

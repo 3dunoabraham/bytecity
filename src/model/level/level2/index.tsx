@@ -14,7 +14,7 @@ import { useUnloadHandler } from "@/../script/util/hook/useHooksHelper";
 import { fetchPost } from "@/../script/util/helper/fetchHelper";
 import Level1_Index1  from "./index1";
 import MovingBoxAndPipe from "./npc/MovingBoxAndPipe";
-import Scene from "@/model/core/Scene"
+import RootScene from "@/model/core/RootScene"
 import SavedGoalPost from "./goal/SavedGoalPost";
 import RoadNorthSouth from "./core/RoadNorthSouth";
 import GoodPlaceGoal from "./goal/GoodPlaceGoal";
@@ -39,23 +39,20 @@ const chartRotLookup:any = {
 function Component ({}) {
   const app:any = useContext(AppContext)
   const searchParams:any = useSearchParams();
-
-  const [opponent, s__opponent] = useState(searchParams.get('oppo'))
   const { user, superuser, do:{login, logout, fetchSupaPlayer, demo,},  jwt }:any = useAuth()
   const [chartPos, s__chartPos]:any = useState(chartPosLookup["btc"])
   const [chartRot, s__chartRot]:any = useState(chartRotLookup["btc"])
   const [LS_rpi, s__LS_rpi] = useLocalStorage('rpi', "user:0000")
+  const [rpi, s__rpi] = useState<any>(LS_rpi)
   const [_tutoStage, s__LS_tutoStage] = useLocalStorage('level2tutorialstage', "{}")
   const [LS_tokensArrayObj, s__LS_tokensArrayObj] = useLocalStorage('localTokensArrayObj', "{}")
   const [chartBoxPos, s__chartBoxPos] = useState([0,0,0])
-  const [enablePan, s__enablePan] = useState(true)
   const [tokensArrayObj,s__tokensArrayObj] = useState<any>({})
   const [savedString,s__savedString] = useState("")
   const [selectedToken, __selectedToken] = useState("btc")
   const [currentOrders, s__currentOrders] = useState<any>({})
   const [orderHistory, s__orderHistory] = useState<any>([])
   const [profitHistory, s__profitHistory] = useState<any>([])
-  const [rpi, s__rpi] = useState<any>(LS_rpi)
   const [form,s__form] = useState({
     id:"BTCUSDT3M",
   })
@@ -175,45 +172,27 @@ function Component ({}) {
     }
   }
   const toggleBattleMode = async (newMode:number) => {
-    // let newMode: any = prompt("Enter your new desired battle mode!", "0") || 0
-    // if (!binanceapikeys) return
-    // if (binanceapikeys.split(":").length < 2) return
     let oppoLink = searchParams.get('link')
     if (!oppoLink) return
     const splitKey = rpi.split(":")
     if (splitKey[0] == "user" && splitKey[1] == "0000") { return true }
-    // let splitKey:any = [0,0]
-    // let binanceapikeys:any = "0:0"
-    console.log("superuser.mode superuser.mode superuser.mode")
-
-    
-
     try {
       let thedata = {
         referral: splitKey[0],
         pin: splitKey[1],
         newMode,
         oppo:oppoLink,
-        // binancePublic: binanceapikeys.split(":")[0],
-        // binanceSecret: binanceapikeys.split(":")[1],
       }
-      console.log("thedata", thedata)
-      // app.alert("neutral", "Setting battle mode")
-      
       let fetchRes: any = await fetchPost("/api/player/battle", thedata)
-      console.log("fetchRes", fetchRes)
-
       
-      if (fetchRes.status >= 400)
-      {
-
+      if (fetchRes.status >= 400) {
         return app.alert("error", "Failed to Set battle mode")
       }
       app.alert("success", "Successfully set battle mode!")
 
       fetchSupaPlayer()
     } catch (e: unknown) {
-      console.log("e", e)
+      console.error("e", e)
       app.alert("error", "Failed battle mode!")
     }
   }
@@ -257,7 +236,6 @@ function Component ({}) {
     let newId = val.toUpperCase() + "USDT" + selectedTimeframe.toUpperCase()
     s__form({id:newId})
     __selectedToken(val)
-    // console.log()
     s__chartPos(chartPosLookup[val])
     s__chartRot(chartRotLookup[val])
   }
@@ -334,8 +312,6 @@ function Component ({}) {
       if (newTradeObj.side === "sell") {
         app.audio("neutral","./sound/404.wav")
         app.alert("error", "Live BUY order not found!");
-        // s__orderHistory(orderHistory);
-        // if (tutoStage > 4)
       }
     }
   };
@@ -422,7 +398,7 @@ function Component ({}) {
 
 
   return (<>
-    <Scene>
+    <RootScene>
       {/* CONSTANT LANDING SCENE */}
       {/* CHAPTER 1 */}
       {/* BTC | Bitcoin | Bit Coin */}
@@ -554,7 +530,7 @@ function Component ({}) {
         </group>
       }
       
-    </Scene>
+    </RootScene>
   </>)
 }
 
