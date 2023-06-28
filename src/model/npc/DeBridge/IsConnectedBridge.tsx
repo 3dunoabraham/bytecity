@@ -18,9 +18,11 @@ export function IsConnectedBridge({state,calls}:any) {
 
 
       {/* SECOND PART | to the outside */}
+      {!!state.nftBalanceOfUser && !!state.nftBalanceOfUser.data &&
       <Box args={[3.2,0.08,0.1]} position={[-2.,0.39,0]} rotation={[0,0,-0.18]}>
         <meshStandardMaterial color={"#ccc"} />
       </Box>
+}
       <Box args={[2,0.6,2.5]} position={[-4.5,0.65,0]}>
         <meshStandardMaterial color={"#ccc"} />
       </Box>
