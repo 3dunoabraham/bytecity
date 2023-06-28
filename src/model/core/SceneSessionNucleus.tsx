@@ -3,6 +3,8 @@ import ConnectPlayerToggle from "../level/level2/core/ConnectPlayerToggle"
 import { useLocalStorage } from "usehooks-ts"
 import { AppContext } from "../../../script/state/context/AppContext"
 import { useAuth } from "../../../script/state/context/AuthContext"
+import BlockchainWalletToggle from "../level/level2/core/BlockchainWalletToggle"
+import ResetLocalStorage from "../level/level2/core/ResetLocalStorage"
 
 export function SceneSessionNucleus({}) {
   const [LS_tokensArrayObj, s__LS_tokensArrayObj] = useLocalStorage('localTokensArrayObj', "{}")
@@ -57,13 +59,25 @@ export function SceneSessionNucleus({}) {
     app.alert("success", "Player signed out, refreshing game!")   
     window.location.reload()
   }
+  const triggerResetLocalStorage = () => {
+    if (prompt("Reset local storage (yes/no)","yes") !== "yes") return
+    
+    s__LS_rpi("user:0000");
+    s__LS_tutoStage("{}");
+    s__LS_tokensArrayObj("{}");
+    window.location.reload()
+  }
 
 
-
+  
   return (<>
     <ConnectPlayerToggle calls={{triggerLogin, triggerLogout,}}
       state={{isDefaultUser, }} 
     />
+
+    <BlockchainWalletToggle calls={{}} state={{isDefaultUser }}  />
+
+    <ResetLocalStorage calls={{triggerResetLocalStorage}} state={{ isDefaultUser }} />
   </>)
 }
 

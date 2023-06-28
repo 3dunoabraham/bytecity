@@ -51,16 +51,6 @@ function Level1_Index1 ({state, calls, }:any) {
 
 
 
-  const triggerResetAll = () => {
-    if (prompt("Reset local storage (yes/no)","yes") !== "yes") return
-
-    
-    calls.s__LS_rpi("user:0000");
-    calls.s__LS_tutoStage("{}");
-    calls.s__LS_tokensArrayObj("{}");
-    window.location.reload()
-  }
-
 
 
   return (<>
@@ -74,11 +64,7 @@ function Level1_Index1 ({state, calls, }:any) {
       <meshStandardMaterial color={!!state.tutoStage && state.tutoStage?.lvl > 4 ? "#84BC4E" : "#fff"}/>
     </Box>
 
-    {/* <ConnectPlayerToggle calls={{triggerLogin, triggerLogout,}}
-      state={{isDefaultUser:state.isDefaultUser, }} 
-    /> */}
-    <BlockchainWalletToggle calls={{}} state={{isDefaultUser:state.isDefaultUser, }}  />
-    <ResetLocalStorage calls={{triggerResetAll}} state={{isDefaultUser:state.isDefaultUser, }} />
+    
     
     {/* START TUTORIAL */}
     {!state.hasAnyToken && <ClickToStart calls={{join:calls.join}} />}
