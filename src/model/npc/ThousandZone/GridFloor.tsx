@@ -12,48 +12,35 @@ const GridBlocks: React.FC<Props> = ({
   yCount = 5,
   zCount = 100,
 }) => {
+  const [localY, s__localY] = useState(0)
   const [hoveredBlock, setHoveredBlock] = useState<number | null>(null);
   const [solidBlocks, setSolidBlocks] = useState<number[]>([]);
-
-  const handlePlaneClick = (index: number) => {
+  const handlePlaneClick = (e:any, index: number, heightLevel: number) => {
     if (!solidBlocks.includes(index)) {
       setSolidBlocks([...solidBlocks, index]);
+      // s__localY
+    } else {
+      alert()
+
+      e.stopPropagation()
     }
     setHoveredBlock(null);
   };
-
-  const handlePlaneHover = (index: number) => {
+  const handlePlaneHover = (e:any,index: number) => {
+    if (!solidBlocks.includes(index)) {
+    } else { e.stopPropagation() }
     setHoveredBlock(index);
   };
-
-  const handlePlaneHoverEnd = () => {
-    setHoveredBlock(null);
-  };
-
-
-  
-
+  const handlePlaneHoverEnd = () => { setHoveredBlock(null); };
   const handleWireClick = (e:any, index: number) => {
-    // return
     if (!solidBlocks.includes(index)) {
-    } else {
-      e.stopPropagation()
-    }
-    // setHoveredBlock(null);
+    } else { e.stopPropagation() }
   };
-
   const handleWireHover = (e:any,index: number) => {
     if (!solidBlocks.includes(index)) {
-    } else {
-      e.stopPropagation()
-    }
-    // setHoveredBlock(index);
+    } else { e.stopPropagation() }
   };
-
-  const handleWireHoverEnd = () => {
-    // setHoveredBlock(null);
-  };
-
+  const handleWireHoverEnd = () => { };
 
 
 
@@ -73,29 +60,25 @@ const GridBlocks: React.FC<Props> = ({
 
         return (
           <group key={index}>
-            <Box receiveShadow={!isSolid} castShadow={isSolid}
-              args={[1, 1, 1]}
-              position={[xPos, yPos, zPos]}
-              onClick={(e:any) => handleWireClick(e,index)}
-              onPointerOver={(e:any) => handleWireHover(e,index)}
-              onPointerOut={handleWireHoverEnd}
-            >
-              <meshStandardMaterial
-                transparent={!isSolid && !isHovered}
-                opacity={0.1}
-                color={isSolid ? "#777777" : undefined}
-              />
-            </Box>
-            {y === 0 && (
-              <Plane castShadow receiveShadow
-                args={[1, 1]}
-                onClick={() => handlePlaneClick(index)}
-                onPointerOver={() => handlePlaneHover(index)}
-                onPointerOut={handlePlaneHoverEnd}
-                position={[xPos, yPos - 0.5, zPos]}
-                rotation={[-Math.PI / 2, 0, 0]}
+
+            {isSolid &&  (
+              <Box receiveShadow={!isSolid} castShadow={isSolid} args={[1, 1, 1]} position={[xPos, yPos, zPos]}
+                onClick={(e:any) => handleWireClick(e,index)} onPointerOut={handleWireHoverEnd}
+                onPointerOver={(e:any) => handleWireHover(e,index)}
               >
-                <meshStandardMaterial color="#888888" />
+                <meshStandardMaterial transparent={!isSolid && !isHovered}
+                  opacity={0.1} color={isSolid ? "#777777" : undefined}
+                />
+              </Box>
+            )}
+            { (
+              <Plane castShadow receiveShadow args={[1, 1]} onPointerOut={handlePlaneHoverEnd}
+                position={[xPos, isSolid ? +0.51 : -0.5, zPos]}
+                rotation={[-Math.PI / 2, 0, 0]}
+                onClick={(e:any) => handlePlaneClick(e,index, parseInt(isSolid ? "1" : ""))}
+                onPointerOver={(e:any) => handlePlaneHover(e,index)}
+              >
+                <meshStandardMaterial color="#88aa88" />
               </Plane>
             )}
           </group>

@@ -54,23 +54,10 @@ function Component ({}) {
   const yCount = 1
   return (<>
     <RootScene>
-    <group position={[0,1.5,1.5]} scale={2}>
-      <SceneSessionNucleus included={["blockchain"]} />
-    </group>
-
-    {/* <Plane rotation={[-Math.PI/2,0,0]} args={[5,5]}>
-
-    </Plane> */}
-    {/* <group position={[-4.5,0,-4.5]}>
-      <ThousandZone xCount={xCount} zCount={zCount}  />
-    </group> */}
-    <GridFloor xCount={xCount} yCount={yCount} zCount={zCount} />
-    
-
-      
-    <MillionControls state={{tutoStage, hasAnyToken}} />
-    <MFEnv />
-
+      <group position={[0,1.5,1.5]} scale={2}> <SceneSessionNucleus included={["blockchain"]} /> </group>
+      <GridFloor xCount={xCount} yCount={yCount} zCount={zCount} />
+      <MillionControls state={{tutoStage, hasAnyToken}} />
+      <MFEnv />
     </RootScene>
   </>)
 }
