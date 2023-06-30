@@ -6,7 +6,7 @@ import { useAuth } from "../../../script/state/context/AuthContext"
 import BlockchainWalletToggle from "../level/level2/core/BlockchainWalletToggle"
 import ResetLocalStorage from "../level/level2/core/ResetLocalStorage"
 
-export function SceneSessionNucleus({}) {
+export function SceneSessionNucleus({included=["local","database","blockchain"]}:{included?:string[]}) {
   const [LS_tokensArrayObj, s__LS_tokensArrayObj] = useLocalStorage('localTokensArrayObj', "{}")
   const [_tutoStage, s__LS_tutoStage] = useLocalStorage('level2tutorialstage', "{}")
   const tutoStage:any = useMemo(()=> JSON.parse(_tutoStage) , [_tutoStage])
@@ -71,13 +71,19 @@ export function SceneSessionNucleus({}) {
 
   
   return (<>
-    <ConnectPlayerToggle calls={{triggerLogin, triggerLogout,}}
-      state={{isDefaultUser, }} 
-    />
+    {included.includes("database") &&
+      <ConnectPlayerToggle calls={{triggerLogin, triggerLogout,}}
+        state={{isDefaultUser, }} 
+      />
+    }
 
-    <BlockchainWalletToggle calls={{}} state={{isDefaultUser }}  />
+    {included.includes("blockchain") &&
+      <BlockchainWalletToggle calls={{}} state={{isDefaultUser, included }}  />
+    }
 
-    <ResetLocalStorage calls={{triggerResetLocalStorage}} state={{ isDefaultUser }} />
+    {included.includes("local") &&
+      <ResetLocalStorage calls={{triggerResetLocalStorage}} state={{ isDefaultUser }} />
+    }
   </>)
 }
 

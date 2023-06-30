@@ -21,6 +21,10 @@ import GoodPlaceGoal from "./goal/GoodPlaceGoal";
 import Level1_Index2 from "./index2";
 import Level1_Index3 from "./index3";
 import GoodPlaceBuilder from "./goal/GoodPlaceBuilder";
+import MetaOrbitControls from "@/model/core/MetaOrbitControls";
+import ByteCityEnv from "./core/ByteCityEnv";
+import SceneSessionNucleus from "@/model/core/SceneSessionNucleus";
+import { pov_isDefaultUser } from "../../../../script/util/helper/gameHelper";
 
 const DEFAULT_TOKEN_OBJ = {
   mode:0,state:0,buy:0,sell:0, floor:0,ceil:0,
@@ -36,7 +40,7 @@ const chartRotLookup:any = {
   "btc": [0,Math.PI/2,0], "eth": [0,-Math.PI/2,0], "link": [0,Math.PI/2,0], "ftm": [0,0,0],
 }
 
-function Component ({}) {
+function Level3 ({}) {
   const app:any = useContext(AppContext)
   const searchParams:any = useSearchParams();
   const { user, superuser, do:{login, logout, fetchSupaPlayer, demo,},  jwt }:any = useAuth()
@@ -81,11 +85,8 @@ function Component ({}) {
       return !!atrade[1] && atrade[1] == "profit"
     }).length
   },[profitHistory])
-  const isDefaultUser = useMemo(()=>{
-    const splitKey = rpi.split(":")
-    if (splitKey[0] == "user" && splitKey[1] == "0000") { return true }
-    return false
-  },[rpi])
+  const isDefaultUser = useMemo(()=> pov_isDefaultUser(rpi),[rpi])
+  const splitRPI = useMemo(()=> isDefaultUser ? null : rpi.split(":") ,[rpi])
   const isSelectedTokenDowntrend = useMemo(()=>{
     let tokensArrayArray = tokensArrayObj[selectedToken]
     return !!tokensArrayArray && !!tokensArrayArray[selectedTimeframeIndex] && !!tokensArrayArray[selectedTimeframeIndex].mode
@@ -399,6 +400,13 @@ function Component ({}) {
 
   return (<>
     <RootScene>
+
+    <SceneSessionNucleus />
+
+      
+    <MetaOrbitControls state={{tutoStage, hasAnyToken}} />
+    <ByteCityEnv />
+
       {/* CONSTANT LANDING SCENE */}
       {/* CHAPTER 1 */}
       {/* BTC | Bitcoin | Bit Coin */}
@@ -416,6 +424,7 @@ function Component ({}) {
 
 
       {/* CHAPTER 2 */}
+      {/* FIRST LOCAL GOAL CENTRE */}
       {/* TEXT TUTORIALS */}
       <Level1_Index2 {...{
         state: {
@@ -534,4 +543,4 @@ function Component ({}) {
   </>)
 }
 
-export default Component
+export default Level3

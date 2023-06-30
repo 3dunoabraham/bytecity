@@ -97,7 +97,8 @@ function BlockchainWalletToggle({ calls, state }: any) {
     <DynaText text={!isConnected ? "Connect" : "Connected"} color={"#ff00ff"} font={0.055}
       position={[0, -0.89, -0.75]}
     />
-    {isConnected &&
+
+    {isConnected && state.included.includes("local") &&
       <IsConnectedBridge state={{isConnected, address, nftBalanceOfUser}}
         calls={{buyNFT}}
        />

@@ -23,7 +23,6 @@ function RootScene({
   return (
     <Canvas camera={{ fov: 55, position: [1, 0.75, 1], }} shadows>
 
-      <SceneSessionNucleus />
 
       {!!children && <> {childrenWithProps} </>}
       {!children && <>
