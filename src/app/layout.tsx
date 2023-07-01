@@ -2,6 +2,7 @@ import '@/../style/theme.css'
 import '@/../style/css.css'
 import { fetchSession } from '@/../script/state/repository/session'
 import AppClientProvider from '@/dom/organ/layout/AppClientProvider'
+import { Analytics } from '@vercel/analytics/react';
 
 export const metadata = {
   title: 'Byte City',
@@ -24,6 +25,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <AppClientProvider session={session}>
           <> {children}  </>
         </AppClientProvider>
+        <Analytics />
       </body>
     </html>
   </>)
