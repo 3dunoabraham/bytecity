@@ -54,6 +54,8 @@ const EvolutionBox = forwardRef(({
     return {
       toggleGame,
       queryUSDT,
+      clickedPrice,
+      clicked,
     };
   }, []);
 
@@ -76,7 +78,15 @@ const EvolutionBox = forwardRef(({
   }
 
   const triggerJoin = () => { calls.join(form.id) }
-  const triggerLeave = () => { calls.leaveAsset(form.id) }
+  const triggerLeave = () => {
+    if (clicked) {
+      let answ = prompt("You have a pending transaction \n\n do you want to cancel it? (y/n)","y")
+      if (answ != "y") { return }
+      toggleGame()
+    }
+
+    calls.leaveAsset(form.id)
+  }
   const triggerTurnOn = () => {
     if (clicked) { return app.alert("error", "Complete the pending transaction first") }
     calls.turnOn(form.id)

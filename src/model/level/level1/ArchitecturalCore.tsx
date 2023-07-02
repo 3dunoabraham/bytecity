@@ -1,7 +1,7 @@
 "use client";
 import { Box } from "@react-three/drei";
-import { useContext, useRef, useState } from "react";
-import { Vector3 } from 'three';
+import { useContext, useMemo, useRef, useState } from "react";
+import { Mesh, Vector3 } from 'three';
 
 
 import { AppContext } from "@/../script/state/context/AppContext";
@@ -15,18 +15,22 @@ import MiniCitySign from "@/model/npc/TradingBox/output/MiniCitySign";
 import { fetchMultipleJsonArray, parseDecimals } from "../../../../script/util/helper";
 import { BINA_API_PRICE_BASEURL, GLOBAL_baseToken } from "../../../../script/constant/game";
 import { useQuery } from "@tanstack/react-query";
+import BouncingThing from "@/model/npc/TradingBox/output/BouncingThing";
 
 function ArchitecturalCore ({state, calls, store}:any) {
   const app:any = useContext(AppContext)
   const { user, superuser, do:{login, logout, demo,},  jwt }:any = useAuth()
   const position = new Vector3(-0.75,0,-0.75)
   const $evolBox: any = useRef(null);
+  const [clicked, setClicked] = useState(false)
   const toggleGame = (boxName:string, tradeData:any)=> {
+    setClicked(!!tradeData.value)
+    // console.log("tradeData", boxName, tradeData, state.selectedHasArray)
     if (!state.selectedHasArray) { return }
-    console.log("tradeData", boxName, tradeData, state.selectedHasArray)
     calls.toggleGame(boxName, tradeData)
     // alert("toggleGame")
   }
+  const bouncingThing:any = useRef<Mesh>();
   const refetchInterval = 9000
   const queryUSDT: any = useQuery({
     queryKey: ['usdt' + state.token], refetchInterval: refetchInterval,
@@ -38,6 +42,18 @@ function ArchitecturalCore ({state, calls, store}:any) {
       return prr
     }
   })
+  // const [clickedPrice, s__clickedPrice] = useState(0)
+
+  const clickedPrice = useMemo(()=> {
+    if (!$evolBox || !$evolBox.current) return 0
+    return $evolBox.current.clickedPrice
+  }, [])
+  // const clicked = useMemo(()=> {
+  //   if (!$evolBox || !$evolBox.current) return false
+  //   return $evolBox.current.clicked
+  // }, [])
+
+
 
   return (<>
   
@@ -53,13 +69,25 @@ function ArchitecturalCore ({state, calls, store}:any) {
     </group>    
     
     
-    <group position={position}>
+      <group position={position}>
         <MiniCitySign tokensArrayArray={state.tokensArrayArray}
           state={{queryUSDT,state:state.isSelected, selectedHasArray: state.selectedHasArray}}
           calls={{}}
         />
       </group>
       
+      {state.selectedHasArray &&
+        <group position={position}>
+          <BouncingThing tokensArrayArray={state.tokensArrayArray} _bouncingThing={bouncingThing}
+            livestate={{clickedPrice, queryUSDT}}
+            calls={{
+              app_tip:(msg:string)=>{app.alert("neutral",msg)},
+            }}
+            isSelectedId={state.isSelectedId} token={state.token} clicked={clicked}
+          />
+        </group>
+      }
+
     {/* START TUTORIAL */}
     {!state.hasAnyToken && <TownTextStart calls={{}} />}
 
