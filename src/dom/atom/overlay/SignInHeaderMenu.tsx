@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import ConnectPlayerForm from "@/model/overlay/ConnectPlayerForm"
 
-export function SignInHeaderMenu({foundJWT}:any) {
+export function SignInHeaderMenu({foundJWT, eraName}:any) {
   return (
     <div className='  h-min-100vh pos-rel w-100 '>      
         <div className='flex '>
@@ -17,7 +17,7 @@ export function SignInHeaderMenu({foundJWT}:any) {
         {!foundJWT && <>
           <div className='pos-abs top-0 right-0 '>
             <div className='Q_xs py-5'></div>
-            <ConnectPlayerForm />
+            <ConnectPlayerForm eraName={eraName} />
           </div>
         </>}
 

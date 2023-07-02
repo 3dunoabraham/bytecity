@@ -40,7 +40,7 @@ const chartRotLookup:any = {
   "btc": [0,Math.PI/2,0], "eth": [0,-Math.PI/2,0], "link": [0,Math.PI/2,0], "ftm": [0,0,0],
 }
 
-function Level3 ({}) {
+function Level2 ({eraName="cityEra"}:any) {
   const app:any = useContext(AppContext)
   const searchParams:any = useSearchParams();
   const { user, superuser, do:{login, logout, fetchSupaPlayer, demo,},  jwt }:any = useAuth()
@@ -48,8 +48,8 @@ function Level3 ({}) {
   const [chartRot, s__chartRot]:any = useState(chartRotLookup["btc"])
   const [LS_rpi, s__LS_rpi] = useLocalStorage('rpi', "user:0000")
   const [rpi, s__rpi] = useState<any>(LS_rpi)
-  const [_tutoStage, s__LS_tutoStage] = useLocalStorage('level2tutorialstage', "{}")
-  const [LS_tokensArrayObj, s__LS_tokensArrayObj] = useLocalStorage('localTokensArrayObj', "{}")
+  const [_tutoStage, s__LS_tutoStage] = useLocalStorage(eraName+'TutorialStage', "{}")
+  const [LS_tokensArrayObj, s__LS_tokensArrayObj] = useLocalStorage(eraName+'TokensArrayObj', "{}")
   const [chartBoxPos, s__chartBoxPos] = useState([0,0,0])
   const [tokensArrayObj,s__tokensArrayObj] = useState<any>({})
   const [savedString,s__savedString] = useState("")
@@ -543,4 +543,4 @@ function Level3 ({}) {
   </>)
 }
 
-export default Level3
+export default Level2

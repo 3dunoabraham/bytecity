@@ -6,7 +6,7 @@ import Image from 'next/image';
 import Link from "next/link";
 import DisconnectPlayerForm from "./DisconnectPlayerForm";
 
-function DevelopmentProfile ({foundUser, foundJWT}:any) {
+function DevelopmentProfile ({foundUser, foundJWT, eraName}:any) {
     const [asd, s__asd] = useState("")
 
     const setFullscreen = () => {
@@ -70,7 +70,7 @@ function DevelopmentProfile ({foundUser, foundJWT}:any) {
                 </Link>
                   
           <div className='pos-abs top-0 right-0'>
-              <DisconnectPlayerForm />
+              <DisconnectPlayerForm eraName={eraName} />
             </div>
                 <div className="pos-abs top-0 left-0 pa-3 opaci-chov--75"
                         onClick={()=>{s__asd("")}} 

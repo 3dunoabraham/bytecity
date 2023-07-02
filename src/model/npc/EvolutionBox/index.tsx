@@ -144,7 +144,7 @@ const selectedHasArray = useMemo(()=>{
 
       
       <group position={position} >
-        <EvolTextContainer tokensArrayArray={store}
+        <EvolTextContainer tokensArrayArray={store[state.form.id]}
           state={{clicked,clickedPrice,isSelectedId,token,queryUSDT,tokenColor,selectedHasArray,}}
           calls={{onTextClick,turnOff,turnOn}}
         />

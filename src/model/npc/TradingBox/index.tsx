@@ -31,6 +31,7 @@ export const tokenColors:any = {
   "ftm": "#1A6AFF",
 }
 const TradingBox = forwardRef(({
+  eraName = "cityEra",
   mainModel = "pc",
   turnOn, turnOff, leaveAsset, join,
   trendDown, trendUp,
@@ -46,7 +47,7 @@ const TradingBox = forwardRef(({
   const API_PRICE_BASEURL = "https://api.binance.com/api/v3/ticker/price?symbol="
   const baseToken = "USDT"
     const app:any = useContext(AppContext)
-    const [LS_tokensArrayObj, s__LS_tokensArrayObj] = useLocalStorage('localTokensArrayObj', "{}")
+    const [LS_tokensArrayObj, s__LS_tokensArrayObj] = useLocalStorage(eraName+'TokensArrayObj', "{}")
     const [LS_rpi, s__LS_rpi] = useLocalStorage('rpi', "")
     const [rpi, s__rpi] = useState("")
     const [showAllTokens,s__showAllTokens] = useState<any>(true)

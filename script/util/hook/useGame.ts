@@ -15,9 +15,18 @@ export const useGame: any = (initialConfig={state:{eraName:"unnamedEra"}}) => {
   const [selectedBox, s__selectedBox] = useState<any>(null)
   const [LS_tokensArrayObj, s__LS_tokensArrayObj] = useLocalStorage(state.eraName+'TokensArrayObj', "{}")
   const [tokensArrayObj,s__tokensArrayObj] = useState<any>({})
-  const [_tutoStage, s__LS_tutoStage] = useLocalStorage(state.eraName+'tutorialStage', "{}")
-  const tutoStage:any = useMemo(()=> JSON.parse(_tutoStage) , [_tutoStage])
+  const [_tutoStage, s__LS_tutoStage] = useLocalStorage(state.eraName+'TutorialStage', "{}")
+  
+  const tutoStage:any = useMemo(()=> {
+    try {
+      console.log("_tutoStage")
+      JSON.parse(_tutoStage)
+    } catch (e:unknown) {
+      return null
+    }
+} , [_tutoStage])
 
+  const setTutoStage = (lvl: any) => s__LS_tutoStage(JSON.stringify({ ...tutoStage, lvl }))
   const leaveBox = (x:string) => {
     s__selectedBox(x)
     let new_tokensArrayObj = { ...tokensArrayObj };
@@ -31,7 +40,7 @@ export const useGame: any = (initialConfig={state:{eraName:"unnamedEra"}}) => {
     
     s__selectedBox(x)
     updateTokenOrder(x, selectedTimeframeIndex, "state", 0)
-    if (!tutoStage.lvl) {
+    if (!tutoStage || !tutoStage.lvl) {
       app.alert("success","Game Started!")
       app.audio("neutral","./sound/aaa.wav")
     }
@@ -91,10 +100,12 @@ export const useGame: any = (initialConfig={state:{eraName:"unnamedEra"}}) => {
     state:{
       ...state,
       hasAnyToken,
+      tutoStage
     },
     calls: {
       join: joinBox,    
-      leave: leaveBox,    
+      leave: leaveBox,
+          
     }
   }
 }

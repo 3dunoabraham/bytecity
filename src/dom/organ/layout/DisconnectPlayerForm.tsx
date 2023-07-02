@@ -8,9 +8,10 @@ import { useAuth } from "@/../script/state/context/AuthContext";
 import { AppContext } from "@/../script/state/context/AppContext";
 
 const DisconnectPlayerForm = ({
-}: { }) => {
-  const [LS_tokensArrayObj, s__LS_tokensArrayObj] = useLocalStorage('localTokensArrayObj', "{}")
-  const [_tutoStage, s__LS_tutoStage] = useLocalStorage('level2tutorialstage', "{}")
+  eraName="unnamedEra"
+}: any) => {
+  const [LS_tokensArrayObj, s__LS_tokensArrayObj] = useLocalStorage(eraName+'TokensArrayObj', "{}")
+  const [_tutoStage, s__LS_tutoStage] = useLocalStorage(eraName+'TutorialStage', "{}")
 
   const app:any = useContext(AppContext)
   const { do:{ logout } }:any = useAuth()

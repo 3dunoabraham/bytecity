@@ -1,9 +1,9 @@
 "use client";
-import "@rainbow-me/rainbowkit/styles.css";
-import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit";
-import { configureChains, createConfig, WagmiConfig } from "wagmi";
-import { sepolia } from "wagmi/chains";
-import { publicProvider } from "wagmi/providers/public";
+// import "@rainbow-me/rainbowkit/styles.css";
+// import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit";
+// import { configureChains, createConfig, WagmiConfig } from "wagmi";
+// import { sepolia } from "wagmi/chains";
+// import { publicProvider } from "wagmi/providers/public";
 
 import { useMap } from 'usehooks-ts';
 import { useState, useMemo, useEffect, useRef } from 'react';
@@ -19,19 +19,19 @@ import { InventoryProvider } from '@/../script/state/context/InventoryContext';
 import AudioContainer from '@/dom/atom/common/AudioContainer';
 
 
-const { chains, publicClient } = configureChains([sepolia], [publicProvider()]);
+// const { chains, publicClient } = configureChains([sepolia], [publicProvider()]);
 
-const { connectors } = getDefaultWallets({
-  appName: "WebDAO",
-  projectId: "89a152808dd3d7422c6fc305e49f9225",
-  chains,
-});
+// const { connectors } = getDefaultWallets({
+//   appName: "WebDAO",
+//   projectId: "89a152808dd3d7422c6fc305e49f9225",
+//   chains,
+// });
 
-const wagmiConfig = createConfig({
-  autoConnect: true,
-  connectors,
-  publicClient,
-});
+// const wagmiConfig = createConfig({
+//   autoConnect: true,
+//   connectors,
+//   publicClient,
+// });
 
 function AppClientProvider({ session, children, }: { session: any, children: React.ReactElement }) {
   

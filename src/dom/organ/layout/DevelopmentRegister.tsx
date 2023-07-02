@@ -4,15 +4,15 @@ import { useState } from "react";
 import { FaExternalLinkAlt, FaPause, FaPauseCircle, FaRecycle, FaCity, FaArrowDown, FaBook, FaTwitter, FaUser, FaUserAlt, FaUserCircle, FaGoogle } from "react-icons/fa";
 import Image from 'next/image';
 import Link from "next/link";
-import { InjectedConnector } from 'wagmi/connectors/injected'
-import { ConnectButton } from "@rainbow-me/rainbowkit";
-import { useAccount, useConnect, useContractRead } from "wagmi";
-import {
-  CryptoDevsDAOABI,
-  WebDAOAddress,
-  CryptoDevsNFTABI,
-  BitsNFTAddress,
-} from "@/../script/constant/blockchain";
+// import { InjectedConnector } from 'wagmi/connectors/injected'
+// import { ConnectButton } from "@rainbow-me/rainbowkit";
+// import { useAccount, useConnect, useContractRead } from "wagmi";
+// import {
+//   CryptoDevsDAOABI,
+//   WebDAOAddress,
+//   CryptoDevsNFTABI,
+//   BitsNFTAddress,
+// } from "@/../script/constant/blockchain";
 function Component({ }) {
   //   const { address, isConnected } = useAccount();
   // const [asd, s__asd] = useState("")

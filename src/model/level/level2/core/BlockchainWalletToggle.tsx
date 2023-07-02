@@ -3,15 +3,15 @@ import IsConnectedBridge from "@/model/npc/DeBridge/IsConnectedBridge";
 import { Cylinder } from "@react-three/drei"
 import { useLayoutEffect, useMemo, useRef, useState } from "react"
 import * as THREE from "three";
-import { useAccount, useConnect, useContractRead } from "wagmi";
-import { InjectedConnector } from 'wagmi/connectors/injected'
-import { readContract, waitForTransaction, writeContract } from "wagmi/actions";
-import {
-  CryptoDevsDAOABI,
-  WebDAOAddress,
-  CryptoDevsNFTABI,
-  BitsNFTAddress,
-} from "@/../script/constant/blockchain";
+// import { useAccount, useConnect, useContractRead } from "wagmi";
+// import { InjectedConnector } from 'wagmi/connectors/injected'
+// import { readContract, waitForTransaction, writeContract } from "wagmi/actions";
+// import {
+//   CryptoDevsDAOABI,
+//   WebDAOAddress,
+//   CryptoDevsNFTABI,
+//   BitsNFTAddress,
+// } from "@/../script/constant/blockchain";
 export function BoxBlendGeometry({ width = 1, height = 1, radius = 0.2, depth = 1 }) {
   const geometry: any = useRef()
   const shape = useMemo(() => {
@@ -36,7 +36,7 @@ export function BoxBlendGeometry({ width = 1, height = 1, radius = 0.2, depth = 
 }
 
 function BlockchainWalletToggle({ calls, state }: any) {
-  const { address, isConnected } = useAccount()
+  // const { address, isConnected } = useAccount()
   const [loading, s__loading] = useState(false)
   // const { connect } = useConnect({
   //   connector: new InjectedConnector(),
@@ -61,29 +61,29 @@ function BlockchainWalletToggle({ calls, state }: any) {
   }
       
   async function mint() {
-    if (loading) return
-    s__loading(true);
-    console.log("im here 999", loading)
-    try {
-      const tx = await writeContract({
-        abi: CryptoDevsNFTABI,
-        address: BitsNFTAddress,
-        functionName: "mint",
-        // args: [],
-      });
+    // if (loading) return
+    // s__loading(true);
+    // console.log("im here 999", loading)
+    // try {
+    //   const tx = await writeContract({
+    //     abi: CryptoDevsNFTABI,
+    //     address: BitsNFTAddress,
+    //     functionName: "mint",
+    //     // args: [],
+    //   });
 
-      await waitForTransaction(tx);
-      // nftBalanceOfUser.refetch()
-    } catch (error) {
-      console.error(error);
-      window.alert(error);
-    }
-    s__loading(false);
+    //   await waitForTransaction(tx);
+    //   // nftBalanceOfUser.refetch()
+    // } catch (error) {
+    //   console.error(error);
+    //   window.alert(error);
+    // }
+    // s__loading(false);
   }
 
   return (<>
     {/* CONNECT BUTTON */}
-
+{/* 
     <mesh rotation={[Math.PI / 2, 0, 0]} scale={[0.3, 0.3, 0.2]} position={[0, -1, -0.75]}
       castShadow receiveShadow
       onClick={() => { triggerBlockchain() }}
@@ -102,7 +102,7 @@ function BlockchainWalletToggle({ calls, state }: any) {
       <IsConnectedBridge state={{isConnected, address, nftBalanceOfUser}}
         calls={{buyNFT}}
        />
-    }
+    } */}
 
 
 

@@ -8,12 +8,13 @@ import { useBools } from "@/../script/util/hook/useBools";
 import { AppContext } from "@/../script/state/context/AppContext";
 
 const ConnectPlayerForm = ({
-}: {}) => {
+  eraName="unnamedEra",
+}: any) => {
   const app: any = useContext(AppContext)
   const $referral: any = useRef()
   const $pin: any = useRef()
   const [LS_rpi, s__LS_rpi] = useLocalStorage('rpi', "user:0000")
-  const [_tutoStage, s__LS_tutoStage] = useLocalStorage('level2tutorialstage', "{}")
+  const [_tutoStage, s__LS_tutoStage] = useLocalStorage(eraName+'TutorialStage', "{}")
   const [loadings, t__loadings, s__loading]: any = useBools({ login: false })
   const [forms, s__forms]: any = useState({
     referral: "", pin: "", isForm: false,

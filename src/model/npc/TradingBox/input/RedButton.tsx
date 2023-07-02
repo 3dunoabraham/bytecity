@@ -9,9 +9,9 @@ export function RedButton({ state, calls }: any) {
     app.audio("neutral","./sound/click33.wav")
     
     if (!state.isOn) {
-      if (calls.join) { calls.join() }
+      if (calls.join) { calls.join(e) }
     } else {
-      if (calls.leaveAsset) { calls.leaveAsset() }
+      if (calls.leaveAsset) { calls.leaveAsset(e) }
     }
     e.stopPropagation()
   }
