@@ -1,6 +1,7 @@
 "use client";
 import { Box } from "@react-three/drei";
-import { useContext, useState } from "react";
+import { useContext, useRef, useState } from "react";
+import { Vector3 } from 'three';
 
 
 import { AppContext } from "@/../script/state/context/AppContext";
@@ -10,17 +11,33 @@ import EvolutionBox from "@/model/npc/EvolutionBox";
 import FloatingStart from "../../core/FloatingStart";
 import TownTextStart from "./tutorial/TownTextStart";
 import { useGame } from "@/../script/util/hook/useGame";
+import MiniCitySign from "@/model/npc/TradingBox/output/MiniCitySign";
+import { fetchMultipleJsonArray, parseDecimals } from "../../../../script/util/helper";
+import { BINA_API_PRICE_BASEURL, GLOBAL_baseToken } from "../../../../script/constant/game";
+import { useQuery } from "@tanstack/react-query";
 
 function ArchitecturalCore ({state, calls, store}:any) {
   const app:any = useContext(AppContext)
   const { user, superuser, do:{login, logout, demo,},  jwt }:any = useAuth()
-  
+  const position = new Vector3(-0.75,0,-0.75)
+  const $evolBox: any = useRef(null);
   const toggleGame = (boxName:string, tradeData:any)=> {
     if (!state.selectedHasArray) { return }
     console.log("tradeData", boxName, tradeData, state.selectedHasArray)
     calls.toggleGame(boxName, tradeData)
     // alert("toggleGame")
   }
+  const refetchInterval = 9000
+  const queryUSDT: any = useQuery({
+    queryKey: ['usdt' + state.token], refetchInterval: refetchInterval,
+    queryFn: async () => {
+      let theList = await fetchMultipleJsonArray(([state.token].reduce((acc, aToken) => (
+        { ...acc, [aToken]: [`${BINA_API_PRICE_BASEURL}${(aToken + GLOBAL_baseToken).toUpperCase()}`] }
+      ), {})))
+      let prr = parseDecimals(theList[0].price)
+      return prr
+    }
+  })
 
   return (<>
   
@@ -29,12 +46,20 @@ function ArchitecturalCore ({state, calls, store}:any) {
       <meshStandardMaterial color={!!state.tutoStage && state.tutoStage?.lvl > 4 ? "#84BC4E" : "#fff"}/>
     </Box>
 
-    <group position={[-0.75,0,-0.75]}>
-      <EvolutionBox {...{state, calls:{...calls,...{toggleGame}}, store}} >
+    <group position={position}>
+      <EvolutionBox {...{state, calls:{...calls,...{toggleGame}}, store}}  ref={$evolBox} queryUSDT={queryUSDT}>
 
       </EvolutionBox>
     </group>    
     
+    
+    <group position={position}>
+        <MiniCitySign tokensArrayArray={state.tokensArrayArray}
+          state={{queryUSDT,state:state.isSelected, selectedHasArray: state.selectedHasArray}}
+          calls={{}}
+        />
+      </group>
+      
     {/* START TUTORIAL */}
     {!state.hasAnyToken && <TownTextStart calls={{}} />}
 

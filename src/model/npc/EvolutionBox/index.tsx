@@ -15,15 +15,11 @@ import { useRouter, useSearchParams } from "next/navigation";
 
 export const tokenColors: any = { "btc": "#FE8E1B", "eth": "#3EDF5D", "link": "#2A5ADA", "ftm": "#1A6AFF", }
 const EvolutionBox = forwardRef(({
-
-  refetchInterval = 3000,
+  queryUSDT,
+  refetchInterval = 9000,
   position = [0, 0, 0],
   onTextClick = () => { }, onTimeframeClick = () => { },
   score = 0, s__score = () => { },
-  velocityX = 0,
-  setVelocityX = () => { },
-  velocityY = 0,
-  setVelocityY = () => { },
 
   form = { id: "BTCUSDT3M" },
   calls = { toggleGame: () => { }, join: () => { }, leaveAsset: () => { }, turnOn: () => { }, turnOff: () => { }, onTextClick: () => { }, },
@@ -31,21 +27,11 @@ const EvolutionBox = forwardRef(({
   state = { token: "btc", timeframe: "3m", isDowntrend: false, eraName: "unnamedEra", form: null, selectedHasArray: false, }
 }: any, ref: any) => {
   const router = useRouter()
-  const API_PRICE_BASEURL = "https://api.binance.com/api/v3/ticker/price?symbol="
   const baseToken = "USDT"
   const app: any = useContext(AppContext)
   const [chopAmount, s__chopAmount] = useState<any>(0)
   const [klinesArray, s__klinesArray] = useState<any[]>([])
-  const queryUSDT: any = useQuery({
-    queryKey: ['usdt' + state.token], refetchInterval: refetchInterval,
-    queryFn: async () => {
-      let theList = await fetchMultipleJsonArray(([state.token].reduce((acc, aToken) => (
-        { ...acc, [aToken]: [`${API_PRICE_BASEURL}${(aToken + baseToken).toUpperCase()}`] }
-      ), {})))
-      let prr = parseDecimals(theList[0].price)
-      return prr
-    }
-  })
+
   const [clickedPrice, s__clickedPrice] = (
     useState(!!store[form.id] ? parseFloat(`${store[form.id][state.selectedTimeframeIndex].price}`) : 0)
   )
@@ -67,6 +53,7 @@ const EvolutionBox = forwardRef(({
   useImperativeHandle(ref, () => {
     return {
       toggleGame,
+      queryUSDT,
     };
   }, []);
 

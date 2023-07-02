@@ -1,3 +1,7 @@
+export const GLOBAL_baseToken = "USDT"
+
+export const BINA_API_PRICE_BASEURL = "https://api.binance.com/api/v3/ticker/price?symbol="
+
 export const DEFAULT_TIMEFRAME_ARRAY = ["3m","15m","4h","1d","1w"]  
 
 export const DEFAULT_BOX_OBJ = {
