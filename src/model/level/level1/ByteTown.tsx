@@ -12,7 +12,7 @@ import MetaOrbitControls from "@/model/core/MetaOrbitControls";
 import SceneSessionNucleus from "@/model/core/SceneSessionNucleus";
 import StandardSkyEnv from "@/model/core/StandardSkyEnv";
 import ArchitecturalCore from "./ArchitecturalCore";
-import { useGame } from "../../../../script/util/hook/useGame";
+import { useGame } from "@/../script/util/hook/useGame";
 import RootScene from "@/model/core/RootScene"
 
 const ByteTown = ({eraName="townEra"}:any) => {

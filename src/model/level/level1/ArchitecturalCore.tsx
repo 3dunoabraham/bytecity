@@ -9,7 +9,7 @@ import { useCopyToClipboard } from "usehooks-ts";
 import EvolutionBox from "@/model/npc/EvolutionBox";
 import FloatingStart from "../../core/FloatingStart";
 import TownTextStart from "./tutorial/TownTextStart";
-import { useGame } from "../../../../script/util/hook/useGame";
+import { useGame } from "@/../script/util/hook/useGame";
 
 function ArchitecturalCore ({state, calls, store}:any) {
   const app:any = useContext(AppContext)

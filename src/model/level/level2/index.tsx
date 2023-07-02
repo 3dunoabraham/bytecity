@@ -24,7 +24,7 @@ import GoodPlaceBuilder from "./goal/GoodPlaceBuilder";
 import MetaOrbitControls from "@/model/core/MetaOrbitControls";
 import StandardSkyEnv from "../../core/StandardSkyEnv";
 import SceneSessionNucleus from "@/model/core/SceneSessionNucleus";
-import { pov_isDefaultUser } from "../../../../script/util/helper/gameHelper";
+import { pov_isDefaultUser } from "@/../script/util/helper/gameHelper";
 
 const DEFAULT_TOKEN_OBJ = {
   mode:0,state:0,buy:0,sell:0, floor:0,ceil:0,

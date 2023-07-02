@@ -1,7 +1,7 @@
 import { Box } from "@react-three/drei"
-import { useAuth } from "../../../../script/state/context/AuthContext"
+import { useAuth } from "@/../script/state/context/AuthContext"
 import DynaText from "@/model/core/DynaText"
-import { useQueryPlus } from "../../../../script/util/hook/useHooksHelper"
+import { useQueryPlus } from "@/../script/util/hook/useHooksHelper"
 import { AppContext } from "@/../script/state/context/AppContext";
 import { useState, useContext, useEffect, useMemo } from "react"
 

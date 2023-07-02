@@ -1,5 +1,5 @@
 import { useContext } from "react"
-import { AppContext } from "../../../../script/state/context/AppContext"
+import { AppContext } from "@/../script/state/context/AppContext"
 
 
 export function RedButton({ state, calls }: any) {
