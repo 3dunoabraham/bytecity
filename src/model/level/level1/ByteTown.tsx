@@ -15,9 +15,11 @@ import { pov_isDefaultUser } from "../../../../script/util/helper/gameHelper";
 import StandardSkyEnv from "@/model/core/StandardSkyEnv";
 import ArchitecturalCore from "./ArchitecturalCore";
 import { DefaultSceneTable } from "@/model/core/DefaultSceneTable";
+import { useGame } from "../../../../script/util/hook/useGame";
 
 function ByteTown ({}) {
   const eraName = "townEra"
+  const gameLoop = useGame({state:{eraName}})
   const app:any = useContext(AppContext)
   const searchParams:any = useSearchParams();
   const { user, superuser, do:{login, logout, fetchSupaPlayer, demo,},  jwt }:any = useAuth()
@@ -80,6 +82,7 @@ function ByteTown ({}) {
               eraName,
             },
             calls:{
+              join: gameLoop.calls.join
             }
         }}/>
       </group>

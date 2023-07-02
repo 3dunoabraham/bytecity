@@ -15,7 +15,6 @@ function ArchitecturalCore ({state, calls, }:any) {
   const app:any = useContext(AppContext)
   const { user, superuser, do:{login, logout, demo,},  jwt }:any = useAuth()
   
-  const gameLoop = useGame()
 
   return (<>
   
@@ -25,13 +24,13 @@ function ArchitecturalCore ({state, calls, }:any) {
     </Box>
 
     <group position={[-0.75,0,-0.75]}>
-      <EvolutionBox {...{state, calls:{}}} >
+      <EvolutionBox {...{state, calls}} >
 
       </EvolutionBox>
     </group>    
     
     {/* START TUTORIAL */}
-    {!state.hasAnyToken && <TownTextStart calls={{join:calls.join}} />}
+    {!state.hasAnyToken && <TownTextStart calls={{}} />}
 
     {/* CHAPTER X */}
     {/* {state.hasAnyToken && !state.isDefaultUser && !!state.tokensArrayObj[state.selectedToken] && state.isSelectedTokenDowntrend && <>

@@ -122,7 +122,7 @@ const selectedHasArray = useMemo(()=>{
   },[selectedTimeframeIndex,tokensArrayArray])
 
   const triggerJoin = () => {
-    calls.join()
+    calls.join(state.form.id)
   }
 
   const triggerLeave = () => {
