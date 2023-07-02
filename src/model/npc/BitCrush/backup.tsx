@@ -4,7 +4,7 @@ import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { useSearchParams } from 'next/navigation';
 import {Screen, Frame} from "./FrameScreen"
-import TextContainer from "./TextContainer"
+import BitCrushTextContainer from "./BitCrushTextContainer"
 import DynaText from "@/model/core/DynaText"
 import { useAuth } from "@/../script/state/context/AuthContext";
 
@@ -115,7 +115,7 @@ const getBattleAttack = () => {
     <>
 
       {/* SCORE */}
-      <TextContainer calls={{startGame}} state={{score, lastScore, opponent, battleLife}} />
+      <BitCrushTextContainer calls={{startGame}} state={{score, lastScore, opponent, battleLife}} />
 
       <Screen />
       <Frame />

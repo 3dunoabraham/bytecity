@@ -4,7 +4,7 @@ import { useState } from "react"
 
 import DynaText from "@/model/core/DynaText"
 
-function TextContainer({ tokensArrayArray, state, calls }: any) {
+function TradingTextContainer({ tokensArrayArray, state, calls }: any) {
   const [translation, s__translation]: any = useState({
     btc: "Bitcoin",
     eth: "Ethereum",
@@ -81,4 +81,4 @@ function TextContainer({ tokensArrayArray, state, calls }: any) {
     </group>)
 }
 
-export default TextContainer
+export default TradingTextContainer

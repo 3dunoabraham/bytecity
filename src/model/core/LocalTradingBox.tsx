@@ -8,7 +8,7 @@ import { fetchMultipleJsonArray, parseDecimals } from "@/../script/util/helper";
 import { AppContext } from "../../../script/state/context/AppContext";
 import TableLegs from "../npc/TradingBox/parts/TableLegs";
 import TableBody from "../npc/TradingBox/parts/TableBody";
-import TextContainer from "../npc/TradingBox/output/TextContainer";
+import TradingTextContainer from "../npc/TradingBox/output/TradingTextContainer";
 import Computer from "../npc/TradingBox/parts/Computer";
 import Bank from "../npc/TradingBox/parts/Bank";
 import Tower from "../npc/TradingBox/parts/Tower";
@@ -154,7 +154,7 @@ const selectedHasArray = useMemo(()=>{
 
       
       <group position={position} >
-        <TextContainer tokensArrayArray={tokensArrayArray}
+        <TradingTextContainer tokensArrayArray={tokensArrayArray}
           state={{clicked,clickedPrice,isSelectedId,token,queryUSDT,tokenColor,selectedHasArray,}}
           calls={{onTextClick,turnOff,turnOn}}
         />

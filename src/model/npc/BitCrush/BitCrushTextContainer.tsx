@@ -1,7 +1,7 @@
 import DynaText from "@/model/core/DynaText"
 import OppoTitle from "./label/OppoTitle"
 
-export function TextContainer ({state, calls}:any) {
+export function BitCrushTextContainer ({state, calls}:any) {
   return (
     <>
     <OppoTitle {...{state, calls}} />
@@ -9,4 +9,4 @@ export function TextContainer ({state, calls}:any) {
     </>
   )
 }
-export default TextContainer
+export default BitCrushTextContainer

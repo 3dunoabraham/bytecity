@@ -4,12 +4,16 @@ import { forwardRef, useContext, useEffect, useImperativeHandle, useMemo, useRef
 import { Mesh } from "three";
 import { useLocalStorage } from "usehooks-ts";
 import { useQuery } from "@tanstack/react-query";
+
+
 import { AppContext } from "@/../script/state/context/AppContext";
 import { fetchMultipleJsonArray, parseDecimals } from "@/../script/util/helper";
 import EdenBlock from "./EdenBlock";
 import EdenGenesis from "./EdenGenesis";
+import RedButton from "../TradingBox/input/RedButton";
+import { DEFAULT_TIMEFRAME_ARRAY } from "../../../../script/constant/game";
+import EvolTextContainer from "./EvolTextContainer";
 
-export const DEFAULT_TIMEFRAME_ARRAY = ["3m","15m","4h","1d","1w"]  
 export const tokenColors:any = {
   "btc": "#FE8E1B",
   "eth": "#3EDF5D",
@@ -39,15 +43,10 @@ const EvolutionBox = forwardRef(({
     const [LS_tokensArrayObj, s__LS_tokensArrayObj] = useLocalStorage('localTokensArrayObj', "{}")
     const [LS_rpi, s__LS_rpi] = useLocalStorage('rpi', "")
     const [rpi, s__rpi] = useState("")
-    const [showAllTokens,s__showAllTokens] = useState<any>(true)
     const [chopAmount,s__chopAmount] = useState<any>(0)
     const [tokensArrayObj,s__tokensArrayObj] = useState<any>({})
     const [klinesArray,s__klinesArray] = useState<any[]>([])
     const [clientIP, s__clientIP] = useState('');
-    const DEFAULT_TOKEN_OBJ = {
-        mode:0,state:0,buy:0,sell:0, floor:0,ceil:0,
-        min:0,max:0,minMaxAvg:0,minMedian:0,maxMedian:0,
-    }
     const p__klinesArray = useMemo(()=>{
         let slicedArray = [...klinesArray]
         for (let index = 0; index < chopAmount; index++) { slicedArray.push(klinesArray[499]) }
@@ -77,12 +76,7 @@ const selectedHasArray = useMemo(()=>{
 
     const [clickedPrice, s__clickedPrice] = useState(selectedHasArray ? parseFloat(`${tokensArrayArray[selectedTimeframeIndex].price}`) : 0)
     const [clicked, setClicked] = useState(selectedHasArray ? !!tokensArrayArray[selectedTimeframeIndex].buy : false);
-  const meshRef = useRef<Mesh>();
-  const bouncingThing:any = useRef<Mesh>();
-  const playerMesh:any = useRef<Mesh>();
-  const depthBuffer = useDepthBuffer({ frames: 1 });
-  const [elapsed, setElapsed] = useState<any>(0);
-  const viewport = useThree((state) => state.viewport);
+
   const tokenColor = useMemo(()=>{
     return tokenColors[token]
   },[token])
@@ -134,77 +128,21 @@ const selectedHasArray = useMemo(()=>{
         <EdenBlock  />
         <EdenGenesis />
       </group>
-    {/* <TableBody state={{boundaries, wallWidth, isSelectedId, clicked, hasAnyToken:!!tokensArrayArray}}
-        calls={{ onTextClick: (e:any) => {onTextClick();e.stopPropagation()}}}
-
-     />
-
-    <TableLegs />
 
       
       <group position={position} >
-        <TextContainer tokensArrayArray={tokensArrayArray}
+        <EvolTextContainer tokensArrayArray={tokensArrayArray}
           state={{clicked,clickedPrice,isSelectedId,token,queryUSDT,tokenColor,selectedHasArray,}}
           calls={{onTextClick,turnOff,turnOn}}
         />
       </group>
-
-      {mainModel == "pc" && 
-        <group position={position} >
-        <Computer tokensArrayArray={tokensArrayArray}
-            state={{clicked,clickedPrice,isSelectedId,token,queryUSDT,tokenColor,selectedHasArray,}}
-            calls={{onTextClick,turnOff,turnOn}}
-          />
-        </group>
-    }
-    {mainModel == "bank" && 
-      <group position={position} onClick={onTextClick}>
-        <Bank tokensArrayArray={tokensArrayArray}
-          state={{clicked,clickedPrice,isSelectedId,token,queryUSDT,tokenColor,selectedHasArray,}}
-          calls={{onTextClick,turnOff,turnOn}}
-        />
-      </group>
-    }
-    {mainModel == "tower" && 
-      <group position={position} >
-        <Tower tokensArrayArray={tokensArrayArray}
-          state={{clicked,clickedPrice,isSelectedId,token,queryUSDT,tokenColor,selectedHasArray,}}
-          calls={{onTextClick,turnOff,turnOn}}
-        />
-      </group>
-    }
-      
-      <group position={position} >
-        <MiniCitySign tokensArrayArray={tokensArrayArray}
-          state={{clicked,clickedPrice,isSelectedId,token,queryUSDT,tokenColor,selectedHasArray,}}
-          calls={{onTextClick,turnOff,turnOn}}
-        />
-      </group> */}
 
       
       <group position={position}>
-        {/* <BouncingThing tokensArrayArray={tokensArrayArray} _bouncingThing={bouncingThing}
-          livestate={{clickedPrice, queryUSDT}}
-          calls={{
-            app_tip:(msg:string)=>{app.alert("neutral",msg)},
-          }}
-          isSelectedId={isSelectedId} token={token} clicked={clicked}
-        /> */}
-
-          {/* <RedButton state={{score, isSelectedId, selectedHasArray,isDowntrend,}}
+      <RedButton state={{score, isSelectedId, selectedHasArray,isDowntrend,}}
             tokensArrayArray={tokensArrayArray}
             calls={{join, leaveAsset, onTextClick, turnOff, turnOn,trendDown,trendUp}}
           />
-          
-        <TrendTree state={{score, isSelectedId, selectedHasArray,isDowntrend,}}
-            tokensArrayArray={tokensArrayArray}
-            calls={{join, leaveAsset, onTextClick, turnOff, turnOn,trendDown,trendUp}}
-          />
-          
-        <TradeButtons state={{score, isSelectedId, selectedHasArray,isDowntrend,clicked}}
-            tokensArrayArray={tokensArrayArray}
-            calls={{join, leaveAsset, onTextClick, turnOff, turnOn,trendDown,trendUp,toggleGame}}
-          /> */}
         
         {clicked &&
           <group position={[0,-0.33,0]}>
@@ -224,9 +162,6 @@ const selectedHasArray = useMemo(()=>{
         }
 
       </group>
-
-
-
       {isDowntrend && <>
           <group position={position}>
         <mesh castShadow receiveShadow scale={score.score ? 1 : 3}

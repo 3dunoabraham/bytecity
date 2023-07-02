@@ -18,7 +18,7 @@ import { fetchMultipleJsonArray, parseDecimals } from "@/../script/util/helper";
 import BankRoofContainer from "./parts/BankRoofContainer";
 
 import BouncingThing from "./output/BouncingThing";
-import TextContainer from "./output/TextContainer";
+import TradingTextContainer from "./output/TradingTextContainer";
 import MiniScreen from "./output/MiniScreen";
 import MiniCitySign from "./output/MiniCitySign";
 import RedButton from "./input/RedButton";
@@ -153,7 +153,7 @@ const selectedHasArray = useMemo(()=>{
 
       
       <group position={position} >
-        <TextContainer tokensArrayArray={tokensArrayArray}
+        <TradingTextContainer tokensArrayArray={tokensArrayArray}
           state={{clicked,clickedPrice,isSelectedId,token,queryUSDT,tokenColor,selectedHasArray,}}
           calls={{onTextClick,turnOff,turnOn}}
         />

@@ -14,7 +14,7 @@ import {
     BitsNFTAddress,
   } from "@/../script/constant/blockchain";
 function Component ({}) {
-  const { address, isConnected } = useAccount();
+//   const { address, isConnected } = useAccount();
   // const [asd, s__asd] = useState("")
 //   const { connect } = useConnect({
 //     connector: new InjectedConnector(),
@@ -115,13 +115,13 @@ function Component ({}) {
                             
                         </a>
                 </div>
-                {isConnected ? <>
+                {/* {isConnected ? <>
                     Your Bits NFT Balance: {!nftBalanceOfUser.data ? "-" : nftBalanceOfUser.data.toString()}
                     
                 </> : <>
                 ConnectButton:
                     <ConnectButton />
-                </>}
+                </>} */}
 
                     {/* <details className="Q_md_x">
                         <summary className="pt-6 pb-2 opaci-chov--50 ">

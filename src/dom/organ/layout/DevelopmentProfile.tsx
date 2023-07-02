@@ -116,7 +116,7 @@ function DevelopmentProfile ({foundUser, foundJWT}:any) {
                         </div>
                         
           <div className=''>
-              <DisconnectPlayerForm />
+              {/* <DisconnectPlayerForm /> */}
             </div>
                     <details className="">
                         <summary className="pt-6 pb-2 opaci-chov--50 ">
