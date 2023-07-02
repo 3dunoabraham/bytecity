@@ -4,12 +4,14 @@ import { useAuth } from '../../state/context/AuthContext'
 import { AppContext } from '../../state/context/AppContext'
 import { DEFAULT_BOX_OBJ, DEFAULT_TIMEFRAME_ARRAY } from '../../constant/game'
 import { getComputedLevels } from '../helper'
+import { pov_isDefaultUser } from '../helper/gameHelper'
 
-export const useGame: any = (initialConfig={state:{eraName:"unnamedEra"}}) => {
+export const useGame: any = (initialConfig={form:{id:"BTCUSDT3M"},state:{eraName:"unnamedEra"}}) => {
   const { user, superuser, do:{login, logout, fetchSupaPlayer, demo,},  jwt }:any = useAuth()
   const app:any = useContext(AppContext)
 
   const [state, s__state] = useState<any>(initialConfig.state)
+  const [form, s__form] = useState<any>(initialConfig.form)
 
   const selectedTimeframeIndex = 0
   const [selectedBox, s__selectedBox] = useState<any>(null)
@@ -17,6 +19,9 @@ export const useGame: any = (initialConfig={state:{eraName:"unnamedEra"}}) => {
   const [tokensArrayObj,s__tokensArrayObj] = useState<any>({})
   const [_tutoStage, s__LS_tutoStage] = useLocalStorage(state.eraName+'TutorialStage', "{}")
   
+  const [LS_rpi, s__LS_rpi] = useLocalStorage('rpi', "user:0000")
+  const [rpi, s__rpi] = useState<any>(LS_rpi)
+
   const tutoStage:any = useMemo(()=> {
     try {
       console.log("_tutoStage")
@@ -94,12 +99,43 @@ export const useGame: any = (initialConfig={state:{eraName:"unnamedEra"}}) => {
     return interestCount.length > 0
   },[tokensArrayObj])
 
+
   
+const selectedHasArray = useMemo(()=>{
+  return !!tokensArrayObj && !!tokensArrayObj[selectedTimeframeIndex] && !!tokensArrayObj[selectedTimeframeIndex].state
+},[tokensArrayObj, selectedTimeframeIndex])
+
+// const selectedTimeframeIndex = useMemo(()=>{
+//   return DEFAULT_TIMEFRAME_ARRAY.indexOf(selectedTimeframe)
+// },[selectedTimeframe])
+
+
+
+const isDefaultUser = useMemo(()=> pov_isDefaultUser(rpi),[rpi])
+
+const isDowntrend = useMemo(()=>{
+  return !!tokensArrayObj && !!tokensArrayObj[state.selectedTimeframeIndex] && !!tokensArrayObj[state.selectedTimeframeIndex].mode
+},[state.selectedTimeframeIndex,tokensArrayObj])
+
+const hasAllTokens = useMemo(()=>{
+  let interestCount = Object.keys(tokensArrayObj).filter((token)=>{
+    return token in tokensArrayObj
+  })
+  return interestCount.length == 4
+},[tokensArrayObj])
+
   return {
     store: tokensArrayObj,
     state:{
       ...state,
+      rpi,
       hasAnyToken,
+      hasAllTokens,
+      selectedHasArray,
+      selectedTimeframeIndex,
+      isDowntrend,
+      form,
+      isDefaultUser,
       tutoStage
     },
     calls: {

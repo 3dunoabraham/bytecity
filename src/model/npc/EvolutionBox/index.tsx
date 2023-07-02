@@ -14,12 +14,7 @@ import RedButton from "../TradingBox/input/RedButton";
 import { DEFAULT_TIMEFRAME_ARRAY } from "../../../../script/constant/game";
 import EvolTextContainer from "./EvolTextContainer";
 
-export const tokenColors:any = {
-  "btc": "#FE8E1B",
-  "eth": "#3EDF5D",
-  "link": "#2A5ADA",
-  "ftm": "#1A6AFF",
-}
+export const tokenColors:any = { "btc": "#FE8E1B", "eth": "#3EDF5D", "link": "#2A5ADA", "ftm": "#1A6AFF",}
 const EvolutionBox = forwardRef(({
   mainModel = "pc",
   turnOn, turnOff, 
@@ -28,6 +23,7 @@ const EvolutionBox = forwardRef(({
   position=[0,0,0], 
   onTextClick=()=>{}, onTimeframeClick=()=>{},score=0,s__score=()=>{},
   velocityX=0, setVelocityX=()=>{}, velocityY=0, setVelocityY=()=>{},
+  form={id:"BTCUSDT3M"},
   calls= {
     join:()=>{},
     leaveAsset:()=>{},
@@ -36,26 +32,22 @@ const EvolutionBox = forwardRef(({
 
   },
   state= {
+    isDowntrend: false,
     eraName:"unnamedEra",
     form: null, 
+    selectedHasArray: false,
   }
 }: any, ref:any) => {
   const API_PRICE_BASEURL = "https://api.binance.com/api/v3/ticker/price?symbol="
   const baseToken = "USDT"
     const app:any = useContext(AppContext)
-    const [LS_tokensArrayObj, s__LS_tokensArrayObj] = useLocalStorage(state.eraName+"TokensArrayObj", "{}")
-    const [LS_rpi, s__LS_rpi] = useLocalStorage('rpi', "")
-    const [rpi, s__rpi] = useState("")
+    // const [LS_tokensArrayObj, s__LS_tokensArrayObj] = useLocalStorage(state.eraName+"TokensArrayObj", "{}")
+    // const [LS_rpi, s__LS_rpi] = useLocalStorage('rpi', "")
+    // const [rpi, s__rpi] = useState("")
     const [chopAmount,s__chopAmount] = useState<any>(0)
-    const [tokensArrayObj,s__tokensArrayObj] = useState<any>({})
+    // const [tokensArrayObj,s__tokensArrayObj] = useState<any>({})
     const [klinesArray,s__klinesArray] = useState<any[]>([])
     const [clientIP, s__clientIP] = useState('');
-    const p__klinesArray = useMemo(()=>{
-        let slicedArray = [...klinesArray]
-        for (let index = 0; index < chopAmount; index++) { slicedArray.push(klinesArray[499]) }
-        
-        return slicedArray.slice(slicedArray.length-500,slicedArray.length)
-    },[klinesArray,chopAmount])
     const queryUSDT:any = useQuery({ queryKey: ['usdt'+token], refetchInterval: refetchInterval,
     queryFn: async () => {
       let theList = await fetchMultipleJsonArray(( [token].reduce((acc, aToken) => (
@@ -66,31 +58,38 @@ const EvolutionBox = forwardRef(({
     }
 })
 const selectedTimeframe = useMemo(()=>{
-  return state.form.id.split("USDT")[1].toLowerCase()
-},[state.form.id])
-const selectedTimeframeIndex = useMemo(()=>{
-  return DEFAULT_TIMEFRAME_ARRAY.indexOf(selectedTimeframe)
-},[selectedTimeframe])
+  return form.id.split("USDT")[1].toLowerCase()
+},[form.id])
 
 
-const selectedHasArray = useMemo(()=>{
-  return !!store && !!store[selectedTimeframeIndex] && !!store[selectedTimeframeIndex].state
-},[store, selectedTimeframeIndex])
 
-    const [clickedPrice, s__clickedPrice] = useState(selectedHasArray ? parseFloat(`${store[selectedTimeframeIndex].price}`) : 0)
-    const [clicked, setClicked] = useState(selectedHasArray ? !!store[selectedTimeframeIndex].buy : false);
+    const [clickedPrice, s__clickedPrice] = (
+      useState(state.selectedHasArray ? parseFloat(`${store[state.selectedTimeframeIndex].price}`) : 0)
+    )
+    const [clicked, setClicked] = (
+      useState(state.selectedHasArray ? !!store[state.selectedTimeframeIndex].buy : false)
+    )
+    // const selectedToken = useMemo(()=>{
+    //   return form.id.split("USDT")[0].toLowerCase()
+    // },[form.id])
 
+    const p__klinesArray = useMemo(()=>{
+      let slicedArray = [...klinesArray]
+      for (let index = 0; index < chopAmount; index++) { slicedArray.push(klinesArray[499]) }
+      
+      return slicedArray.slice(slicedArray.length-500,slicedArray.length)
+  },[klinesArray,chopAmount])
   const tokenColor = useMemo(()=>{
     return tokenColors[token]
   },[token])
   const isSelectedId = useMemo(()=>{
-    return state.form && state.form.id == token.toUpperCase()+"USDT"+timeframe.toUpperCase()
+    return state.form && form.id == token.toUpperCase()+"USDT"+timeframe.toUpperCase()
   },[state.form])
-  useEffect(()=>{
-    s__tokensArrayObj(JSON.parse(LS_tokensArrayObj))
-    s__rpi(LS_rpi)
-    s__clientIP(LS_rpi.split(":")[0])
-  },[])
+  // useEffect(()=>{
+  //   s__tokensArrayObj(JSON.parse(LS_tokensArrayObj))
+  //   s__rpi(LS_rpi)
+  //   s__clientIP(LS_rpi.split(":")[0])
+  // },[])
 
   useImperativeHandle(ref, () => {
     return {
@@ -115,25 +114,9 @@ const selectedHasArray = useMemo(()=>{
     s__clickedPrice(queryUSDT.data)
   }
 
-  const selectedToken = useMemo(()=>{
-    return state.form.id.split("USDT")[0].toLowerCase()
-  },[state.form.id])
-
-  const isDowntrend = useMemo(()=>{
-    return !!store && !!store[selectedTimeframeIndex] && !!store[selectedTimeframeIndex].mode
-  },[selectedTimeframeIndex,store])
-
-  const triggerJoin = () => {
-    calls.join(state.form.id)
-  }
-
-  const triggerLeave = () => {
-    calls.leaveAsset(state.form.id)
-  }
-
-  const isOn = useMemo(()=>{
-    return state.form.id in store
-  },[store])
+  const triggerJoin = () => { calls.join(form.id) }
+  const triggerLeave = () => { calls.leaveAsset(form.id) }
+  const isOn = useMemo(()=>{ return form.id in store },[store])
 
   return (
     <group>
@@ -144,8 +127,8 @@ const selectedHasArray = useMemo(()=>{
 
       
       <group position={position} >
-        <EvolTextContainer tokensArrayArray={store[state.form.id]}
-          state={{clicked,clickedPrice,isSelectedId,token,queryUSDT,tokenColor,selectedHasArray,}}
+        <EvolTextContainer tokensArrayArray={store[form.id]}
+          state={{clicked,clickedPrice,isSelectedId,token,queryUSDT,tokenColor,selectedHasArray:state.selectedHasArray,}}
           calls={{onTextClick,turnOff,turnOn}}
         />
       </group>
@@ -172,7 +155,7 @@ const selectedHasArray = useMemo(()=>{
         }
 
       </group>
-      {isDowntrend && <>
+      {state.isDowntrend && <>
           <group position={position}>
         <mesh castShadow receiveShadow scale={score.score ? 1 : 3}
           position={[  - 0.42,  - 0,  - 0.42 ]}
