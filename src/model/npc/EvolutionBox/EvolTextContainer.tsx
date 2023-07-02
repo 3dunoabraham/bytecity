@@ -17,11 +17,11 @@ function TradingTextContainer({ tokensArrayArray, state, calls }: any) {
   return (
     <group position={[0, -0.444, 0]}>
       {/* COMPUTER */}
-      <DynaText text={translation[state.token] + "" || ""} color={0x666666}
+      {/* <DynaText text={translation[state.token] + "" || ""} color={0x666666}
         position={new Vector3(-0.41, 0, 0.15)}
         rotation={[-Math.PI / 2, 0, Math.PI / 2]}
         isSelected={state.isSelectedId} font={0.11} onClick={() => { }}
-      />
+      /> */}
 
       {state.clicked && // PROFIT LOSS
         <DynaText text={"profit"}

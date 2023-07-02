@@ -1,64 +1,37 @@
-import { Torus } from "@react-three/drei"
+import { useContext } from "react"
+import { AppContext } from "../../../../../script/state/context/AppContext"
 
 
-function RedButton ({ tokensArrayArray, state, calls }:any) {
-    return ( <>
-        
-        {/* STATE MODE */}
-        <group onClick={!tokensArrayArray ? calls.join : calls.leaveAsset} 
-            position={[0,-0.47,0]}
-        >
-        {/* KEY */}
-        <group position={[0,0.1,0]} >
-            <mesh castShadow receiveShadow 
-                rotation={[0,0,0]} scale={state.score.score ? 1 : 3}
-                position={[  0.39,  -0.04,  0,]}
-            >
-                <boxGeometry args={[0.04, 0.03, 0.04]} />
-                <meshStandardMaterial color={!tokensArrayArray ? "#ff0000" : "#009900"} />
-            </mesh>
-            
-            {/* <mesh castShadow receiveShadow 
-                rotation={[0,0,0]} scale={state.score.score ? 1 : 3}
-                position={[  0.59,  0,  0.05,]}
-            >
-                <boxGeometry args={[0.03, 0.008, 0.02]} />
-                <meshStandardMaterial color={!tokensArrayArray ? "#ff9900" : "#bb9955"} />
-            </mesh> */}
-{/*             
-            <Torus args={[0.06,0.033,6,4]} rotation={[Math.PI/2,0,Math.PI/4*3]} 
-                position={[0.79,0,0]}
-            >
-                <meshStandardMaterial flatShading={true} color={!tokensArrayArray ? "#ff9900" : "#bb9955" } />
+export function RedButton({ state, calls }: any) {
+  const app:any = useContext(AppContext)
 
-            </Torus> */}
-        </group>
-        
-        {/* LOCK */}
-        {/* <Torus args={[0.1,0.033,6,4]} rotation={[Math.PI/2,0,Math.PI/4*3]} 
-            position={[0.28,0.03,0]}
-        >
-            <meshStandardMaterial flatShading={true} color={!state.isDowntrend ? "#aaaaaa" : "#ff9900" } />
+  const triggerClick = (e:any)=>{
+    app.audio("neutral","./sound/click33.wav")
+    
+    if (!state.isOn) {
+      if (calls.join) { calls.join() }
+    } else {
+      if (calls.leaveAsset) { calls.leaveAsset() }
+    }
+    e.stopPropagation()
+  }
 
-        </Torus> */}
-        <mesh castShadow receiveShadow onClick={!tokensArrayArray ? calls.join : calls.leaveAsset}
-            scale={3}
-            position={[  0.39,  0,  0,]}
-        >
-            <boxGeometry args={[0.06, 0.04, 0.06]} />
-            <meshStandardMaterial color={"#888"} />
+  return (<>
+    <group position={[0, -0.47, 0]} onClick={triggerClick}    >
+      <group position={[0, 0.1, 0]} >
+        <mesh castShadow receiveShadow position={[0.39, -0.04, 0,]} rotation={[0, 0, 0]} >
+          <boxGeometry args={[0.12, 0.09, 0.12]} />
+          <meshStandardMaterial color={state.isOn ? "#009900" : "#ff0000"} />
         </mesh>
-        {/* {state.selectedHasArray &&
-            <mesh castShadow receiveShadow onClick={!tokensArrayArray ? calls.join : calls.leaveAsset}
-                scale={3}
-                position={[  0.41, 0.01,  0,]}
-            >
-                <boxGeometry args={[0.065, 0.04, 0.075]} />
-                <meshStandardMaterial color={"#46a740"} />
-            </mesh>
-        } */}
-        </group>
-
-    </>)
+      </group>
+      <mesh castShadow receiveShadow
+        scale={3} position={[0.39, 0, 0,]}
+      >
+        <boxGeometry args={[0.06, 0.04, 0.06]} />
+        <meshStandardMaterial color={"#888"} />
+      </mesh>
+    </group>
+  </>)
 }
+
 export default RedButton

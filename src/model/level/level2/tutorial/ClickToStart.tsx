@@ -8,7 +8,7 @@ function ClickToStart({ calls }: any) {
   const $textGroup: any = useRef()
   useFrame((ctx, delta) => {
     if (!$textGroup.current) return
-    $textGroup.current.position.y = Math.sin(Date.now() / 500) / 50 -0.2
+    $textGroup.current.position.y = Math.sin(Date.now() / 500) / 50 -0.3
   })
 
 
@@ -16,7 +16,8 @@ function ClickToStart({ calls }: any) {
   return (<>
     <group position={[0.4, 0, -0.5]}>
       <group ref={$textGroup}>
-        <DynaText onClick={() => { calls.join("btc") }} text="Start" color="#cc0000" font={0.15}
+        <DynaText  // onClick={() => { calls.join("btc") }}
+           text="Start" color="#cc0000" font={0.15}
           position={[-0.65, 0.1, -0.2]} rotation={[-0.65, 0., 0]}
         >
         </DynaText>

@@ -223,10 +223,7 @@ const selectedHasArray = useMemo(()=>{
             tokensArrayArray={tokensArrayArray}
             calls={{join, leaveAsset, onTextClick, turnOff, turnOn,trendDown,trendUp}}
           /> */}
-          <RedButton state={{score, isSelectedId, selectedHasArray,isDowntrend,}}
-            tokensArrayArray={tokensArrayArray}
-            calls={{join, leaveAsset, onTextClick, turnOff, turnOn,trendDown,trendUp}}
-          />
+          <RedButton state={{isOn: tokensArrayArray}} calls={{join, leaveAsset}} />
           
         <TrendTree state={{score, isSelectedId, selectedHasArray,isDowntrend,}}
             tokensArrayArray={tokensArrayArray}

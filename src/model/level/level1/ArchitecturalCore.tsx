@@ -7,9 +7,10 @@ import { AppContext } from "@/../script/state/context/AppContext";
 import { useAuth } from "@/../script/state/context/AuthContext";
 import { useCopyToClipboard } from "usehooks-ts";
 import EvolutionBox from "@/model/npc/EvolutionBox";
-import ClickToStart from "../level2/tutorial/ClickToStart";
+import FloatingStart from "../../core/FloatingStart";
+import TownTextStart from "./tutorial/TownTextStart";
 
-function Level1_Index1 ({state, calls, }:any) {
+function ArchitecturalCore ({state, calls, }:any) {
   const app:any = useContext(AppContext)
   const { user, superuser, do:{login, logout, demo,},  jwt }:any = useAuth()
   
@@ -23,12 +24,12 @@ function Level1_Index1 ({state, calls, }:any) {
 
     <group position={[-0.75,0,-0.75]}>
       <EvolutionBox {...{state, calls:{}}} >
-        
+
       </EvolutionBox>
     </group>    
     
     {/* START TUTORIAL */}
-    {!state.hasAnyToken && <ClickToStart calls={{join:calls.join}} />}
+    {!state.hasAnyToken && <TownTextStart calls={{join:calls.join}} />}
 
     {/* CHAPTER X */}
     {/* {state.hasAnyToken && !state.isDefaultUser && !!state.tokensArrayObj[state.selectedToken] && state.isSelectedTokenDowntrend && <>
@@ -43,4 +44,4 @@ function Level1_Index1 ({state, calls, }:any) {
   </>)
 }
 
-export default Level1_Index1
+export default ArchitecturalCore

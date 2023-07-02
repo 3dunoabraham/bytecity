@@ -66,20 +66,22 @@ function ByteTown ({}) {
       <StandardSkyEnv />
 
       
-    <group >
+    {/* <group >
       <DefaultSceneTable  />
-    </group>    
+    </group>     */}
 
 
-{/* 
+
       <group position={[0,0,0]}>
         <ArchitecturalCore {...{
-            state:{form
+            state:{
+              form,
+              eraName:"townTokenArrayObj"
             },
             calls:{
             }
         }}/>
-      </group> */}
+      </group>
       
       {hasAllTokens && <>
         <Cylinder receiveShadow args={[3.3,3.3,0.15,tutoStage.lvl > 4 ? 3+tutoStage.lvl : 4]} position={[0, -1.2, 0]}>

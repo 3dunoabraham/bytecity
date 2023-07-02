@@ -34,13 +34,14 @@ const EvolutionBox = forwardRef(({
   velocityX=0, setVelocityX=()=>{}, velocityY=0, setVelocityY=()=>{},
 
   state= {
+    eraName:"unnamedEraTokensArrayObj",
     form: null, 
   }
 }: any, ref:any) => {
   const API_PRICE_BASEURL = "https://api.binance.com/api/v3/ticker/price?symbol="
   const baseToken = "USDT"
     const app:any = useContext(AppContext)
-    const [LS_tokensArrayObj, s__LS_tokensArrayObj] = useLocalStorage('localTokensArrayObj', "{}")
+    const [LS_tokensArrayObj, s__LS_tokensArrayObj] = useLocalStorage(state.eraName, "{}")
     const [LS_rpi, s__LS_rpi] = useLocalStorage('rpi', "")
     const [rpi, s__rpi] = useState("")
     const [chopAmount,s__chopAmount] = useState<any>(0)
@@ -120,7 +121,9 @@ const selectedHasArray = useMemo(()=>{
     return !!tokensArrayArray && !!tokensArrayArray[selectedTimeframeIndex] && !!tokensArrayArray[selectedTimeframeIndex].mode
   },[selectedTimeframeIndex,tokensArrayArray])
 
-
+  const triggerJoin = () => {
+    alert()
+  }
 
   return (
     <group>
@@ -139,10 +142,7 @@ const selectedHasArray = useMemo(()=>{
 
       
       <group position={position}>
-      <RedButton state={{score, isSelectedId, selectedHasArray,isDowntrend,}}
-            tokensArrayArray={tokensArrayArray}
-            calls={{join, leaveAsset, onTextClick, turnOff, turnOn,trendDown,trendUp}}
-          />
+        <RedButton state={{isOn: tokensArrayArray}} calls={{join:triggerJoin, leaveAsset }} />
         
         {clicked &&
           <group position={[0,-0.33,0]}>

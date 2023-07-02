@@ -20,8 +20,9 @@ function DevelopmentProfile ({foundUser, foundJWT}:any) {
     return (<>
 
         {asd == "landing" && <>
-            <div className="w-100 z-1001 h-min-100vh  75 bg-glass-5 pos-fixed flex-col flex-justify-start top-0"
-                style={{background:"linear-gradient(185deg, #34AEFB77, #8FD5F4 80%, #34AEFB 100%)"}}
+            <div className="w-100 z-1001 h-min-100vh  75 bg-glass-10 pos-fixed flex-col flex-justify-start top-0"
+                style={{background:"radial-gradient(#34AEFB77, #000000)"}}
+                // style={{background:"linear-gradient(185deg, #34AEFB77, #8FD5F4 80%, #34AEFB 100%)"}}
             >
                 
                 <div onClick={()=>{setFullscreen()}} className="opaci-chov--50">
@@ -67,7 +68,30 @@ function DevelopmentProfile ({foundUser, foundJWT}:any) {
                         </div>
                     </div>
                 </Link>
-                
+                  
+          <div className='pos-abs top-0 right-0'>
+              <DisconnectPlayerForm />
+            </div>
+                <div className="pos-abs top-0 left-0 pa-3 opaci-chov--75"
+                        onClick={()=>{s__asd("")}} 
+                    >
+                        <div className="flex-center box-shadow-2-b pa-1 block bord-r-10" style={{background:"#ffffff"}}
+                            
+                        >
+                            <Image src={"/bytecity.png"} alt="bytecity" width={32} height={32} />
+                            <small className="tx-black">Back</small>
+                        </div>
+                    </div>
+                <div className="pos-abs bottom-0 right-0 pa-3 opaci-chov--75"
+                        onClick={()=>{s__asd("")}} 
+                    >
+                        <div className="flex-center box-shadow-2-b pa-1 block bord-r-10" style={{background:"#ffffff"}}
+                            
+                        >
+                            <Image src={"/bytecity.png"} alt="bytecity" width={32} height={32} />
+                            <small className="tx-black">Back</small>
+                        </div>
+                    </div>
                 {/* <div className=" tx-shadow-5 tx-white pb-2 translate-y--50">
                     Links
                 </div> */}
@@ -114,10 +138,7 @@ function DevelopmentProfile ({foundUser, foundJWT}:any) {
 
                             </a>
                         </div>
-                        
-          <div className=''>
-              {/* <DisconnectPlayerForm /> */}
-            </div>
+                      
                     <details className="">
                         <summary className="pt-6 pb-2 opaci-chov--50 ">
                             <button className="noclick tx-lg tx-shadow-5  tx-bold-8 tx-white">Controls</button>
@@ -150,20 +171,7 @@ function DevelopmentProfile ({foundUser, foundJWT}:any) {
           
 
                     
-                    <div onClick={()=>{s__asd("")}} className="opaci-chov--50 bg-w-50 tx-center bord-r-l-100  noverflow pos-abs bottom-0 mb-8 box-shadow-2-b right-0 flex-col-stretch">
-                        <div className="pt-4 pb-2 px-8  tx-shadow-5 box-shadow-5-b tx-lx flex-center gap-2 bg-white ">
-                            {/* <FaArrowDown /> */}
-                            <div style={{color:"black "}} className="tx-roman">Back</div>
-                            <div className="box-shadow-5-b  py-0 pa-1 block bord-r-10" style={{background:"#ffffff"}}>
-                                <Image src={"/bytecity.png"} alt="bytecity" width={50} height={50} />
-                            </div>
-                        </div>
-                        <div className=" tx-white mt-1   tx-shadow-5 pb-3 px-8 tx-lg bg-white" style={{color:"orange "}}>
-                            <span className="block pos-abs hover-4 ">
-                                Resume Game
-                            </span>
-                        </div>
-                    </div>
+
                 </div>
             </div>
         </>}

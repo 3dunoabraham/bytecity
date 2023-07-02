@@ -39,7 +39,7 @@ function Component ({}) {
     return (<>
         
         {asd == "landing" && <>
-            <div className="w-100 z-1001 h-min-100vh  75 bg-glass-5 pos-fixed flex-col flex-justify-start top-0 bg-b-90"
+            <div className="w-100 z-1001 h-min-100vh  75 bg-glass-10 pos-fixed flex-col flex-justify-start top-0 bg-b-90"
                 style={{background:"radial-gradient(#34AEFB77, #000000)"}}
                 // style={{background:"linear-gradient(185deg, #34AEFB77, #8FD5F4 80%, #34AEFB 100%)"}}
             >
