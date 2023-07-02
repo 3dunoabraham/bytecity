@@ -16,9 +16,9 @@ import {
 function Component ({}) {
   const { address, isConnected } = useAccount();
   // const [asd, s__asd] = useState("")
-  const { connect } = useConnect({
-    connector: new InjectedConnector(),
-  })
+//   const { connect } = useConnect({
+//     connector: new InjectedConnector(),
+//   })
     // const [asd, s__asd] = useState("")
     const [asd, s__asd] = useState("")
     
@@ -26,14 +26,15 @@ function Component ({}) {
         document.documentElement.requestFullscreen();
         
       }
+      const nftBalanceOfUser:any = null
 
-       // Fetch the CryptoDevs NFT balance of the user
-  const nftBalanceOfUser = useContractRead({
-    abi: CryptoDevsNFTABI,
-    address: BitsNFTAddress,
-    functionName: "balanceOf",
-    args: [address],
-  });
+//        // Fetch the CryptoDevs NFT balance of the user
+//   const nftBalanceOfUser = useContractRead({
+//     abi: CryptoDevsNFTABI,
+//     address: BitsNFTAddress,
+//     functionName: "balanceOf",
+//     args: [address],
+//   });
   
     return (<>
         

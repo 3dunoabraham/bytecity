@@ -4,24 +4,10 @@ import { forwardRef, useContext, useEffect, useImperativeHandle, useMemo, useRef
 import { Mesh } from "three";
 import { useLocalStorage } from "usehooks-ts";
 import { useQuery } from "@tanstack/react-query";
-import TableBody from "./parts/TableBody";
-import Computer from "./parts/Computer";
-import Bank from "./parts/Bank";
-import Tower from "./parts/Tower";
-import TableLegs from "./parts/TableLegs";
 import { AppContext } from "@/../script/state/context/AppContext";
-import TimeframeButtons from "./input/TimeframeButtons";
-import TrendTree from "./input/TrendTree";
-import PowerLock from "./input/PowerLock";
-import TradeButtons from "./input/TradeButtons";
 import { fetchMultipleJsonArray, parseDecimals } from "@/../script/util/helper";
-import BankRoofContainer from "./parts/BankRoofContainer";
-
-import BouncingThing from "./output/BouncingThing";
-import TextContainer from "./output/TextContainer";
-import MiniScreen from "./output/MiniScreen";
-import MiniCitySign from "./output/MiniCitySign";
-import RedButton from "./input/RedButton";
+import EdenBlock from "./EdenBlock";
+import EdenGenesis from "./EdenGenesis";
 
 export const DEFAULT_TIMEFRAME_ARRAY = ["3m","15m","4h","1d","1w"]  
 export const tokenColors:any = {
@@ -30,18 +16,22 @@ export const tokenColors:any = {
   "link": "#2A5ADA",
   "ftm": "#1A6AFF",
 }
-const TradingBox = forwardRef(({
+const EvolutionBox = forwardRef(({
   mainModel = "pc",
   turnOn, turnOff, leaveAsset, join,
   trendDown, trendUp,
   tokensArrayArray,
   unselectedColor="#48721E",
   refetchInterval=3000,
-  form= null, token= "btc", timeframe= "3m",
+  token= "btc", timeframe= "3m",
   wallWidth=0.1,
   position=[0,0,0], boundaries=[1,1,1],
   onTextClick=()=>{}, onTimeframeClick=()=>{},score=0,s__score=()=>{},
   velocityX=0, setVelocityX=()=>{}, velocityY=0, setVelocityY=()=>{},
+
+  state= {
+    form: null, 
+  }
 }: any, ref:any) => {
   const API_PRICE_BASEURL = "https://api.binance.com/api/v3/ticker/price?symbol="
   const baseToken = "USDT"
@@ -74,8 +64,8 @@ const TradingBox = forwardRef(({
     }
 })
 const selectedTimeframe = useMemo(()=>{
-  return form.id.split("USDT")[1].toLowerCase()
-},[form.id])
+  return state.form.id.split("USDT")[1].toLowerCase()
+},[state.form.id])
 const selectedTimeframeIndex = useMemo(()=>{
   return DEFAULT_TIMEFRAME_ARRAY.indexOf(selectedTimeframe)
 },[selectedTimeframe])
@@ -97,8 +87,8 @@ const selectedHasArray = useMemo(()=>{
     return tokenColors[token]
   },[token])
   const isSelectedId = useMemo(()=>{
-    return form && form.id == token.toUpperCase()+"USDT"+timeframe.toUpperCase()
-  },[form])
+    return state.form && state.form.id == token.toUpperCase()+"USDT"+timeframe.toUpperCase()
+  },[state.form])
   useEffect(()=>{
     s__tokensArrayObj(JSON.parse(LS_tokensArrayObj))
     s__rpi(LS_rpi)
@@ -129,11 +119,8 @@ const selectedHasArray = useMemo(()=>{
   }
 
   const selectedToken = useMemo(()=>{
-    return form.id.split("USDT")[0].toLowerCase()
-  },[form.id])
-  // const selectedHasArray = useMemo(()=>{
-  //   return !!tokensArrayArray && !!tokensArrayArray[selectedTimeframeIndex] && !!tokensArrayArray[selectedTimeframeIndex].state
-  // },[tokensArrayArray, selectedTimeframeIndex])
+    return state.form.id.split("USDT")[0].toLowerCase()
+  },[state.form.id])
 
   const isDowntrend = useMemo(()=>{
     return !!tokensArrayArray && !!tokensArrayArray[selectedTimeframeIndex] && !!tokensArrayArray[selectedTimeframeIndex].mode
@@ -143,8 +130,11 @@ const selectedHasArray = useMemo(()=>{
 
   return (
     <group>
-        
-    <TableBody state={{boundaries, wallWidth, isSelectedId, clicked, hasAnyToken:!!tokensArrayArray}}
+      <group position={[0,0,0]}>
+        <EdenBlock  />
+        <EdenGenesis />
+      </group>
+    {/* <TableBody state={{boundaries, wallWidth, isSelectedId, clicked, hasAnyToken:!!tokensArrayArray}}
         calls={{ onTextClick: (e:any) => {onTextClick();e.stopPropagation()}}}
 
      />
@@ -189,41 +179,19 @@ const selectedHasArray = useMemo(()=>{
           state={{clicked,clickedPrice,isSelectedId,token,queryUSDT,tokenColor,selectedHasArray,}}
           calls={{onTextClick,turnOff,turnOn}}
         />
-      </group>
-
-      {/* <group position={position} >
-        <MiniScreen tokensArrayArray={tokensArrayArray}
-          state={{clicked,clickedPrice,isSelectedId,token,queryUSDT,tokenColor,selectedHasArray,}}
-          calls={{onTextClick,turnOff,turnOn}}
-        />
       </group> */}
-
 
       
       <group position={position}>
-        <BouncingThing tokensArrayArray={tokensArrayArray} _bouncingThing={bouncingThing}
+        {/* <BouncingThing tokensArrayArray={tokensArrayArray} _bouncingThing={bouncingThing}
           livestate={{clickedPrice, queryUSDT}}
           calls={{
             app_tip:(msg:string)=>{app.alert("neutral",msg)},
           }}
           isSelectedId={isSelectedId} token={token} clicked={clicked}
-        />
-        {/* {!!tokensArrayArray && selectedHasArray &&
-          <group position={[-0.18,0,0.2]}>
-            <TimeframeButtons tokensArrayArray={tokensArrayArray}
-              state={{isSelectedId, score, token, selectedTimeframe, selectedTimeframeIndex}}
-              calls={{onTimeframeClick,onTextClick,}}
-            />
-          </group>
-        } */}
-        
-        
-        {/* toggles sync join trend */}
-        {/* <PowerLock state={{score, isSelectedId, selectedHasArray,isDowntrend,}}
-            tokensArrayArray={tokensArrayArray}
-            calls={{join, leaveAsset, onTextClick, turnOff, turnOn,trendDown,trendUp}}
-          /> */}
-          <RedButton state={{score, isSelectedId, selectedHasArray,isDowntrend,}}
+        /> */}
+
+          {/* <RedButton state={{score, isSelectedId, selectedHasArray,isDowntrend,}}
             tokensArrayArray={tokensArrayArray}
             calls={{join, leaveAsset, onTextClick, turnOff, turnOn,trendDown,trendUp}}
           />
@@ -236,10 +204,8 @@ const selectedHasArray = useMemo(()=>{
         <TradeButtons state={{score, isSelectedId, selectedHasArray,isDowntrend,clicked}}
             tokensArrayArray={tokensArrayArray}
             calls={{join, leaveAsset, onTextClick, turnOff, turnOn,trendDown,trendUp,toggleGame}}
-          />
-          
+          /> */}
         
-        {/* OPEN VIRTUAL ORDER SCREEN */}
         {clicked &&
           <group position={[0,-0.33,0]}>
             <mesh castShadow receiveShadow scale={score.score ? 1 : 3}
@@ -261,12 +227,6 @@ const selectedHasArray = useMemo(()=>{
 
 
 
-
-
-
-      {/* mini buttons */}
-      
-      {/* EXCLAMATION MARK */}
       {isDowntrend && <>
           <group position={position}>
         <mesh castShadow receiveShadow scale={score.score ? 1 : 3}
@@ -283,23 +243,11 @@ const selectedHasArray = useMemo(()=>{
         </mesh>
         </group>
       </>}
-      {/* mini  yellow button */}
-      {/* {isSelectedId && !!tokensArrayArray &&
-          <group position={position}>
-          <mesh castShadow receiveShadow scale={score.score ? 1 : 3}
-          position={[  - 0.23,  - 0.28,  + 0.2]}
-        >
-          <boxGeometry args={[0.02, 0.06, 0.015]} />
-          <meshStandardMaterial color={ !!tokensArrayArray &&  clicked ? "#ffa066" : "#FEEA4D"} />
-        </mesh>
-        </group>
-      } */}
-
 
     </group>
   );
 })
 
-TradingBox.displayName = 'TradingBox'
+EvolutionBox.displayName = 'EvolutionBox'
 
-export default TradingBox
+export default EvolutionBox

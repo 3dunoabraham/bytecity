@@ -82,8 +82,8 @@ function AppClientProvider({ session, children, }: { session: any, children: Rea
       <AuthProvider {...{session}}>
         <QueryClientProvider client={queryClient}>
           <InventoryProvider>
-            <WagmiConfig config={wagmiConfig}>
-              <RainbowKitProvider chains={chains}>
+            {/* <WagmiConfig config={wagmiConfig}> */}
+              {/* <RainbowKitProvider chains={chains}> */}
                 {children}        
                 <div>
 
@@ -107,8 +107,8 @@ function AppClientProvider({ session, children, }: { session: any, children: Rea
                     }}
                   />
                 </div>
-              </RainbowKitProvider>
-            </WagmiConfig>
+              {/* </RainbowKitProvider> */}
+            {/* </WagmiConfig> */}
           </InventoryProvider>
         </QueryClientProvider>
       </AuthProvider>

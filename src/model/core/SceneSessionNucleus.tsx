@@ -77,9 +77,9 @@ export function SceneSessionNucleus({included=["local","database","blockchain"]}
       />
     }
 
-    {included.includes("blockchain") &&
+    {/* {included.includes("blockchain") &&
       <BlockchainWalletToggle calls={{}} state={{isDefaultUser, included }}  />
-    }
+    } */}
 
     {included.includes("local") &&
       <ResetLocalStorage calls={{triggerResetLocalStorage}} state={{ isDefaultUser }} />

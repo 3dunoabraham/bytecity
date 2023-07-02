@@ -38,22 +38,22 @@ export function BoxBlendGeometry({ width = 1, height = 1, radius = 0.2, depth = 
 function BlockchainWalletToggle({ calls, state }: any) {
   const { address, isConnected } = useAccount()
   const [loading, s__loading] = useState(false)
-  const { connect } = useConnect({
-    connector: new InjectedConnector(),
-  })
+  // const { connect } = useConnect({
+  //   connector: new InjectedConnector(),
+  // })
   const triggerBlockchain = () => {
     // calls.triggerLogin()
-    connect()
+    // connect()
   }
 
-  
+  const nftBalanceOfUser = null
        // Fetch the CryptoDevs NFT balance of the user
-       const nftBalanceOfUser = useContractRead({
-        abi: CryptoDevsNFTABI,
-        address: BitsNFTAddress,
-        functionName: "balanceOf",
-        args: [address],
-      });
+      //  const nftBalanceOfUser = useContractRead({
+      //   abi: CryptoDevsNFTABI,
+      //   address: BitsNFTAddress,
+      //   functionName: "balanceOf",
+      //   args: [address],
+      // });
   const buyNFT = async ()=>{
     console.log("before await mint()")
     await mint()
@@ -73,7 +73,7 @@ function BlockchainWalletToggle({ calls, state }: any) {
       });
 
       await waitForTransaction(tx);
-      nftBalanceOfUser.refetch()
+      // nftBalanceOfUser.refetch()
     } catch (error) {
       console.error(error);
       window.alert(error);

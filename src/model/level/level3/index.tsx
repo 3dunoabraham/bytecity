@@ -9,7 +9,7 @@ import { AppContext } from "@/../script/state/context/AppContext";
 import { useUnloadHandler } from "@/../script/util/hook/useHooksHelper";
 import RootScene from "@/model/core/RootScene"
 import MetaOrbitControls from "@/model/core/MetaOrbitControls";
-import ByteCityEnv from "@/model/level/level2/core/ByteCityEnv";
+import ByteCityEnv from "@/model/core/StandardSkyEnv";
 import SceneSessionNucleus from "@/model/core/SceneSessionNucleus";
 import MFEnv from "./core/MFEnv";
 import MillionControls from "@/model/core/MillionControls";

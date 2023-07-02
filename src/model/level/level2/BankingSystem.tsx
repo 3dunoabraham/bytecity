@@ -7,7 +7,7 @@ import ChartBox from "@/model/npc/ChartBox";
 import ByteCityLibertyBank from "./npc/ByteCityLibertyBank";
 import ClickToStart from "./tutorial/ClickToStart";
 import MetaOrbitControls from "@/model/core/MetaOrbitControls";
-import ByteCityEnv from "./core/ByteCityEnv";
+import ByteCityEnv from "../../core/StandardSkyEnv";
 import ConnectPlayerToggle from "./core/ConnectPlayerToggle";
 import ResetLocalStorage from "./core/ResetLocalStorage";
 import { AppContext } from "@/../script/state/context/AppContext";
@@ -15,7 +15,7 @@ import { useAuth } from "@/../script/state/context/AuthContext";
 import { useCopyToClipboard } from "usehooks-ts";
 import BlockchainWalletToggle from "./core/BlockchainWalletToggle";
 
-function Level1_Index1 ({state, calls, }:any) {
+function BankingSystem ({state, calls, }:any) {
   const app:any = useContext(AppContext)
   const { user, superuser, do:{login, logout, demo,},  jwt }:any = useAuth()
   const [AIdata, s__AIdata] = useState({})
@@ -96,4 +96,4 @@ function Level1_Index1 ({state, calls, }:any) {
   </>)
 }
 
-export default Level1_Index1
+export default BankingSystem

@@ -12,19 +12,12 @@ import { AppContext } from "@/../script/state/context/AppContext";
 import TradingBox, { DEFAULT_TIMEFRAME_ARRAY } from "@/model/npc/TradingBox";
 import { useUnloadHandler } from "@/../script/util/hook/useHooksHelper";
 import { fetchPost } from "@/../script/util/helper/fetchHelper";
-import BankingSystem  from "./BankingSystem";
-import MovingBoxAndPipe from "./npc/MovingBoxAndPipe";
 import RootScene from "@/model/core/RootScene"
-import SavedGoalPost from "./goal/SavedGoalPost";
-import RoadNorthSouth from "./core/RoadNorthSouth";
-import GoodPlaceGoal from "./goal/GoodPlaceGoal";
-import PublicInfrastructure from "./PublicInfrastructure";
-import TransportSystem from "./TransportSystem";
-import GoodPlaceBuilder from "./goal/GoodPlaceBuilder";
 import MetaOrbitControls from "@/model/core/MetaOrbitControls";
-import StandardSkyEnv from "../../core/StandardSkyEnv";
 import SceneSessionNucleus from "@/model/core/SceneSessionNucleus";
 import { pov_isDefaultUser } from "../../../../script/util/helper/gameHelper";
+import StandardSkyEnv from "@/model/core/StandardSkyEnv";
+import ArchitecturalCore from "./ArchitecturalCore";
 
 const DEFAULT_TOKEN_OBJ = {
   mode:0,state:0,buy:0,sell:0, floor:0,ceil:0,
@@ -410,14 +403,16 @@ function Level3 ({}) {
       {/* CONSTANT LANDING SCENE */}
       {/* CHAPTER 1 */}
       {/* BTC | Bitcoin | Bit Coin */}
-      <BankingSystem {...{
-          state:{tokensArrayObj, selectedToken, hasAnyToken, form, isDefaultUser, chartPos, chartRot, 
-            isSelectedTokenDowntrend, selectedTimeframe, chartBoxPos, rpi, tutoStage,
-          },
-          calls:{toggleTrade, onTextClick, turnOn, trendUp, leaveAsset, turnOff, onTimeframeClick,s__rpi, s__LS_rpi,
-            trendDown, join, s__chartBoxPos, setTutoStage, s__LS_tutoStage, s__LS_tokensArrayObj, 
-          }
-      }}/>
+      <group position={[0,0,0]}>
+        <ArchitecturalCore {...{
+            state:{tokensArrayObj, selectedToken, hasAnyToken, form, isDefaultUser, chartPos, chartRot, 
+              isSelectedTokenDowntrend, selectedTimeframe, chartBoxPos, rpi, tutoStage,
+            },
+            calls:{toggleTrade, onTextClick, turnOn, trendUp, leaveAsset, turnOff, onTimeframeClick,s__rpi, s__LS_rpi,
+              trendDown, join, s__chartBoxPos, setTutoStage, s__LS_tutoStage, s__LS_tokensArrayObj, 
+            }
+        }}/>
+      </group>
       
 
 
@@ -426,7 +421,7 @@ function Level3 ({}) {
       {/* CHAPTER 2 */}
       {/* FIRST LOCAL GOAL CENTRE */}
       {/* TEXT TUTORIALS */}
-      <PublicInfrastructure {...{
+      {/* <Level1_Index2 {...{
         state: {
           hasAnyToken, tutoStage, isDefaultUser, profitHistory, realProfitCount, LS_rpi,
           tokensArrayObj, form, selectedToken, 
@@ -435,7 +430,7 @@ function Level3 ({}) {
           setTutoStage, s__profitHistory, onTextClick, toggleTrade, 
           turnOff, turnOn, join, leaveAsset, trendDown, trendUp, onTimeframeClick
         }
-      }}/>
+      }}/> */}
 
 
 
@@ -443,7 +438,7 @@ function Level3 ({}) {
       {/* CHAPTER 3 */}
       {/* MINI GAME */}
       {/* main road 1 */}
-      <TransportSystem {...{
+      {/* <Level1_Index3 {...{
         state: {
           tokensArrayObj, profitHistory, realProfitCount, 
         },
@@ -451,7 +446,7 @@ function Level3 ({}) {
           s__projectionMode, s__profitHistory
         }
       }}/>
-
+ */}
 
 
 
@@ -459,20 +454,20 @@ function Level3 ({}) {
 
       {/* CHAPTER 4 */}
       {/* account connected goal */}
-      {hasAnyToken &&  (tutoStage.lvl > 3 && !!superuser) && !isDefaultUser &&
+      {/* {hasAnyToken &&  (tutoStage.lvl > 3 && !!superuser) && !isDefaultUser &&
         <group position={[0,0,1.6]}>
           <SavedGoalPost calls={{triggerSyncGoodPlace,setAPIKeys, claim:claimOrSyncDatabase}}
             {...{projectionMode, s__projectionMode: _s__projectionMode}}
             state={{hasAnyToken, profitHistory, savedString }}
           />
         </group>
-      }
+      } */}
       {/* second road */}
-      {("link" in tokensArrayObj || (hasAnyToken &&
+      {/* {("link" in tokensArrayObj || (hasAnyToken &&
        (tutoStage.lvl > 3 && !!superuser) && !isDefaultUser)) && <RoadNorthSouth />
-      }
+      } */}
       {/* LINK | Chain Link | chainlink */}
-      {hasAnyToken && // LINK | Chain Link | chainlink
+      {/* {hasAnyToken && // LINK | Chain Link | chainlink
         <group position={[-0.3,-0.1,0.5]}>
           {("eth" in tokensArrayObj || "link" in tokensArrayObj) && tutoStage.lvl >= 3 &&
             <group position={[-0.52,0,0.46]} >
@@ -491,25 +486,25 @@ function Level3 ({}) {
           }
         </group>
       }
-      
-      <GoodPlaceBuilder calls={{triggerSyncGoodPlace,setAPIKeys, claim:claimOrSyncDatabase, s__projectionMode}} {...{projectionMode, s__projectionMode: _s__projectionMode}}
+       */}
+      {/* <GoodPlaceBuilder calls={{triggerSyncGoodPlace,setAPIKeys, claim:claimOrSyncDatabase, s__projectionMode}} {...{projectionMode, s__projectionMode: _s__projectionMode}}
             state={{hasAnyToken, profitHistory, savedString, projectionMode }}
-          />
+          /> */}
 
 
 
       {/* CHAPTER 4 */}
       {/* FTM | Fantom | Phantom */}
       {/* Loyal Player */}
-      {hasAnyToken &&  (tutoStage.lvl > 3 && !!superuser && superuser.goodAttempts > 0) && !isDefaultUser &&
+      {/* {hasAnyToken &&  (tutoStage.lvl > 3 && !!superuser && superuser.goodAttempts > 0) && !isDefaultUser &&
         <group position={[0,0,6]}>
           <GoodPlaceGoal calls={{triggerSyncGoodPlace,setAPIKeys,toggleBattleMode, claim:claimOrSyncDatabase, s__projectionMode}} {...{projectionMode, s__projectionMode: _s__projectionMode}}
             state={{hasAnyToken, profitHistory, savedString, projectionMode }}
           />
         </group>
-      }
+      } */}
       {/* PIPE STREAM LINES */}
-      {"ftm" in tokensArrayObj && <> <MovingBoxAndPipe /> </>}
+      {/* {"ftm" in tokensArrayObj && <> <MovingBoxAndPipe /> </>} */}
       {hasAllTokens && <>
         <Cylinder receiveShadow args={[3.3,3.3,0.15,tutoStage.lvl > 4 ? 3+tutoStage.lvl : 4]} position={[0, -1.2, 0]}>
           <meshStandardMaterial color={tutoStage.lvl > 4 ? "#84BC4E" : "#fff"} />
