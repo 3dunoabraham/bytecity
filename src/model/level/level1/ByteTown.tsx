@@ -17,6 +17,7 @@ import ArchitecturalCore from "./ArchitecturalCore";
 import { DefaultSceneTable } from "@/model/core/DefaultSceneTable";
 
 function ByteTown ({}) {
+  const eraName = "townEra"
   const app:any = useContext(AppContext)
   const searchParams:any = useSearchParams();
   const { user, superuser, do:{login, logout, fetchSupaPlayer, demo,},  jwt }:any = useAuth()
@@ -59,7 +60,7 @@ function ByteTown ({}) {
   return (<>
     <RootScene>
 
-    <SceneSessionNucleus />
+    <SceneSessionNucleus state={{eraName}} />
 
       
     <MetaOrbitControls state={{tutoStage, hasAnyToken}} />
@@ -76,7 +77,7 @@ function ByteTown ({}) {
         <ArchitecturalCore {...{
             state:{
               form,
-              eraName:"townTokenArrayObj"
+              eraName,
             },
             calls:{
             }

@@ -9,11 +9,13 @@ import { useCopyToClipboard } from "usehooks-ts";
 import EvolutionBox from "@/model/npc/EvolutionBox";
 import FloatingStart from "../../core/FloatingStart";
 import TownTextStart from "./tutorial/TownTextStart";
+import { useGame } from "../../../../script/util/hook/useGame";
 
 function ArchitecturalCore ({state, calls, }:any) {
   const app:any = useContext(AppContext)
   const { user, superuser, do:{login, logout, demo,},  jwt }:any = useAuth()
   
+  const gameLoop = useGame()
 
   return (<>
   

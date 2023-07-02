@@ -401,7 +401,7 @@ function Level3 ({}) {
   return (<>
     <RootScene>
 
-    <SceneSessionNucleus />
+    <SceneSessionNucleus state={{eraName:"cityEra"}} />
 
       
     <MetaOrbitControls state={{tutoStage, hasAnyToken}} />

@@ -22,26 +22,26 @@ export const tokenColors:any = {
 }
 const EvolutionBox = forwardRef(({
   mainModel = "pc",
-  turnOn, turnOff, leaveAsset, join,
-  trendDown, trendUp,
+  turnOn, turnOff, 
   tokensArrayArray,
-  unselectedColor="#48721E",
   refetchInterval=3000,
   token= "btc", timeframe= "3m",
-  wallWidth=0.1,
-  position=[0,0,0], boundaries=[1,1,1],
+  position=[0,0,0], 
   onTextClick=()=>{}, onTimeframeClick=()=>{},score=0,s__score=()=>{},
   velocityX=0, setVelocityX=()=>{}, velocityY=0, setVelocityY=()=>{},
-
+  calls= {
+    join:()=>{},
+    leaveAsset:()=>{},
+  },
   state= {
-    eraName:"unnamedEraTokensArrayObj",
+    eraName:"unnamedEra",
     form: null, 
   }
 }: any, ref:any) => {
   const API_PRICE_BASEURL = "https://api.binance.com/api/v3/ticker/price?symbol="
   const baseToken = "USDT"
     const app:any = useContext(AppContext)
-    const [LS_tokensArrayObj, s__LS_tokensArrayObj] = useLocalStorage(state.eraName, "{}")
+    const [LS_tokensArrayObj, s__LS_tokensArrayObj] = useLocalStorage(state.eraName+"TokensArrayObj", "{}")
     const [LS_rpi, s__LS_rpi] = useLocalStorage('rpi', "")
     const [rpi, s__rpi] = useState("")
     const [chopAmount,s__chopAmount] = useState<any>(0)
@@ -122,7 +122,11 @@ const selectedHasArray = useMemo(()=>{
   },[selectedTimeframeIndex,tokensArrayArray])
 
   const triggerJoin = () => {
-    alert()
+    calls.join()
+  }
+
+  const triggerLeave = () => {
+    calls.leaveAsset()
   }
 
   return (
@@ -142,7 +146,7 @@ const selectedHasArray = useMemo(()=>{
 
       
       <group position={position}>
-        <RedButton state={{isOn: tokensArrayArray}} calls={{join:triggerJoin, leaveAsset }} />
+        <RedButton state={{isOn: tokensArrayArray}} calls={{join:triggerJoin, leaveAsset:triggerLeave }} />
         
         {clicked &&
           <group position={[0,-0.33,0]}>
