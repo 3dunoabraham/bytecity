@@ -11,7 +11,7 @@ import FloatingStart from "../../core/FloatingStart";
 import TownTextStart from "./tutorial/TownTextStart";
 import { useGame } from "../../../../script/util/hook/useGame";
 
-function ArchitecturalCore ({state, calls, }:any) {
+function ArchitecturalCore ({state, calls, store}:any) {
   const app:any = useContext(AppContext)
   const { user, superuser, do:{login, logout, demo,},  jwt }:any = useAuth()
   
@@ -24,7 +24,7 @@ function ArchitecturalCore ({state, calls, }:any) {
     </Box>
 
     <group position={[-0.75,0,-0.75]}>
-      <EvolutionBox {...{state, calls}} >
+      <EvolutionBox {...{state, calls, store}} >
 
       </EvolutionBox>
     </group>    

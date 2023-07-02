@@ -19,7 +19,7 @@ export function RedButton({ state, calls }: any) {
   return (<>
     <group position={[0, -0.47, 0]} onClick={triggerClick}    >
       <group position={[0, 0.1, 0]} >
-        <mesh castShadow receiveShadow position={[0.39, -0.04, 0,]} rotation={[0, 0, 0]} >
+        <mesh castShadow receiveShadow position={[0.39, state.isOn ? -0.06 : -0.04, 0,]} rotation={[0, 0, 0]} >
           <boxGeometry args={[0.12, 0.09, 0.12]} />
           <meshStandardMaterial color={state.isOn ? "#009900" : "#ff0000"} />
         </mesh>

@@ -18,8 +18,16 @@ export const useGame: any = (initialConfig={state:{eraName:"unnamedEra"}}) => {
   const [_tutoStage, s__LS_tutoStage] = useLocalStorage(state.eraName+'tutorialStage', "{}")
   const tutoStage:any = useMemo(()=> JSON.parse(_tutoStage) , [_tutoStage])
 
+  const leaveBox = (x:string) => {
+    s__selectedBox(x)
+    let new_tokensArrayObj = { ...tokensArrayObj };
+    delete new_tokensArrayObj[x];
+    s__LS_tokensArrayObj((prevValue) => JSON.stringify(new_tokensArrayObj));
+    s__tokensArrayObj(new_tokensArrayObj)
+    // app.audio("neutral","./sound/click47.wav")
+  }
   const joinBox = (x:string) => {
-    alert("Joining "+x)
+    // alert("Joining "+x)
     
     s__selectedBox(x)
     updateTokenOrder(x, selectedTimeframeIndex, "state", 0)
@@ -60,6 +68,8 @@ export const useGame: any = (initialConfig={state:{eraName:"unnamedEra"}}) => {
     let bigTokensObj = {...tokensArrayObj, ...{[_token]:old_tokensArrayObjArray}}
     s__tokensArrayObj(bigTokensObj)
     s__LS_tokensArrayObj((prevValue) => JSON.stringify(bigTokensObj))
+
+    console.log("tokensArrayObj", tokensArrayObj)
   }
 
   
@@ -68,12 +78,23 @@ export const useGame: any = (initialConfig={state:{eraName:"unnamedEra"}}) => {
     // s__savedString(LH_superuser)
   },[user, superuser])
 
+  const hasAnyToken = useMemo(()=>{
+    let interestCount = Object.keys(tokensArrayObj).filter((token)=>{
+      return token in tokensArrayObj
+    })
+    return interestCount.length > 0
+  },[tokensArrayObj])
 
   
   return {
-    state,
+    store: tokensArrayObj,
+    state:{
+      ...state,
+      hasAnyToken,
+    },
     calls: {
       join: joinBox,    
+      leave: leaveBox,    
     }
   }
 }

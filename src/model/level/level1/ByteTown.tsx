@@ -17,7 +17,7 @@ import ArchitecturalCore from "./ArchitecturalCore";
 import { DefaultSceneTable } from "@/model/core/DefaultSceneTable";
 import { useGame } from "../../../../script/util/hook/useGame";
 
-function ByteTown ({}) {
+export function ByteTown ({}) {
   const eraName = "townEra"
   const gameLoop = useGame({state:{eraName}})
   const app:any = useContext(AppContext)
@@ -27,7 +27,6 @@ function ByteTown ({}) {
   const [rpi, s__rpi] = useState<any>(LS_rpi)
   const [_tutoStage, s__LS_tutoStage] = useLocalStorage('level2tutorialstage', "{}")
   const [LS_tokensArrayObj, s__LS_tokensArrayObj] = useLocalStorage('townTokensArrayObj', "{}")
-  const [tokensArrayObj,s__tokensArrayObj] = useState<any>({})
   const [savedString,s__savedString] = useState("")
   const [selectedToken, __selectedToken] = useState("btc")
   const [profitHistory, s__profitHistory] = useState<any>([])
@@ -36,17 +35,17 @@ function ByteTown ({}) {
   })
   const tutoStage:any = useMemo(()=> JSON.parse(_tutoStage) , [_tutoStage])
   const hasAnyToken = useMemo(()=>{
-    let interestCount = Object.keys(tokensArrayObj).filter((token)=>{
-      return token in tokensArrayObj
+    let interestCount = Object.keys(gameLoop.store).filter((token)=>{
+      return token in gameLoop.store
     })
     return interestCount.length > 0
-  },[tokensArrayObj])
+  },[gameLoop.store])
   const hasAllTokens = useMemo(()=>{
-    let interestCount = Object.keys(tokensArrayObj).filter((token)=>{
-      return token in tokensArrayObj
+    let interestCount = Object.keys(gameLoop.store).filter((token)=>{
+      return token in gameLoop.store
     })
     return interestCount.length == 4
-  },[tokensArrayObj])
+  },[gameLoop.store])
   const [LH_superuser, s__LH_superuser]:any = useLocalStorage("superuser","{}")
   const [notSaved,s__notSaved] = useState(false)
   const router = useRouter()
@@ -54,10 +53,9 @@ function ByteTown ({}) {
   useUnloadHandler(router, notSaved,)
   const isDefaultUser = useMemo(()=> pov_isDefaultUser(rpi),[rpi])
 
-  useEffect(()=>{
-    s__tokensArrayObj(JSON.parse(LS_tokensArrayObj))
-    s__savedString(LH_superuser)
-  },[user, superuser])
+  // useEffect(()=>{
+  //   console.log("asdasdasd", gameLoop.store)
+  // },[])
 
   return (<>
     <RootScene>
@@ -77,13 +75,16 @@ function ByteTown ({}) {
 
       <group position={[0,0,0]}>
         <ArchitecturalCore {...{
-            state:{
-              form,
-              eraName,
-            },
-            calls:{
-              join: gameLoop.calls.join
-            }
+          store: gameLoop.store,
+          state:{
+            ...gameLoop.state,
+            form,
+            eraName,
+          },
+          calls:{
+            join: gameLoop.calls.join,
+            leaveAsset: gameLoop.calls.leave,
+          }
         }}/>
       </group>
       

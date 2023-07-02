@@ -23,7 +23,6 @@ export const tokenColors:any = {
 const EvolutionBox = forwardRef(({
   mainModel = "pc",
   turnOn, turnOff, 
-  tokensArrayArray,
   refetchInterval=3000,
   token= "btc", timeframe= "3m",
   position=[0,0,0], 
@@ -32,6 +31,9 @@ const EvolutionBox = forwardRef(({
   calls= {
     join:()=>{},
     leaveAsset:()=>{},
+  },
+  store= {
+
   },
   state= {
     eraName:"unnamedEra",
@@ -72,11 +74,11 @@ const selectedTimeframeIndex = useMemo(()=>{
 
 
 const selectedHasArray = useMemo(()=>{
-  return !!tokensArrayArray && !!tokensArrayArray[selectedTimeframeIndex] && !!tokensArrayArray[selectedTimeframeIndex].state
-},[tokensArrayArray, selectedTimeframeIndex])
+  return !!store && !!store[selectedTimeframeIndex] && !!store[selectedTimeframeIndex].state
+},[store, selectedTimeframeIndex])
 
-    const [clickedPrice, s__clickedPrice] = useState(selectedHasArray ? parseFloat(`${tokensArrayArray[selectedTimeframeIndex].price}`) : 0)
-    const [clicked, setClicked] = useState(selectedHasArray ? !!tokensArrayArray[selectedTimeframeIndex].buy : false);
+    const [clickedPrice, s__clickedPrice] = useState(selectedHasArray ? parseFloat(`${store[selectedTimeframeIndex].price}`) : 0)
+    const [clicked, setClicked] = useState(selectedHasArray ? !!store[selectedTimeframeIndex].buy : false);
 
   const tokenColor = useMemo(()=>{
     return tokenColors[token]
@@ -118,16 +120,20 @@ const selectedHasArray = useMemo(()=>{
   },[state.form.id])
 
   const isDowntrend = useMemo(()=>{
-    return !!tokensArrayArray && !!tokensArrayArray[selectedTimeframeIndex] && !!tokensArrayArray[selectedTimeframeIndex].mode
-  },[selectedTimeframeIndex,tokensArrayArray])
+    return !!store && !!store[selectedTimeframeIndex] && !!store[selectedTimeframeIndex].mode
+  },[selectedTimeframeIndex,store])
 
   const triggerJoin = () => {
     calls.join(state.form.id)
   }
 
   const triggerLeave = () => {
-    calls.leaveAsset()
+    calls.leaveAsset(state.form.id)
   }
+
+  const isOn = useMemo(()=>{
+    return state.form.id in store
+  },[store])
 
   return (
     <group>
@@ -138,7 +144,7 @@ const selectedHasArray = useMemo(()=>{
 
       
       <group position={position} >
-        <EvolTextContainer tokensArrayArray={tokensArrayArray}
+        <EvolTextContainer tokensArrayArray={store}
           state={{clicked,clickedPrice,isSelectedId,token,queryUSDT,tokenColor,selectedHasArray,}}
           calls={{onTextClick,turnOff,turnOn}}
         />
@@ -146,7 +152,7 @@ const selectedHasArray = useMemo(()=>{
 
       
       <group position={position}>
-        <RedButton state={{isOn: tokensArrayArray}} calls={{join:triggerJoin, leaveAsset:triggerLeave }} />
+        <RedButton state={{isOn}} calls={{join:triggerJoin, leaveAsset:triggerLeave }} />
         
         {clicked &&
           <group position={[0,-0.33,0]}>
