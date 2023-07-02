@@ -154,6 +154,13 @@ const timeframe = useMemo(()=>{
   return form.id.split("USDT")[1].toLowerCase()
 },[form.id])
 
+// const tokenColor = useMemo(()=>{
+//   return tokenColors[token]
+// },[token])
+const isSelectedId = useMemo(()=>{
+  return form && form.id == token.toUpperCase()+"USDT"+timeframe.toUpperCase()
+},[form])
+
   return {
     store: tokensArrayObj,
     state:{
@@ -170,6 +177,7 @@ const timeframe = useMemo(()=>{
       timeframe,
       form,
       isDefaultUser,
+      isSelectedId,
       tutoStage
     },
     calls: {

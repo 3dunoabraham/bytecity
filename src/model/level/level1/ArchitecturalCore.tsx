@@ -15,6 +15,9 @@ function ArchitecturalCore ({state, calls, store}:any) {
   const app:any = useContext(AppContext)
   const { user, superuser, do:{login, logout, demo,},  jwt }:any = useAuth()
   
+  const toggleGame = ()=> {
+    // alert("toggleGame")
+  }
 
   return (<>
   
@@ -24,7 +27,7 @@ function ArchitecturalCore ({state, calls, store}:any) {
     </Box>
 
     <group position={[-0.75,0,-0.75]}>
-      <EvolutionBox {...{state, calls, store}} >
+      <EvolutionBox {...{state, calls:{...calls,...{toggleGame}}, store}} >
 
       </EvolutionBox>
     </group>    
