@@ -1,10 +1,14 @@
 import { useContext, useEffect, useMemo, useState } from 'react'
 import { useLocalStorage } from 'usehooks-ts'
+
+
 import { useAuth } from '../../state/context/AuthContext'
 import { AppContext } from '../../state/context/AppContext'
 import { DEFAULT_BOX_OBJ, DEFAULT_TIMEFRAME_ARRAY } from '../../constant/game'
 import { getComputedLevels } from '../helper'
 import { pov_isDefaultUser } from '../helper/gameHelper'
+import { countProfitableTrades, createTradeObject, handleFirstTutorialStages, updateProfitHistory } from "@/model/scripts";
+import { fetchPost } from '../helper/fetchHelper'
 
 export const useGame: any = (initialConfig={form:{id:"BTCUSDT3M"},state:{eraName:"unnamedEra"}}) => {
   const { user, superuser, do:{login, logout, fetchSupaPlayer, demo,},  jwt }:any = useAuth()
@@ -18,16 +22,21 @@ export const useGame: any = (initialConfig={form:{id:"BTCUSDT3M"},state:{eraName
   const [LS_tokensArrayObj, s__LS_tokensArrayObj] = useLocalStorage(state.eraName+'TokensArrayObj', "{}")
   const [tokensArrayObj,s__tokensArrayObj] = useState<any>({})
   const [_tutoStage, s__LS_tutoStage] = useLocalStorage(state.eraName+'TutorialStage', "{}")
+  const feePercent = 0.0
+  const [projectionMode, s__projectionMode] = useState(false)
   
   const [LS_rpi, s__LS_rpi] = useLocalStorage('rpi', "user:0000")
   const [rpi, s__rpi] = useState<any>(LS_rpi)
+  const [profitHistory, s__profitHistory] = useState<any>([])
+  const [orderHistory, s__orderHistory] = useState<any>([])
+  const [currentOrders, s__currentOrders] = useState<any>({})
 
   const tutoStage:any = useMemo(()=> {
     try {
       console.log("_tutoStage")
-      JSON.parse(_tutoStage)
+      return JSON.parse(_tutoStage)
     } catch (e:unknown) {
-      return null
+      return {lvl:null}
     }
 } , [_tutoStage])
 
@@ -161,6 +170,126 @@ const isSelectedId = useMemo(()=>{
   return form && form.id == token.toUpperCase()+"USDT"+timeframe.toUpperCase()
 },[form])
 
+
+
+
+
+const toggleTrade = async (x:any, y:any) => {
+  if (profitHistory.length > 4) {
+    return alert("Full Local Storage!");
+  }
+
+  const newTradeObj:any = createTradeObject(x, y);
+  const isBuying = newTradeObj.side === "buy";
+
+  handleFirstTutorialStages(isBuying, tutoStage, setTutoStage);
+  s__orderHistory([...orderHistory, newTradeObj])
+  updateTokenOrder(x,selectedTimeframeIndex,"buy",isBuying ? "1" : "0",{["price"]:y.price})
+
+  if (isBuying) {
+    app.audio("neutral","./sound/cas.wav")
+    app.alert("success",`You bought: ${x.toUpperCase()} at: ${y.price}!`)
+  }
+
+  if (form.id in currentOrders) {
+    handleExistingOrder(newTradeObj);
+  } else {
+    handleNewOrder(newTradeObj);
+  }
+};
+
+const realProfitCount = useMemo(()=>{
+  return profitHistory.filter((atrade:any, index:any) => {
+    return !!atrade[1] && atrade[1] == "profit"
+  }).length
+},[profitHistory])
+
+
+const handleExistingOrder = (newTradeObj:any): void => {
+  let oldOrders = { ...currentOrders };
+
+  if (newTradeObj.side === "sell") {
+    let lastProfitCount = realProfitCount
+    let newprofithi = updateProfitHistory(currentOrders, form, newTradeObj, profitHistory, feePercent);
+    s__profitHistory(newprofithi);
+    let newProfitCount = newprofithi.filter((atrade:any, index:any) => {
+      return !!atrade[1] && atrade[1] == "profit"
+    }).length
+    console.log("newProfitCount  > lastProfitCount", newProfitCount  , lastProfitCount)
+    if (newProfitCount  > lastProfitCount ) {
+     app.audio("neutral","./sound/cassh.wav")
+    //  let theLastProfit 
+      // console.log("new profit trade obj", newTradeObj, newprofithi[newprofithi.length-1])
+      let pointsNumber = parseFloat(`${newprofithi[newprofithi.length-1]}`)*100
+      let points = parseInt(`${pointsNumber}`)
+     app.alert("success",`You won ${points} point(s) on ${newTradeObj.token.toUpperCase()} (${newTradeObj.price})!`)
+    } else {
+       app.audio("neutral","./sound/wrong.wav")
+       app.alert("error","Loss trade, try again!")
+      }
+
+    let counting = countProfitableTrades(newprofithi);
+    if (counting >= 4) {
+      setTutoStage(5);
+    }
+
+    if (!!projectionMode) {
+      projectVirtualOrder(form.id,newTradeObj);
+    }
+  }
+
+  delete oldOrders[form.id];
+  s__currentOrders(oldOrders);
+  // s__notSaved(false);
+};
+const handleNewOrder = (newTradeObj:any) => {
+  if (newTradeObj.side === "buy") {
+    s__currentOrders({ ...currentOrders, [form.id]: newTradeObj });
+    // s__notSaved(true);
+
+    if (!!projectionMode) {
+      projectVirtualOrder(form.id, newTradeObj);
+      app.alert("success", "Sending BUY order with synced API keys");
+    }
+  } else {
+    if (newTradeObj.side === "sell") {
+      app.audio("neutral","./sound/404.wav")
+      app.alert("error", "Live BUY order not found!");
+    }
+  }
+};
+
+
+
+const projectVirtualOrder = async (theid:any, thetrade:any) => {    
+  const splitKey = rpi.split(":")
+  if (splitKey[0] == "user" && splitKey[1] == "0000") { return true }
+
+  try {
+    let thedata = {
+      apiKey: splitKey[0],
+      apiSecret: splitKey[1],
+      ...thetrade,
+      quantity: 39,
+      symbol: thetrade.token.toUpperCase()+"USDT",
+    }
+    app.alert("neutral", "Saving Order")
+    let fetchRes:any = await fetchPost("/api/order/place",thedata)
+    if (fetchRes.status >= 400) {
+      app.alert("error","Failed to save order")
+      return
+    }
+    app.alert("success", "Successfully projected order to synced API!")
+
+    fetchSupaPlayer()
+  } catch (e:unknown) {
+    app.alert("error", "Failed order projection!")
+  }
+}
+
+
+
+
   return {
     store: tokensArrayObj,
     state:{
@@ -178,9 +307,11 @@ const isSelectedId = useMemo(()=>{
       form,
       isDefaultUser,
       isSelectedId,
+      profitHistory,
       tutoStage
     },
     calls: {
+      toggleTrade,
       setTutoStage,
       join: joinBox,    
       leave: leaveBox,

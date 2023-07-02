@@ -59,15 +59,15 @@ function TradingTextContainer({ tokensArrayArray, state, calls }: any) {
         />
       }
       {!!tokensArrayArray && <>
-        <DynaText color={state.selectedHasArray ? "#A09390" : "#9A7465"} // LIVE / DEMO
-          onClick={state.selectedHasArray ? calls.turnOff : calls.turnOn} text={"DEMO"}
-          position={new Vector3(0.4, 0, +0.4)}
+        <DynaText color={state.selectedHasArray ? "#A09390" : "#9A3405"} // LIVE / DEMO
+          // onClick={state.selectedHasArray ? calls.turnOff : calls.turnOn} 
+          position={new Vector3(0.4, 0, +0.4)} text={"DEMO"}
           isSelected={state.isSelectedId} font={0.055}
         />
 
-        <DynaText color={state.selectedHasArray ? "#009900" : "#A09390"} // LIVE / DEMO
-          onClick={state.selectedHasArray ? calls.turnOff : calls.turnOn} text={"LIVE"}
-          position={new Vector3(0.4, 0, +0.46)}
+        <DynaText color={state.selectedHasArray ? "#007700" : "#A09390"} // LIVE / DEMO
+          // onClick={state.selectedHasArray ? calls.turnOff : calls.turnOn} 
+          position={new Vector3(0.4, 0, +0.46)} text={"LIVE"}
           isSelected={state.isSelectedId} font={state.selectedHasArray ? 0.06 : 0.06}
         />
       </>}

@@ -9,9 +9,9 @@ export const createTradeObject = (x:any, y:any) => {
   
   
   export const handleFirstTutorialStages = (isBuying:any, tutoStage:any, callback:any) => {
-    if (tutoStage.lvl === 1 && isBuying) {
+    if (!!tutoStage && tutoStage.lvl === 1 && isBuying) {
       callback(2);
-    } else if (tutoStage.lvl === 2 && !isBuying) {
+    } else if (!!tutoStage && tutoStage.lvl === 2 && !isBuying) {
       callback(3);
     }
   };

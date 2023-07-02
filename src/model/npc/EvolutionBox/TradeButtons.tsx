@@ -17,7 +17,7 @@ export function TradeButtons({ tokensArrayArray, state, calls }: any) {
   return (<group position={[0, -0.1, 0]}>
 
     {/* buy/sell */}
-    {state.isSelectedId &&  <group>
+    {state.isSelectedId && !!tokensArrayArray && <group>
       <mesh castShadow receiveShadow onClick={() => calls.toggleGame()} scale={state.score.score ? 1 : 3}
         position={[
           !state.clicked ? - 0.05 : + 0.11,
@@ -30,7 +30,7 @@ export function TradeButtons({ tokensArrayArray, state, calls }: any) {
       </mesh>
 
     </group>}
-    {!!tokensArrayArray && 
+    {!!tokensArrayArray && state.selectedHasArray &&
       <mesh castShadow receiveShadow
         scale={3}
         position={[0.03, -0.355, 0.349,]}

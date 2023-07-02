@@ -69,9 +69,11 @@ const EvolutionBox = forwardRef(({
 
 
   const toggleGame = () => {
+
+
     if (clicked) {
       // setVelocityX(0)
-      calls.toggleGame({ value: 0, price: queryUSDT.data })
+      calls.toggleGame(state.token,{ value: 0, price: queryUSDT.data })
       setClicked(false)
 
       return
@@ -79,14 +81,24 @@ const EvolutionBox = forwardRef(({
     // s__score({ score: 1, maxScore: 0, velocityX: 0, velocityY: 0 })
     setClicked(true)
     // setVelocityX((0.05 + ((Math.random() / 2) - 0.55)) / 5)
-    calls.toggleGame({ value: 0.05, price: queryUSDT.data })
+    calls.toggleGame(state.token,{ value: 0.05, price: queryUSDT.data })
     s__clickedPrice(queryUSDT.data)
   }
 
   const triggerJoin = () => { calls.join(form.id) }
   const triggerLeave = () => { calls.leaveAsset(form.id) }
-  const triggerTurnOn = () => { calls.turnOn(form.id) }
-  const triggerTurnOff = () => { calls.turnOff(form.id) }
+  const triggerTurnOn = () => {
+    if (clicked) { return app.alert("error", "Complete the pending transaction first") }
+    calls.turnOn(form.id)
+  }
+  const triggerTurnOff = () => {
+    if (clicked) {
+      let answ = prompt("You have a pending transaction \n\n do you want to cancel it? (y/n)","y")
+      if (answ != "y") { return }
+      toggleGame()
+    }
+    calls.turnOff(form.id)
+  }
   const isOn = useMemo(() => { return form.id in store }, [store])
 
   return (
@@ -99,7 +111,9 @@ const EvolutionBox = forwardRef(({
 
       <group position={position} >
         <EvolTextContainer tokensArrayArray={store[form.id]}
-          state={{ clicked, clickedPrice, isSelectedId: state.isSelectedId, token: state.token, queryUSDT, tokenColor, selectedHasArray: state.selectedHasArray, }}
+          state={{ clicked, clickedPrice, isSelectedId: state.isSelectedId,
+            token: state.token, queryUSDT, tokenColor, selectedHasArray: state.selectedHasArray,
+          }}
           calls={calls}
         />
       </group>
@@ -110,7 +124,9 @@ const EvolutionBox = forwardRef(({
 
 
         <TradeButtons tokensArrayArray={store[form.id]}
-          state={{ score: { score: 0 }, selectedHasArray: state.selectedHasArray, isSelectedId: state.isSelectedId, clicked }}
+          state={{ score: { score: 0 }, selectedHasArray: state.selectedHasArray,
+            isSelectedId: state.isSelectedId, clicked
+          }}
           calls={{ toggleGame, turnOn: triggerTurnOn, turnOff: triggerTurnOff }}
         />
 

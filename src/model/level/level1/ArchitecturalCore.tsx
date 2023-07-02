@@ -15,7 +15,10 @@ function ArchitecturalCore ({state, calls, store}:any) {
   const app:any = useContext(AppContext)
   const { user, superuser, do:{login, logout, demo,},  jwt }:any = useAuth()
   
-  const toggleGame = ()=> {
+  const toggleGame = (boxName:string, tradeData:any)=> {
+    if (!state.selectedHasArray) { return }
+    console.log("tradeData", boxName, tradeData, state.selectedHasArray)
+    calls.toggleGame(boxName, tradeData)
     // alert("toggleGame")
   }
 
