@@ -54,7 +54,7 @@ function Component ({}) {
   const yCount = 1
   return (<>
     <RootScene>
-      <group position={[0,1.5,1.5]} scale={2}> <SceneSessionNucleus included={["blockchain"]} /> </group>
+      <group position={[0,1.5,1.5]} scale={2}> <SceneSessionNucleus state={{eraName:"chainEra"}} included={["blockchain"]} /> </group>
       <GridFloor xCount={xCount} yCount={yCount} zCount={zCount} />
       <MillionControls state={{tutoStage, hasAnyToken}} />
       <MFEnv />
