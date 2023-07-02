@@ -10,6 +10,8 @@ import RedButton from "./RedButton";
 import EvolTextContainer from "./EvolTextContainer";
 import ExclamationMark from "./ExclamationMark";
 import TradeButtons from "./TradeButtons";
+import { useUnloadHandler } from "@/../script/util/hook/useHooksHelper";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export const tokenColors: any = { "btc": "#FE8E1B", "eth": "#3EDF5D", "link": "#2A5ADA", "ftm": "#1A6AFF", }
 const EvolutionBox = forwardRef(({
@@ -28,6 +30,7 @@ const EvolutionBox = forwardRef(({
   store = {},
   state = { token: "btc", timeframe: "3m", isDowntrend: false, eraName: "unnamedEra", form: null, selectedHasArray: false, }
 }: any, ref: any) => {
+  const router = useRouter()
   const API_PRICE_BASEURL = "https://api.binance.com/api/v3/ticker/price?symbol="
   const baseToken = "USDT"
   const app: any = useContext(AppContext)
@@ -100,6 +103,9 @@ const EvolutionBox = forwardRef(({
     calls.turnOff(form.id)
   }
   const isOn = useMemo(() => { return form.id in store }, [store])
+
+  useUnloadHandler(router, clicked,)
+
 
   return (
     <group>
