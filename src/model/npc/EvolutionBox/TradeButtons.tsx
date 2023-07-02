@@ -1,6 +1,19 @@
+import { useContext } from "react"
+import { AppContext } from "../../../../script/state/context/AppContext"
 
+export function TradeButtons({ tokensArrayArray, state, calls }: any) {
+  const app:any = useContext(AppContext)
+  const triggerDemoLive = (e:any)=> {
+    app.audio("neutral","./sound/click47.wav")
 
-function TradeButtons({ tokensArrayArray, state, calls }: any) {
+    if (state.selectedHasArray) {
+      calls.turnOff()
+     } else {
+       calls.turnOn()
+     }
+    e.stopPropagation()
+  }
+
   return (<group position={[0, -0.1, 0]}>
 
     {/* buy/sell */}
@@ -29,9 +42,8 @@ function TradeButtons({ tokensArrayArray, state, calls }: any) {
 
 
     {/* DEMO LIVE BUUTTON TOGGLE */}
-    {!!tokensArrayArray && <>
+    {!!tokensArrayArray && <group onClick={triggerDemoLive}>
       <mesh castShadow receiveShadow scale={state.score.score ? 1 : 3}
-        onClick={state.selectedHasArray ? calls.turnOff : calls.turnOn}
         rotation={[(!!tokensArrayArray && !!state.selectedHasArray) ? 0.5 : -0.5, 0, 0]}
         position={[0.4, -0.27, + 0.31,]}
       >
@@ -41,14 +53,13 @@ function TradeButtons({ tokensArrayArray, state, calls }: any) {
 
 
       <mesh castShadow receiveShadow scale={state.score.score ? 1 : 3}
-        onClick={state.selectedHasArray ? calls.turnOff : calls.turnOn}
         position={[0.4, -0.32, + 0.31,]}
       >
         <boxGeometry args={[0.03, 0.025, 0.03]} />
         <meshStandardMaterial color={"#978887"} />
       </mesh>
 
-    </>}
+    </group>}
 
   </group>)
 }

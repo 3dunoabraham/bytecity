@@ -17,7 +17,7 @@ import BouncingThing from "../npc/TradingBox/output/BouncingThing";
 import TimeframeButtons from "../npc/TradingBox/input/TimeframeButtons";
 import PowerLock from "../npc/TradingBox/input/PowerLock";
 import TrendTree from "../npc/TradingBox/input/TrendTree";
-import TradeButtons from "../npc/TradingBox/input/TradeButtons";
+import TradeButtons from "../npc/EvolutionBox/TradeButtons";
 
 export const DEFAULT_TIMEFRAME_ARRAY = ["3m","15m","4h","1d","1w"]  
 export const tokenColors:any = {

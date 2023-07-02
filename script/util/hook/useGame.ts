@@ -51,7 +51,18 @@ export const useGame: any = (initialConfig={form:{id:"BTCUSDT3M"},state:{eraName
     }
   }
   
-
+  const turnBoxOn = (x:string) => {
+    s__selectedBox(x)
+    if (!tutoStage || !tutoStage.lvl) { setTutoStage(1) }
+    // console.log("x, selectedTimeframeIndex", x, selectedTimeframeIndex, 1)
+    updateTokenOrder(x, selectedTimeframeIndex, "state", 1)
+    // alert("asdasd")
+  }
+  const turnBoxOff = (x:string) => {
+    s__selectedBox(x)
+    updateTokenOrder(x, selectedTimeframeIndex, "state", 0)
+    // alert("asdasd")
+  }
   
   const updateTokenOrder = async (_token:string, timeframe:any, substate:string,val:any="",subobj:any=null) => {
     if (!_token) return
@@ -83,7 +94,7 @@ export const useGame: any = (initialConfig={form:{id:"BTCUSDT3M"},state:{eraName
     s__tokensArrayObj(bigTokensObj)
     s__LS_tokensArrayObj((prevValue) => JSON.stringify(bigTokensObj))
 
-    console.log("tokensArrayObj", tokensArrayObj)
+    console.log("tokensArrayObj", bigTokensObj)
   }
 
   
@@ -99,11 +110,20 @@ export const useGame: any = (initialConfig={form:{id:"BTCUSDT3M"},state:{eraName
     return interestCount.length > 0
   },[tokensArrayObj])
 
-
+const tokensArrayArray = useMemo(()=>{
+  return !!tokensArrayObj ? tokensArrayObj[form.id] : null
+},[tokensArrayObj[form.id]])
   
 const selectedHasArray = useMemo(()=>{
-  return !!tokensArrayObj && !!tokensArrayObj[selectedTimeframeIndex] && !!tokensArrayObj[selectedTimeframeIndex].state
-},[tokensArrayObj, selectedTimeframeIndex])
+  // if (tokensArrayObj[selectedTimeframeIndex]) {
+
+  //   console.log("!!tokensArrayObj && !!tokensArrayObj[selectedTimeframeIndex] && !!tokensArrayObj[selectedTimeframeIndex].state")
+  //   console.log(tokensArrayObj[selectedTimeframeIndex] , tokensArrayObj[selectedTimeframeIndex].state)
+  // } else {
+  //   console.log("no no no no o", tokensArrayObj, selectedTimeframeIndex)
+  // }
+  return !!tokensArrayArray && !!tokensArrayArray[selectedTimeframeIndex] && !!tokensArrayArray[selectedTimeframeIndex].state
+},[tokensArrayArray, selectedTimeframeIndex])
 
 // const selectedTimeframeIndex = useMemo(()=>{
 //   return DEFAULT_TIMEFRAME_ARRAY.indexOf(selectedTimeframe)
@@ -114,8 +134,8 @@ const selectedHasArray = useMemo(()=>{
 const isDefaultUser = useMemo(()=> pov_isDefaultUser(rpi),[rpi])
 
 const isDowntrend = useMemo(()=>{
-  return !!tokensArrayObj && !!tokensArrayObj[state.selectedTimeframeIndex] && !!tokensArrayObj[state.selectedTimeframeIndex].mode
-},[state.selectedTimeframeIndex,tokensArrayObj])
+  return !!tokensArrayArray && !!tokensArrayArray[state.selectedTimeframeIndex] && !!tokensArrayArray[state.selectedTimeframeIndex].mode
+},[state.selectedTimeframeIndex,tokensArrayArray])
 
 const hasAllTokens = useMemo(()=>{
   let interestCount = Object.keys(tokensArrayObj).filter((token)=>{
@@ -124,23 +144,40 @@ const hasAllTokens = useMemo(()=>{
   return interestCount.length == 4
 },[tokensArrayObj])
 
+
+const token = useMemo(()=>{
+  return form.id.split("USDT")[0].toLowerCase()
+},[form.id])
+
+
+const timeframe = useMemo(()=>{
+  return form.id.split("USDT")[1].toLowerCase()
+},[form.id])
+
   return {
     store: tokensArrayObj,
     state:{
       ...state,
+
       rpi,
       hasAnyToken,
       hasAllTokens,
+      tokensArrayArray,
       selectedHasArray,
       selectedTimeframeIndex,
       isDowntrend,
+      token,
+      timeframe,
       form,
       isDefaultUser,
       tutoStage
     },
     calls: {
+      setTutoStage,
       join: joinBox,    
       leave: leaveBox,
+      turnOn: turnBoxOn,
+      turnOff: turnBoxOff,
           
     }
   }

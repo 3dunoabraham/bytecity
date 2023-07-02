@@ -1,8 +1,4 @@
-import { useDepthBuffer } from "@react-three/drei";
-import { useThree } from "@react-three/fiber";
 import { forwardRef, useContext, useEffect, useImperativeHandle, useMemo, useRef, useState } from "react";
-import { Mesh } from "three";
-import { useLocalStorage } from "usehooks-ts";
 import { useQuery } from "@tanstack/react-query";
 
 
@@ -10,28 +6,33 @@ import { AppContext } from "@/../script/state/context/AppContext";
 import { fetchMultipleJsonArray, parseDecimals } from "@/../script/util/helper";
 import EdenBlock from "./EdenBlock";
 import EdenGenesis from "./EdenGenesis";
-import RedButton from "../TradingBox/input/RedButton";
-import { DEFAULT_TIMEFRAME_ARRAY } from "../../../../script/constant/game";
+import RedButton from "./RedButton";
 import EvolTextContainer from "./EvolTextContainer";
+import ExclamationMark from "./ExclamationMark";
+import TradeButtons from "./TradeButtons";
 
 export const tokenColors:any = { "btc": "#FE8E1B", "eth": "#3EDF5D", "link": "#2A5ADA", "ftm": "#1A6AFF",}
 const EvolutionBox = forwardRef(({
-  mainModel = "pc",
-  turnOn, turnOff, 
+  
   refetchInterval=3000,
-  token= "btc", timeframe= "3m",
   position=[0,0,0], 
   onTextClick=()=>{}, onTimeframeClick=()=>{},score=0,s__score=()=>{},
   velocityX=0, setVelocityX=()=>{}, velocityY=0, setVelocityY=()=>{},
+
   form={id:"BTCUSDT3M"},
   calls= {
     join:()=>{},
     leaveAsset:()=>{},
+    turnOn:()=>{},
+    turnOff:()=>{},
+    onTextClick:()=>{},
   },
   store= {
 
   },
   state= {
+    token: "btc",
+    timeframe: "3m",
     isDowntrend: false,
     eraName:"unnamedEra",
     form: null, 
@@ -48,9 +49,9 @@ const EvolutionBox = forwardRef(({
     // const [tokensArrayObj,s__tokensArrayObj] = useState<any>({})
     const [klinesArray,s__klinesArray] = useState<any[]>([])
     const [clientIP, s__clientIP] = useState('');
-    const queryUSDT:any = useQuery({ queryKey: ['usdt'+token], refetchInterval: refetchInterval,
+    const queryUSDT:any = useQuery({ queryKey: ['usdt'+state.token], refetchInterval: refetchInterval,
     queryFn: async () => {
-      let theList = await fetchMultipleJsonArray(( [token].reduce((acc, aToken) => (
+      let theList = await fetchMultipleJsonArray(( [state.token].reduce((acc, aToken) => (
         { ...acc, [aToken]: [`${API_PRICE_BASEURL}${(aToken+baseToken).toUpperCase()}`] }
         ), {})))
       let prr = parseDecimals(theList[0].price)
@@ -64,10 +65,10 @@ const selectedTimeframe = useMemo(()=>{
 
 
     const [clickedPrice, s__clickedPrice] = (
-      useState(state.selectedHasArray ? parseFloat(`${store[state.selectedTimeframeIndex].price}`) : 0)
+      useState(!!store[form.id] ? parseFloat(`${store[form.id][state.selectedTimeframeIndex].price}`) : 0)
     )
     const [clicked, setClicked] = (
-      useState(state.selectedHasArray ? !!store[state.selectedTimeframeIndex].buy : false)
+      useState(!!store[form.id] ? !!store[form.id][state.selectedTimeframeIndex].buy : false)
     )
     // const selectedToken = useMemo(()=>{
     //   return form.id.split("USDT")[0].toLowerCase()
@@ -80,10 +81,10 @@ const selectedTimeframe = useMemo(()=>{
       return slicedArray.slice(slicedArray.length-500,slicedArray.length)
   },[klinesArray,chopAmount])
   const tokenColor = useMemo(()=>{
-    return tokenColors[token]
-  },[token])
+    return tokenColors[state.token]
+  },[state.token])
   const isSelectedId = useMemo(()=>{
-    return state.form && form.id == token.toUpperCase()+"USDT"+timeframe.toUpperCase()
+    return state.form && form.id == state.token.toUpperCase()+"USDT"+state.timeframe.toUpperCase()
   },[state.form])
   // useEffect(()=>{
   //   s__tokensArrayObj(JSON.parse(LS_tokensArrayObj))
@@ -116,6 +117,8 @@ const selectedTimeframe = useMemo(()=>{
 
   const triggerJoin = () => { calls.join(form.id) }
   const triggerLeave = () => { calls.leaveAsset(form.id) }
+  const triggerTurnOn = () => { calls.turnOn(form.id) }
+  const triggerTurnOff = () => { calls.turnOff(form.id) }
   const isOn = useMemo(()=>{ return form.id in store },[store])
 
   return (
@@ -128,14 +131,22 @@ const selectedTimeframe = useMemo(()=>{
       
       <group position={position} >
         <EvolTextContainer tokensArrayArray={store[form.id]}
-          state={{clicked,clickedPrice,isSelectedId,token,queryUSDT,tokenColor,selectedHasArray:state.selectedHasArray,}}
-          calls={{onTextClick,turnOff,turnOn}}
+          state={{clicked,clickedPrice,isSelectedId,token:state.token,queryUSDT,tokenColor,selectedHasArray:state.selectedHasArray,}}
+          calls={calls}
         />
       </group>
 
       
       <group position={position}>
         <RedButton state={{isOn}} calls={{join:triggerJoin, leaveAsset:triggerLeave }} />
+
+        
+        <TradeButtons state={{score:{score:0}, selectedHasArray: state.selectedHasArray, clicked}}
+            tokensArrayArray={store[form.id]}
+            calls={{toggleGame, turnOn:triggerTurnOn, turnOff:triggerTurnOff}}
+          />
+          
+
         
         {clicked &&
           <group position={[0,-0.33,0]}>
@@ -155,20 +166,12 @@ const selectedTimeframe = useMemo(()=>{
         }
 
       </group>
+
+      
       {state.isDowntrend && <>
           <group position={position}>
-        <mesh castShadow receiveShadow scale={score.score ? 1 : 3}
-          position={[  - 0.42,  - 0,  - 0.42 ]}
-        >
-          <boxGeometry args={[0.02, 0.1, 0.02]} />
-          <meshStandardMaterial color={"red"} />
-        </mesh>
-        <mesh castShadow receiveShadow scale={score.score ? 1 : 3}
-          position={[  - 0.42,  - 0.28,  - 0.42]}
-        >
-          <boxGeometry args={[0.02, 0.03, 0.02]} />
-          <meshStandardMaterial color={"red"} />
-        </mesh>
+            <ExclamationMark />
+        
         </group>
       </>}
 

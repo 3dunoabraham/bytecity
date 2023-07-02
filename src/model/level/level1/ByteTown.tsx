@@ -35,6 +35,8 @@ const ByteTown = ({eraName="townEra"}:any) => {
             eraName,
           },
           calls:{
+            turnOn: gameLoop.calls.turnOn,
+            turnOff: gameLoop.calls.turnOff,
             join: gameLoop.calls.join,
             leaveAsset: gameLoop.calls.leave,
           }

@@ -13,7 +13,7 @@ import { AppContext } from "@/../script/state/context/AppContext";
 import TimeframeButtons from "./input/TimeframeButtons";
 import TrendTree from "./input/TrendTree";
 import PowerLock from "./input/PowerLock";
-import TradeButtons from "./input/TradeButtons";
+import TradeButtons from "../EvolutionBox/TradeButtons";
 import { fetchMultipleJsonArray, parseDecimals } from "@/../script/util/helper";
 import BankRoofContainer from "./parts/BankRoofContainer";
 
@@ -21,7 +21,7 @@ import BouncingThing from "./output/BouncingThing";
 import TradingTextContainer from "./output/TradingTextContainer";
 import MiniScreen from "./output/MiniScreen";
 import MiniCitySign from "./output/MiniCitySign";
-import RedButton from "./input/RedButton";
+import RedButton from "../EvolutionBox/RedButton";
 
 export const DEFAULT_TIMEFRAME_ARRAY = ["3m","15m","4h","1d","1w"]  
 export const tokenColors:any = {
