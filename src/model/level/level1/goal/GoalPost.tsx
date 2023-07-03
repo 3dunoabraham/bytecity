@@ -64,7 +64,7 @@ function Component ({calls, state}:any) {
                   </group>
                   
                     <DynaText text={anOrder[0]*100}
-                      color={anOrder[1] != "profit" ? "#006600"   : "#090"}
+                      color={anOrder[1] != "profit" ? "#990000"   : "#090"}
                       // rotation={[0,0,0]}
                       position={[0,0.01,0.075]} font={0.05}
                     />

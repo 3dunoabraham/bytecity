@@ -176,7 +176,7 @@ const isSelectedId = useMemo(()=>{
 
 const toggleTrade = async (x:any, y:any) => {
   if (profitHistory.length > 4) {
-    app.alert("error", "Full Local Storage!")
+    app.alert("error", "Full LIVE Storage!")
     return alert("New habitants can't enter the station! \n\n Please click the station button to \n add them to your Town Table");
   }
 
@@ -302,6 +302,7 @@ const projectVirtualOrder = async (theid:any, thetrade:any) => {
       tokensArrayArray,
       selectedHasArray,
       selectedTimeframeIndex,
+      realProfitCount,
       isDowntrend,
       token,
       timeframe,

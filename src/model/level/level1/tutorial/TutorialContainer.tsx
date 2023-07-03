@@ -21,7 +21,7 @@ function Component({ state }: any) {
         <group position={[0, 0, 0]} rotation={[0, Math.PI / 2, 0]}>
           <FontText position={[0, 0, 0]} fontSize={0.2} rotation={[-Math.PI / 2, 0, 0]}
             material={new MeshStandardMaterial({ side: 0, color: "#666" })}>
-            Local Storage Station
+            Life Storage Station
           </FontText>
         </group>
       </group>

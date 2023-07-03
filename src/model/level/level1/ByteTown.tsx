@@ -23,22 +23,27 @@ const ByteTown = ({eraName="townEra"}:any) => {
   const gameLoop = useGame({state:{eraName},form:{ id:"BTCUSDT3M" }})
   
   const goalPostTips = async () => {
-    return
+    // return
     if (gameLoop.state.isDefaultUser) {
       if (gameLoop.state.profitHistory.length  == 0) {
-        app.alert("neutral", "Tip: Buy low and sell high to get points!")
+          app.alert("neutral", "Tip: Start CALL only when activity is low!")
+          // app.alert("neutral", "Tip: Start the CALL when activity is low!")
         return
       } else {
         if (gameLoop.state.realProfitCount == 0) {
-          app.alert("neutral", "Tip: Remove bad orders (losses) by fixing (click) white-roofed cars!")
+          app.alert("neutral", "Tip: End CALL when GROWTH is GREEN!")
+
+          // app.alert("neutral", "Tip: Remove bad orders (losses) by fixing (click) white-roofed cars!")
         } else {
-          app.alert("neutral", "Tip: Buy and sell profitably 4 times to level up!")
+          // app.alert("neutral", "Tip: Buy and sell profitably 4 times to level up!")
         }
 
       }
     } else {
+      return
+        // alert("gameLoop.state.realProfitCount " + gameLoop.state.realProfitCount)
       if (gameLoop.state.realProfitCount < 4) {
-        // app.alert("neutral", "Trying to sync account")
+        app.alert("neutral", "Increase inhabitants 4 times to level up!")
         // let loginRes = await login({
         //   referral:gameLoop.state.LS_rpi.split(":")[0],
         //   pin:gameLoop.state.LS_rpi.split(":")[1]

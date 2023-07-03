@@ -134,7 +134,7 @@ const EvolutionBox = forwardRef(({
         />
 
 
-
+          {/* CALL SCREEN */}
         {clicked &&
           <group position={[0, -0.33, 0]}>
             <mesh castShadow receiveShadow scale={score.score ? 1 : 3}
