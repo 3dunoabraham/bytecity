@@ -1,4 +1,5 @@
 import DynaText from "@/model/core/DynaText"
+import HumanScale from "@/model/core/HumanScale"
 import { Box, Cylinder } from "@react-three/drei"
 import { useFrame } from "@react-three/fiber"
 import { useMemo, useRef } from "react"
@@ -56,23 +57,30 @@ function Component ({calls, state}:any) {
       {state.hasAnyToken && <>
         <group position={[-0.15,-0.55,0]}>
             {state.profitHistory.slice(0,5).map((anOrder:any, index:any)=>{
-              return (
-                <Box args={[0.07,0.11,0.07]} position={[index*0.075,0.6,0]}  castShadow receiveShadow key={index}>
+              return (<>
+                <group  position={[index*0.075,0.6,0]} >
+                  <group scale={0.06}  position={[0,0.06,0]} >
+                    <HumanScale color={anOrder[1] != "profit" ? "#f00" : "#0f0"} width={0.1} length={0.3}   /> 
+                  </group>
+                </group>
+                {/* <Box args={[0.07,0.11,0.07]} position={[index*0.075,0.6,0]}  castShadow receiveShadow key={index}>
                   <meshStandardMaterial color={anOrder[1] != "profit" ? "#f00" : "#ccc"}/>
-                </Box>
-              )
+                </Box> */}
+              </>)
             })}
-            {state.profitHistory.slice(0,5).map((anOrder:any, index:any)=>{
-              return (
-                <Box args={[0.065,0.1,0.18]} position={[index*0.075,0.6,0]}  castShadow receiveShadow key={index}>
-                  <meshStandardMaterial color={anOrder[1] != "profit"  ? "#aaaaaa" : "#33aa33"}
-                  />
-                </Box>
+            {/* {state.profitHistory.slice(0,5).map((anOrder:any, index:any)=>{
+              return (<>
+
+                  <Box args={[0.065,0.1,0.18]} position={[index*0.075,0.6,0]}  castShadow receiveShadow key={index}>
+                    <meshStandardMaterial color={anOrder[1] != "profit"  ? "#aaaaaa" : "#33aa33"}
+                    />
+                  </Box>
+                </>
               )
-            })}
+            })} */}
             {[0,1,2,3,4].map((anOrder:any, index:any)=>{
               return (
-                <Box args={[0.065,0.1,0.18]} position={[index*0.075,0.6,0]}  castShadow receiveShadow key={index}>
+                <Box args={[0.065,0.16,0.07]} position={[index*0.075,0.67,0.01]}   key={index}>
                   <meshStandardMaterial color={"#339933"}
                     transparent={true} opacity={0.15}
                   />

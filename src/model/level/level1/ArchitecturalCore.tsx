@@ -16,6 +16,8 @@ import { fetchMultipleJsonArray, parseDecimals } from "../../../../script/util/h
 import { BINA_API_PRICE_BASEURL, GLOBAL_baseToken } from "../../../../script/constant/game";
 import { useQuery } from "@tanstack/react-query";
 import BouncingThing from "@/model/npc/TradingBox/output/BouncingThing";
+import TownSign from "@/model/npc/EvolutionBox/TownSign";
+import CallForHab from "@/model/npc/EvolutionBox/CallForHab";
 
 function ArchitecturalCore ({state, calls, store}:any) {
   const app:any = useContext(AppContext)
@@ -70,7 +72,7 @@ function ArchitecturalCore ({state, calls, store}:any) {
     
     
       <group position={position}>
-        <MiniCitySign tokensArrayArray={state.tokensArrayArray}
+        <TownSign tokensArrayArray={state.tokensArrayArray}
           state={{queryUSDT,state:state.isSelected, selectedHasArray: state.selectedHasArray}}
           calls={{}}
         />
@@ -78,7 +80,7 @@ function ArchitecturalCore ({state, calls, store}:any) {
       
       {state.selectedHasArray &&
         <group position={position}>
-          <BouncingThing tokensArrayArray={state.tokensArrayArray} _bouncingThing={bouncingThing}
+          <CallForHab tokensArrayArray={state.tokensArrayArray} _bouncingThing={bouncingThing}
             livestate={{clickedPrice, queryUSDT}}
             calls={{
               app_tip:(msg:string)=>{app.alert("neutral",msg)},

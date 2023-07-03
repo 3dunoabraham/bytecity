@@ -16,6 +16,7 @@ import { useGame } from "@/../script/util/hook/useGame";
 import RootScene from "@/model/core/RootScene"
 import TutorialContainer from "./tutorial/TutorialContainer";
 import GoalPost from "./goal/GoalPost";
+import TownCamera from "./TownCamera";
 
 const ByteTown = ({eraName="townEra"}:any) => {
   const app:any = useContext(AppContext)
@@ -59,9 +60,9 @@ const ByteTown = ({eraName="townEra"}:any) => {
   return (
     <RootScene>
 
-    <SceneSessionNucleus state={{eraName}} />
+    <SceneSessionNucleus state={{eraName}} included={["local"]} />
       
-    <MetaOrbitControls state={{tutoStage:gameLoop.state.tutoStage, hasAnyToken: gameLoop.state.hasAnyToken}} />
+    <TownCamera state={{tutoStage:gameLoop.state.tutoStage, hasAnyToken: gameLoop.state.hasAnyToken}} />
       <StandardSkyEnv />
       
     <TutorialContainer

@@ -17,25 +17,25 @@ function GreenBuy ({}) {
   return (
     <group position={[-1.2,-0.24,-0.75]} scale={0.35}  rotation={[0,0.2,0]}>
       <group ref={$textGroup} position={[-0.5,0,0.9]} rotation={[-0.5,0,0]}>
-        <FontText position={[0.4,0.28,0.6]} fontSize={0.3} rotation={[0,Math.PI,0]} 
+        {/* <FontText position={[0.4,0.28,0.6]} fontSize={0.3} rotation={[0,Math.PI,0]} 
           material={new MeshStandardMaterial({ side: 0, color: "#000000" })}
         >
             Click green button
-        </FontText>
+        </FontText> */}
         <FontText position={[-0.4,0.28,0.6]} fontSize={0.3} rotation={[0,0,0]} 
           material={new MeshStandardMaterial({ side: 0, color: "#000000" })}
         >
-            Click green button
+            Call nearby inhabitants
         </FontText>
-        <FontText position={[-0.,-0.1,0.6]} fontSize={0.5} rotation={[0,Math.PI,0]} 
+        {/* <FontText position={[-0.,-0.1,0.6]} fontSize={0.5} rotation={[0,Math.PI,0]} 
           material={new MeshStandardMaterial({ side: 0, color: "#aa1100" })}
         >
-          {"<-"} to BUY
-        </FontText>
+          {"<-"} to CALL
+        </FontText> */}
         <FontText position={[0.,-0.1,0.6]} fontSize={0.5} rotation={[0,0,0]} 
           material={new MeshStandardMaterial({ side: 0, color: "#aa1100" })}
         >
-          to BUY {"->"}
+          Here {"->"}
         </FontText>
       </group>
     </group>

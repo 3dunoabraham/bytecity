@@ -24,17 +24,17 @@ function TradingTextContainer({ tokensArrayArray, state, calls }: any) {
       /> */}
 
       {state.clicked && // PROFIT LOSS
-        <DynaText text={"profit"}
+        <DynaText text={"growth"}
           color={state.clickedPrice / state.queryUSDT.data < 1 ? 0x009900 : 0x777777}
-          position={new Vector3(0.28, 0.09, -0.38)} rotation={[0, 0, 0]}
-          isSelected={state.isSelectedId} font={0.05}
+          position={new Vector3(0.295, 0.09, -0.38)} rotation={[0, 0, 0]}
+          isSelected={state.isSelectedId} font={0.044}
         />
       }
       {state.clicked && // PROFIT LOSS
         <DynaText text={"loss"}
           color={state.clickedPrice / state.queryUSDT.data < 1 ? 0x777777 : 0xff0000}
-          position={new Vector3(0.4, 0.09, -0.38)} rotation={[0, 0, 0]}
-          isSelected={state.isSelectedId} font={0.05}
+          position={new Vector3(0.41, 0.09, -0.38)} rotation={[0, 0, 0]}
+          isSelected={state.isSelectedId} font={0.035}
         />
       }
 
@@ -47,13 +47,13 @@ function TradingTextContainer({ tokensArrayArray, state, calls }: any) {
       }
 
       {state.clicked && // CLICKED PRICE 
-        <DynaText text={"Entry Price" + "" || ""} color={0x000000}
+        <DynaText text={"New Inhabitants" + "" || ""} color={0x000000}
           position={new Vector3(0.33, 0.21, -0.38)} rotation={[0, 0, 0]}
-          isSelected={state.isSelectedId} font={0.036}
+          isSelected={state.isSelectedId} font={0.03}
         />
       }
       {state.clicked &&
-        <DynaText text={"" + state.clickedPrice + "" || ""} color={0x660066}
+        <DynaText text={"" + (state.queryUSDT.data-state.clickedPrice) + "" || ""} color={0x660066}
           position={new Vector3(0.33, 0.15, -0.38)} rotation={[0, 0, 0]}
           isSelected={state.isSelectedId} font={0.08}
         />
@@ -72,10 +72,10 @@ function TradingTextContainer({ tokensArrayArray, state, calls }: any) {
         />
       </>}
       {!!tokensArrayArray && state.isSelectedId && state.selectedHasArray &&
-        <DynaText text={!state.clicked ? "Send  BUY  Order" : "Send  SELL  Order"} // BUY / SELL
+        <DynaText text={!state.clicked ? "CALL" : "END  CALL"} // BUY / SELL
           color={!state.clicked ? "#006600" : "#990000"}
-          position={new Vector3(!state.clicked ? - 0.05 : + 0.1, 0, 0.455)}
-          isSelected={state.isSelectedId} font={0.045} onClick={() => { }}
+          position={new Vector3(!state.clicked ? - 0.05 : + 0.12, 0, 0.455)}
+          isSelected={state.isSelectedId} font={0.065} onClick={() => { }}
         />
       }
     </group>)

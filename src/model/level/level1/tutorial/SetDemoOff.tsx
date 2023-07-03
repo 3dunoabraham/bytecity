@@ -17,24 +17,26 @@ function SetDemoOff ({}) {
 
 
   return (
-    <group position={[-0.42,-0.35,-0.5]} scale={0.3} >
+    <group position={[-0.,-0.4,-0.75]} scale={0.3} >
       <group ref={$textGroup} rotation={[-1,0,0]} position={[0,0,1.4]} >
-        <FontText position={[0.85,0,0]} fontSize={0.25} rotation={[0,Math.PI,0]} 
+        {/* <FontText position={[0.85,0,0]} fontSize={0.25} rotation={[0,Math.PI,0]} 
           material={new MeshStandardMaterial({ side: 0, color: "#000000" })}
         >
           Switch to               to continue
-        </FontText>
-        <FontText position={[0.85,0,0]} fontSize={0.25} rotation={[0,0,0]} 
-          material={new MeshStandardMaterial({ side: 0, color: "#000000" })}
-        >
-          Switch to               to continue
-        </FontText>
-        <FontText position={[0.7,0,0]} fontSize={0.4} rotation={[0,Math.PI,0]} 
+        </FontText> */}
+        {/* <FontText position={[0.7,0,0]} fontSize={0.4} rotation={[0,Math.PI,0]} 
           material={new MeshStandardMaterial({ side: 0, color: "#aa0000" })}
         >
           LIVE 
+        </FontText> */}
+
+        
+        <FontText position={[0.85,0,0]} fontSize={0.25} rotation={[0,0,0]} 
+          material={new MeshStandardMaterial({ side: 0, color: "#000000" })}
+        >
+          {"<-"} Toggle               mode
         </FontText>
-        <FontText position={[0.7,0,0]} fontSize={0.4} rotation={[0,0,0]} 
+        <FontText position={[1.07,0,0]} fontSize={0.45} rotation={[0,0,0]} 
           material={new MeshStandardMaterial({ side: 0, color: "#aa0000" })}
         >
           LIVE 
