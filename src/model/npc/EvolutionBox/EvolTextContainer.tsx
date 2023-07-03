@@ -42,7 +42,7 @@ function TradingTextContainer({ tokensArrayArray, state, calls }: any) {
       }
 
       {state.clicked && // PRICE DIFFERENCE PERCENT
-        <DynaText text={((((state.clickedPrice / state.queryUSDT.data) - 1) * -100)-0.004).toFixed(3)}
+        <DynaText text={((((state.clickedPrice / state.queryUSDT.data) - 1) * -100)-0.005).toFixed(3)}
           color={state.clickedPrice / state.queryUSDT.data < 1 ? 0x009900 : 0xff0000}
           position={new Vector3(0.33, 0.03, -0.38)} rotation={[0, 0, 0]}
           isSelected={state.isSelectedId} font={0.08}
