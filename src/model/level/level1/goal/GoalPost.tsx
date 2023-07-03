@@ -62,6 +62,12 @@ function Component ({calls, state}:any) {
                   <group scale={0.06}  position={[0,0.06,0]} >
                     <HumanScale color={anOrder[1] != "profit" ? "#f00" : "#0f0"} width={0.1} length={0.3}   /> 
                   </group>
+                  
+                    <DynaText text={anOrder[0]*100}
+                      color={anOrder[1] != "profit" ? "#006600"   : "#090"}
+                      // rotation={[0,0,0]}
+                      position={[0,0.01,0.075]} font={0.05}
+                    />
                 </group>
                 {/* <Box args={[0.07,0.11,0.07]} position={[index*0.075,0.6,0]}  castShadow receiveShadow key={index}>
                   <meshStandardMaterial color={anOrder[1] != "profit" ? "#f00" : "#ccc"}/>

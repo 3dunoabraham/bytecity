@@ -176,7 +176,8 @@ const isSelectedId = useMemo(()=>{
 
 const toggleTrade = async (x:any, y:any) => {
   if (profitHistory.length > 4) {
-    return alert("Full Local Storage!");
+    app.alert("error", "Full Local Storage!")
+    return alert("New habitants can't enter the station! \n\n Please click the station button to \n add them to your Town Table");
   }
 
   const newTradeObj:any = createTradeObject(x, y);
