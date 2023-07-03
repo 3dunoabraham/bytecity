@@ -31,7 +31,7 @@ function SellHigh ({}) {
                 </FontText> */}
                 <FontText position={[-2.5,-1,0]} fontSize={0.25} rotation={[0,0,0]} 
                     material={new MeshStandardMaterial({ side: 0, color: "#990000" })}> 
-                    Wait for growth . . . then END CALL 
+                    Wait for growth . . . then STOP 
                 </FontText>
             </group>
         </group>

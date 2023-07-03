@@ -56,7 +56,7 @@ function MiniCitySign({ tokensArrayArray, state, calls }: any) {
           position={new Vector3(0, 0, 0)}
         />
       }
-      <DynaText text={"Nearby Hab." + "" || ""} color={!!tokensArrayArray ? 0xffffff : 0x666666} position={[0, 0.125, 0.02]}
+      <DynaText text={"Nearby Humans" + "" || ""} color={!!tokensArrayArray ? 0xffffff : 0x666666} position={[0, 0.125, 0.0]}
       
         isSelected={state.isSelectedId} font={0.05} rotation={[0, Math.PI / 2, 0]}
       />

@@ -50,7 +50,7 @@ function TradingTextContainer({ tokensArrayArray, state, calls }: any) {
       }
 
       {state.clicked && // CLICKED PRICE 
-        <DynaText text={"Interested \n Inhabitants " + "" || ""} color={0x000000}
+        <DynaText text={"New \n Inhabitants " + "" || ""} color={0x000000}
           position={new Vector3(0.33, 0.21, -0.38)} rotation={[0, 0, 0]}
           isSelected={state.isSelectedId} font={0.03}
         />
@@ -72,15 +72,15 @@ function TradingTextContainer({ tokensArrayArray, state, calls }: any) {
         <DynaText color={state.selectedHasArray ? "#007700" : "#A09390"} // LIVE / DEMO
           // onClick={state.selectedHasArray ? calls.turnOff : calls.turnOn} 
           position={new Vector3(0.4, 0, +0.46)} text={"LIVE"}
-          onClick={() => { app.alert("success","LIVE mode enables the nearby inhabitants count") }} 
+          onClick={() => { app.alert("neutral","LIVE mode enables the nearby inhabitants count") }} 
           isSelected={state.isSelectedId} font={state.selectedHasArray ? 0.06 : 0.06}
         />
       </>}
       {!!tokensArrayArray && state.isSelectedId && state.selectedHasArray &&
-        <DynaText text={!state.clicked ? "CALL" : "END  CALL"} // BUY / SELL
-        onClick={() => { app.alert("neutral","Click the RED BUTTON to END CALL") }} 
+        <DynaText text={!state.clicked ? "GET HELP" : "STOP"} // BUY / SELL
+        onClick={() => { app.alert("neutral","Click the RED Button to STOP") }} 
           color={!state.clicked ? "#006600" : "#990000"}
-          position={new Vector3(!state.clicked ? - 0.05 : + 0.12, 0, 0.455)}
+          position={new Vector3(!state.clicked ? - 0.05 : + 0.12, 0, 0.461)}
           isSelected={state.isSelectedId} font={0.065} 
         />
       }

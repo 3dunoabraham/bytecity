@@ -55,7 +55,7 @@ export const useGame: any = (initialConfig={form:{id:"BTCUSDT3M"},state:{eraName
     s__selectedBox(x)
     updateTokenOrder(x, selectedTimeframeIndex, "state", 0)
     if (!tutoStage || !tutoStage.lvl) {
-      app.alert("success","Game Started!")
+      app.alert("success","Click the Toggle!")
       app.audio("neutral","./sound/aaa.wav")
     }
   }
@@ -106,6 +106,22 @@ export const useGame: any = (initialConfig={form:{id:"BTCUSDT3M"},state:{eraName
     console.log("tokensArrayObj", bigTokensObj)
   }
 
+  
+  useEffect(()=>{
+    console.log("LS_tokensArrayObj", LS_tokensArrayObj)
+    if (LS_tokensArrayObj == "{}" || Object.keys(LS_tokensArrayObj).length == 0) {
+      app.alert("neutral", "Click the Red Button ")
+      return
+    }
+    let LS_tutoStage:any = _tutoStage
+    if (!LS_tutoStage.lvl) {
+      
+      // app.alert("Season ")
+    } else if (LS_tutoStage.lvl == 1) {
+      // app.alert("")
+    }
+    // console.log("asdasda", _tutoStage.lvl)
+  },[])
   
   useEffect(()=>{
     s__tokensArrayObj(JSON.parse(LS_tokensArrayObj))
@@ -176,7 +192,7 @@ const isSelectedId = useMemo(()=>{
 
 const toggleTrade = async (x:any, y:any) => {
   if (profitHistory.length > 4) {
-    app.alert("error", "Full LIVE Storage!")
+    app.alert("error", "Full Life Storage!")
     return alert("New habitants can't enter the station! \n\n Please click the station button to \n add them to your Town Table");
   }
 
@@ -189,7 +205,7 @@ const toggleTrade = async (x:any, y:any) => {
 
   if (isBuying) {
     app.audio("neutral","./sound/cas.wav")
-    app.alert("success",`You bought: ${x.toUpperCase()} at: ${y.price}!`)
+    app.alert("success",`Connecting to ${y.price} Humans...`)
   }
 
   if (form.id in currentOrders) {
@@ -223,10 +239,17 @@ const handleExistingOrder = (newTradeObj:any): void => {
       // console.log("new profit trade obj", newTradeObj, newprofithi[newprofithi.length-1])
       let pointsNumber = parseFloat(`${newprofithi[newprofithi.length-1]}`)*100
       let points = parseInt(`${pointsNumber}`)
-     app.alert("success",`You won ${points} point(s) on ${newTradeObj.token.toUpperCase()} (${newTradeObj.price})!`)
+     app.alert("success",`${points}  new inhabitant(s)!`)
     } else {
+      let pointsNumber = parseFloat(`${newprofithi[newprofithi.length-1]}`)*100
+      let points = parseInt(`${pointsNumber}`)
        app.audio("neutral","./sound/wrong.wav")
-       app.alert("error","Loss trade, try again!")
+       if (points == 0) {
+        app.alert("error","Failed: 0 new inhabitants")
+       } else {
+          app.alert("error",`You loss ${points}`+" human connection(s)!")
+        }
+      //  setTimeout(()=>{},2000)
       }
 
     let counting = countProfitableTrades(newprofithi);

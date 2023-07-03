@@ -15,7 +15,7 @@ function FloatingStart({ calls }: any) {
   })
 
   const triggerStartClick = ()=> {
-    app.alert("error", "Click the RED BUTTON!")
+    app.alert("error", "Click the RED Button!")
     app.audio("neutral", "./sound/info.wav")
   }
 
@@ -29,6 +29,7 @@ function FloatingStart({ calls }: any) {
         </DynaText>
       </group>
       <DynaText text="Click the button" color="#000" font={0.12} 
+        onClick={()=>{ app.alert("neutral","Click the RED Button to start the game") }}
         position={[-1.1, -0.445, 0.05]} rotation={[-Math.PI / 2, 0, 0.3]}
       >
       </DynaText>
