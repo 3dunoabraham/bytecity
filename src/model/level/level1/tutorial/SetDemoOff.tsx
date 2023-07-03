@@ -34,7 +34,7 @@ function SetDemoOff ({}) {
         <FontText position={[0.85,0,0]} fontSize={0.25} rotation={[0,0,0]} 
           material={new MeshStandardMaterial({ side: 0, color: "#000000" })}
         >
-          {"<-"} Toggle               mode
+          {"<-"} Enable               mode
         </FontText>
         <FontText position={[1.07,0,0]} fontSize={0.45} rotation={[0,0,0]} 
           material={new MeshStandardMaterial({ side: 0, color: "#aa0000" })}

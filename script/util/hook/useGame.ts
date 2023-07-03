@@ -55,14 +55,17 @@ export const useGame: any = (initialConfig={form:{id:"BTCUSDT3M"},state:{eraName
     s__selectedBox(x)
     updateTokenOrder(x, selectedTimeframeIndex, "state", 0)
     if (!tutoStage || !tutoStage.lvl) {
-      app.alert("success","Click the Toggle!")
+      app.alert("success", "The Game has Started!")
       app.audio("neutral","./sound/aaa.wav")
     }
   }
   
   const turnBoxOn = (x:string) => {
     s__selectedBox(x)
-    if (!tutoStage || !tutoStage.lvl) { setTutoStage(1) }
+    if (!tutoStage || !tutoStage.lvl) {
+      app.alert("success","Click Get Help!")
+      setTutoStage(1)
+    }
     // console.log("x, selectedTimeframeIndex", x, selectedTimeframeIndex, 1)
     updateTokenOrder(x, selectedTimeframeIndex, "state", 1)
     // alert("asdasd")

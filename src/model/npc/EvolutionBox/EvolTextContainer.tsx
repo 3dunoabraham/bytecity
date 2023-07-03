@@ -28,6 +28,7 @@ function TradingTextContainer({ tokensArrayArray, state, calls }: any) {
 
       {state.clicked && // PROFIT LOSS
         <DynaText text={"growth"}
+        onClick={() => { app.alert("neutral","Growth = New Inhabitants > 1") }} 
           color={state.clickedPrice / state.queryUSDT.data < 1 ? 0x009900 : 0x777777}
           position={new Vector3(0.295, 0.09, -0.38)} rotation={[0, 0, 0]}
           isSelected={state.isSelectedId} font={0.044}

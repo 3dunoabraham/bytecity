@@ -128,7 +128,7 @@ function TownCamera({ state, calls }: any) {
         ref={controlsRef}
         minPolarAngle={0.11}
         maxPolarAngle={2.2}
-        minDistance={1}
+        minDistance={0.5}
         maxDistance={12}
         enablePan={!cameraLocked}
         enableZoom={true}
