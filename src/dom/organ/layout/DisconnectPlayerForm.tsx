@@ -19,7 +19,7 @@ const DisconnectPlayerForm = ({
   const triggerLogout = async () => {
     app.alert("neutral","Signin out, clearing cookies...")
     let res = await logout()
-    console.log("res",res)
+    // console.log("res",res)
     app.alert("neutral","Logged out, clearing local storage...")
     s__LS_rpi("user:0000")
     

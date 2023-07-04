@@ -121,9 +121,9 @@ const checkOppo = async () => {
   setTimeout(async ()=>{
   await fetchSupaPlayer()
   let oppo = await fetchSupaOppoUser()
-  console.log("oppo", oppo, superoppo, superuser)
+  // console.log("oppo", oppo, superoppo, superuser)
   setTimeout(()=>{
-    console.log("oppo", oppo, superoppo, superuser)
+    // console.log("oppo", oppo, superoppo, superuser)
   },1000)
 },1000)
 

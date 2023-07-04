@@ -33,7 +33,7 @@ export const useGame: any = (initialConfig={form:{id:"BTCUSDT3M"},state:{eraName
 
   const tutoStage:any = useMemo(()=> {
     try {
-      console.log("_tutoStage")
+      // console.log("_tutoStage")
       return JSON.parse(_tutoStage)
     } catch (e:unknown) {
       return {lvl:null}
@@ -106,12 +106,12 @@ export const useGame: any = (initialConfig={form:{id:"BTCUSDT3M"},state:{eraName
     s__tokensArrayObj(bigTokensObj)
     s__LS_tokensArrayObj((prevValue) => JSON.stringify(bigTokensObj))
 
-    console.log("tokensArrayObj", bigTokensObj)
+    // console.log("tokensArrayObj", bigTokensObj)
   }
 
   
   useEffect(()=>{
-    console.log("LS_tokensArrayObj", LS_tokensArrayObj)
+    // console.log("LS_tokensArrayObj", LS_tokensArrayObj)
     if (LS_tokensArrayObj == "{}" || Object.keys(LS_tokensArrayObj).length == 0) {
       app.alert("neutral", "Click the Red Button ")
       return
@@ -235,7 +235,7 @@ const handleExistingOrder = (newTradeObj:any): void => {
     let newProfitCount = newprofithi.filter((atrade:any, index:any) => {
       return !!atrade[1] && atrade[1] == "profit"
     }).length
-    console.log("newProfitCount  > lastProfitCount", newProfitCount  , lastProfitCount)
+    // console.log("newProfitCount  > lastProfitCount", newProfitCount  , lastProfitCount)
     if (newProfitCount  > lastProfitCount ) {
      app.audio("neutral","./sound/cassh.wav")
     //  let theLastProfit 

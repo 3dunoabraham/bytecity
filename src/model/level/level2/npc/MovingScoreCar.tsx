@@ -13,7 +13,7 @@ function MovingScoreCar ({ calls }:any) {
     const [carColor, s__carColor]:any = useState("#675A5F")
     const carColorCycle = ["#675A5F","#afa2a6",]
     const clickHandler = (e:any)=> {
-        console.log("counter", counter)
+        // console.log("counter", counter)
         if (carColor != "#afa2a6") return
         s__counter(counter+1)
         calls.onClicked(counter)

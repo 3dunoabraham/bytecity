@@ -44,7 +44,7 @@ function BankingSystem ({state, calls, }:any) {
     let newPrompt:any = AIdata
     newPrompt[verbose[state.selectedTimeframe.toLowerCase()]] = ([...data]).splice(400,499)
     s__AIdata(newPrompt)
-    console.log("newPrompt", newPrompt)
+    // console.log("newPrompt", newPrompt)
     clipbloard__do(AI_BASE + JSON.stringify(newPrompt))
   }
 

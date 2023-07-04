@@ -112,7 +112,7 @@ export async function fetchPutPlayerBattleMode(supabase:any, playerObj:any, play
         .match({ hash: playerHash })
         .single()
 
-    console.log("removeattempt, error_removeattempt" , removeattempt, error_removeattempt)
+    // console.log("removeattempt, error_removeattempt" , removeattempt, error_removeattempt)
   
     return !removeattempt
 }
@@ -132,7 +132,7 @@ export async function fetchPutEloBattle(supabase:any, playerHash:any, player_elo
         .match({ hash: playerHash })
         .single()
 
-    console.log("removeattempt, error_removeattempt" , removeattempt, error_removeattempt)
+    // console.log("removeattempt, error_removeattempt" , removeattempt, error_removeattempt)
 
     
     let oppo_dataPack = {
@@ -148,7 +148,7 @@ export async function fetchPutEloBattle(supabase:any, playerHash:any, player_elo
         .match({ hash: oppo })
         .single()
 
-    console.log("removeattempt, error_removeattempt" , removeattempt, error_removeattempt)
+    // console.log("removeattempt, error_removeattempt" , removeattempt, error_removeattempt)
 
   
     return !removeattempt

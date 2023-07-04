@@ -57,7 +57,7 @@ export function BattleLiveToggles ({state, calls}:any) {
         const closingPrices = theList.map((item: any) => parseFloat(item[4]));
         setPrices(closingPrices);
 
-        console.log("qweqwe", lastLocalUnix)
+        // console.log("qweqwe", lastLocalUnix)
 
         return theList
       }

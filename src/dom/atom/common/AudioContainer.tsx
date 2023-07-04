@@ -11,9 +11,10 @@ function AudioContainer({ s__src, src }: AudioContainerProps) {
 
   const handleAudioSourceChange: any = (audioElement: any, newSrc: string, playAudio: any) => {
     if (!audioElement) {
-      return console.log("audio is null", audioElement, newSrc)
+      // console.log("audio is null", audioElement, newSrc)
+      return 
     }
-    console.log("audio is ", audioElement, newSrc)
+    // console.log("audio is ", audioElement, newSrc)
     audioElement?.pause();
     audioElement.src = newSrc;
     playAudio();

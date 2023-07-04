@@ -26,7 +26,7 @@ function ArchitecturalCore ({state, calls, store}:any) {
   const $evolBox: any = useRef(null);
   const [clicked, setClicked] = useState(false)
   const toggleGame = (boxName:string, tradeData:any)=> {
-    console.log("state.profitHistory", state.profitHistory)
+    // console.log("state.profitHistory", state.profitHistory)
     if (state.profitHistory.length > 4) {
       return
     }

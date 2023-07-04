@@ -55,9 +55,9 @@ function BlockchainWalletToggle({ calls, state }: any) {
       //   args: [address],
       // });
   const buyNFT = async ()=>{
-    console.log("before await mint()")
+    // console.log("before await mint()")
     await mint()
-    console.log("after the mint")
+    // console.log("after the mint")
   }
       
   async function mint() {

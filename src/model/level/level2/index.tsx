@@ -154,10 +154,10 @@ function Level2 ({eraName="cityEra"}:any) {
         binancePublic: binanceapikeys.split(":")[0],
         binanceSecret: binanceapikeys.split(":")[1],
       }
-      console.log("thedata", thedata)
+      // console.log("thedata", thedata)
       app.alert("neutral", "Setting api keys")
       let fetchRes: any = await fetchPost("/api/player/apikeys", thedata)
-      console.log("fetchRes", fetchRes)
+      // console.log("fetchRes", fetchRes)
 
       
       if (fetchRes.status >= 400)
@@ -168,7 +168,7 @@ function Level2 ({eraName="cityEra"}:any) {
 
       fetchSupaPlayer()
     } catch (e: unknown) {
-      console.log("e", e)
+      // console.log("e", e)
       app.alert("error", "Failed api setting!")
     }
   }
@@ -273,7 +273,7 @@ function Level2 ({eraName="cityEra"}:any) {
       let newProfitCount = newprofithi.filter((atrade:any, index:any) => {
         return !!atrade[1] && atrade[1] == "profit"
       }).length
-      console.log("newProfitCount  > lastProfitCount", newProfitCount  , lastProfitCount)
+      // console.log("newProfitCount  > lastProfitCount", newProfitCount  , lastProfitCount)
       if (newProfitCount  > lastProfitCount ) {
        app.audio("neutral","./sound/cassh.wav")
       //  let theLastProfit 

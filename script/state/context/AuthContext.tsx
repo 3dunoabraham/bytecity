@@ -52,8 +52,8 @@ const AuthProvider:FC<{
         let ownplayer = await fetchUserByRPI(key, secret)
         let oppoUser = await fetchOppoUserByHash(ownplayer.href)
         return oppoUser
-        console.log("ownplayer", ownplayer)
-        console.log("oppoUser", oppoUser)
+        // console.log("ownplayer", ownplayer)
+        // console.log("oppoUser", oppoUser)
       }
   }
   useEffect( () => {
