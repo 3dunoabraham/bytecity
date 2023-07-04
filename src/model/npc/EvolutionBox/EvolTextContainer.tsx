@@ -26,8 +26,27 @@ function TradingTextContainer({ tokensArrayArray, state, calls }: any) {
         isSelected={state.isSelectedId} font={0.11} onClick={() => { }}
       /> */}
 <group 
-          onClick={() => { app.alert("neutral","Tip: You need min. +2 new inhabitants for migration") }} 
+          onClick={() => { app.alert("neutral","Tip: You need min. +2 new inhabitants for success") }} 
           >
+
+      {state.clicked && // CLICKED PRICE 
+        <DynaText text={"New \n Inhabitants " + "" || ""} color={0x000000}
+          position={new Vector3(0.33, 0.21, -0.38)} rotation={[0, 0, 0]}
+          isSelected={state.isSelectedId} font={0.03}
+        />
+      }
+      {state.clicked &&
+        <DynaText text={"" + (state.queryUSDT.data-state.clickedPrice) + "" || ""} color={0x660066}
+          position={new Vector3(0.33, 0.14, -0.38)} rotation={[0, 0, 0]}
+          isSelected={state.isSelectedId} font={0.08}
+        />
+      }
+
+      </group>
+      
+<group
+        onClick={() => { app.alert("neutral","Tip: This 'Inhabitants Change Percent' enhances precision") }} 
+        >
       {state.clicked && // PROFIT LOSS
         <DynaText text={"growth"}
         // onClick={() => { app.alert("neutral","Tip: Growth = New Inhabitants > 1") }} 
@@ -45,31 +64,15 @@ function TradingTextContainer({ tokensArrayArray, state, calls }: any) {
         />
       }
 
-
-      {state.clicked && // CLICKED PRICE 
-        <DynaText text={"New \n Inhabitants " + "" || ""} color={0x000000}
-          position={new Vector3(0.33, 0.21, -0.38)} rotation={[0, 0, 0]}
-          isSelected={state.isSelectedId} font={0.03}
-        />
-      }
-      {state.clicked &&
-        <DynaText text={"" + (state.queryUSDT.data-state.clickedPrice) + "" || ""} color={0x660066}
-          position={new Vector3(0.33, 0.14, -0.38)} rotation={[0, 0, 0]}
-          isSelected={state.isSelectedId} font={0.08}
-        />
-      }
-
-      </group>
-      
       {state.clicked && // PRICE DIFFERENCE PERCENT
         <DynaText text={((((state.clickedPrice / state.queryUSDT.data) - 1) * -100)-0.005).toFixed(3)}
-        onClick={() => { app.alert("neutral","Tip: You clicked the 'Inhabitants Change Percent'") }} 
 
           color={state.clickedPrice / state.queryUSDT.data < 1 ? 0x009900 : 0xff0000}
           position={new Vector3(0.33, 0.03, -0.38)} rotation={[0, 0, 0]}
           isSelected={state.isSelectedId} font={0.08}
         />
       }
+      </group>
 
       {!!tokensArrayArray && <>
         <DynaText color={state.selectedHasArray ? "#606360" : "#00f"} // LIVE / DEMO

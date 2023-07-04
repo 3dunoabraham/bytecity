@@ -22,7 +22,7 @@ function Component({ state }: any) {
 
     {state.hasAnyToken && state.tutoStage.lvl > 2 &&
       <group position={[-0.35, -0.498, -1.9]} scale={0.35} 
-      onClick={() => { app.alert("neutral","Tip: The Life Storage Station resets on page reload") }} 
+      onClick={() => { app.alert("neutral","Tip: The Life Storage resets on page reload") }} 
 
        >
         <group position={[0, 0, 0]} rotation={[0, Math.PI / 2, 0]}>

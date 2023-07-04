@@ -26,16 +26,17 @@ const ByteTown = ({eraName="townEra"}:any) => {
     // return
     if (gameLoop.state.isDefaultUser) {
       if (gameLoop.state.profitHistory.length  == 0) {
-          app.alert("neutral", "Tip: Start CALL only when activity is low!")
-          // app.alert("neutral", "Tip: Start the CALL when activity is low!")
+          // check if it did bought
+          // app.alert("neutral", "Tip: Click the GET HELP Button to start")
+          app.alert("neutral", "Tip: GET HELP when activity is low!")
         return
       } else {
         if (gameLoop.state.realProfitCount == 0) {
-          app.alert("neutral", "Tip: End CALL when GROWTH is GREEN!")
+          app.alert("neutral", "Tip: Click STOP when GROWTH is green")
 
           // app.alert("neutral", "Tip: Remove bad orders (losses) by fixing (click) white-roofed cars!")
         } else {
-          // app.alert("neutral", "Tip: Buy and sell profitably 4 times to level up!")
+          app.alert("neutral", "Tip: Add new inhabitants 4 times to level up")
         }
 
       }
