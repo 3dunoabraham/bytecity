@@ -18,7 +18,7 @@ function GreenBuy ({}) {
   
   return (
     <group position={[-1.2,-0.24,-0.75]} scale={0.35}  rotation={[0,0.2,0]}
-      onClick={()=>{app.alert("neutral","Get help from nearby humans")}}
+      onClick={()=>{app.alert("neutral","Tip: Transmute nearby humans into inhabitants")}}
     >
       <group ref={$textGroup} position={[-0.5,0,0.9]} rotation={[-0.5,0,0]}
         

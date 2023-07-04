@@ -1,11 +1,14 @@
 import { useFrame } from '@react-three/fiber';
 import { useRef } from 'react';
 import { MeshStandardMaterial } from 'three';
+import { useContext, useState } from "react"
+import { AppContext } from "@/../script/state/context/AppContext"
 
 
 import FontText from '@/model/core/FontText';
 
 function SetDemoOff ({}) {
+  const app:any = useContext(AppContext)
   const $textGroup:any = useRef()
 
   useFrame((ctx, delta)=>{
@@ -17,7 +20,9 @@ function SetDemoOff ({}) {
 
 
   return (
-    <group position={[-0.,-0.4,-0.75]} scale={0.3} >
+    <group position={[-0.,-0.4,-0.75]} scale={0.3}
+    onClick={() => { app.alert("neutral","Tip: LIVE Mode creates humans close to you") }} 
+    >
       <group ref={$textGroup} rotation={[-1,0,0]} position={[0,0,1.4]} >
         {/* <FontText position={[0.85,0,0]} fontSize={0.25} rotation={[0,Math.PI,0]} 
           material={new MeshStandardMaterial({ side: 0, color: "#000000" })}

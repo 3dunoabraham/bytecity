@@ -63,7 +63,7 @@ export const useGame: any = (initialConfig={form:{id:"BTCUSDT3M"},state:{eraName
   const turnBoxOn = (x:string) => {
     s__selectedBox(x)
     if (!tutoStage || !tutoStage.lvl) {
-      app.alert("success","Click Get Help!")
+      app.alert("neutral","Next Step: Add New Inhabitants")
       setTutoStage(1)
     }
     // console.log("x, selectedTimeframeIndex", x, selectedTimeframeIndex, 1)
@@ -196,7 +196,7 @@ const isSelectedId = useMemo(()=>{
 const toggleTrade = async (x:any, y:any) => {
   if (profitHistory.length > 4) {
     app.alert("error", "Full Life Storage!")
-    return alert("New habitants can't enter the station! \n\n Please click the station button to \n add them to your Town Table");
+    return alert("New habitants can't migrate, your Life Storage Station is FULL! \n\n Please click the station button to \n add them to your Town Table");
   }
 
   const newTradeObj:any = createTradeObject(x, y);

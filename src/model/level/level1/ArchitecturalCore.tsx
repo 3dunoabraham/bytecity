@@ -34,7 +34,14 @@ function ArchitecturalCore ({state, calls, store}:any) {
 
     setClicked(!!tradeData.value)
     // console.log("tradeData", boxName, tradeData, state.selectedHasArray)
-    if (!state.selectedHasArray) { return }
+    if (!state.selectedHasArray) {
+      if (!!tradeData.value) {
+        app.alert("neutral","DEMO Action started")
+      } else {
+        app.alert("neutral","DEMO Action stopped")
+      }
+      return
+    }
     calls.toggleGame(boxName, tradeData)
     // alert("toggleGame")
   }
