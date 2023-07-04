@@ -195,7 +195,7 @@ const isSelectedId = useMemo(()=>{
 
 const toggleTrade = async (x:any, y:any) => {
   if (profitHistory.length > 4) {
-    app.alert("error", "Full Life Storage!")
+    app.alert("error", "Your Life Storage Station is FULL!")
     return alert("New habitants can't migrate, your Life Storage Station is FULL! \n\n Please click the station button to \n add them to your Town Table");
   }
 

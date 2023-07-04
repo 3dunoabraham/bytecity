@@ -28,15 +28,23 @@ const ByteTown = ({eraName="townEra"}:any) => {
       if (gameLoop.state.profitHistory.length  == 0) {
           // check if it did bought
           // app.alert("neutral", "Tip: Click the GET HELP Button to start")
-          app.alert("neutral", "Tip: GET HELP when activity is low!")
+          app.alert("neutral", "Tip: GET HELP when nearby activity is low!")
         return
       } else {
         if (gameLoop.state.realProfitCount == 0) {
-          app.alert("neutral", "Tip: Click STOP when GROWTH is green")
+          if (gameLoop.state.profitHistory.length == 5) {
+            // all fail
+            if (prompt("Clear the Life Storage Station by reloading the page \n\n Confirm page reload (y/n)","y") !== "y") return    
+            
+            window.location.reload()
+            app.alert("success", "Reloading game, please wait...")
+          } else {
+            app.alert("neutral", "Tip: Click STOP when GROWTH is green")
+          }
 
           // app.alert("neutral", "Tip: Remove bad orders (losses) by fixing (click) white-roofed cars!")
         } else {
-          app.alert("neutral", "Tip: Add new inhabitants 4 times to level up")
+          app.alert("neutral", "Tip: GET HELP 4 times to level up")
         }
 
       }

@@ -64,7 +64,7 @@ const EvolutionBox = forwardRef(({
     
     if (state.profitHistory.length > 4) {
       app.alert("error", "Full Life Storage!")
-      return alert("New habitants can't enter the station! \n\n Please click the station button to \n add them to your Town Table");
+      return alert("New inhabitants can't enter the station! \n\n Please click the station button to reload the page \n or to add them to your Town Table");
     }
 
     // console.log("state.profitHistory", state.profitHistory)
