@@ -26,11 +26,11 @@ function TradingTextContainer({ tokensArrayArray, state, calls }: any) {
         isSelected={state.isSelectedId} font={0.11} onClick={() => { }}
       /> */}
 <group 
-          onClick={() => { app.alert("neutral","Tip: You need min. +2 new inhabitants for success") }} 
+          onClick={() => { app.alert("neutral","Tip: You need min. +2 new humans for growth") }} 
           >
 
       {state.clicked && // CLICKED PRICE 
-        <DynaText text={"New \n Inhabitants " + "" || ""} color={0x000000}
+        <DynaText text={"Nearby \n Human Change " + "" || ""} color={0x000000}
           position={new Vector3(0.33, 0.21, -0.38)} rotation={[0, 0, 0]}
           isSelected={state.isSelectedId} font={0.03}
         />
@@ -45,7 +45,8 @@ function TradingTextContainer({ tokensArrayArray, state, calls }: any) {
       </group>
       
 <group
-        onClick={() => { app.alert("neutral","Tip: This 'Inhabitants Change Percent' enhances precision") }} 
+          onClick={() => { app.alert("neutral","Tip: You need min. +0.001 growth for success") }} 
+          // onClick={() => { app.alert("neutral","Tip: ") }} 
         >
       {state.clicked && // PROFIT LOSS
         <DynaText text={"growth"}

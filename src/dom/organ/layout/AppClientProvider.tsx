@@ -17,6 +17,7 @@ import { AppContext } from "@/../script/state/context/AppContext";
 import AlertContainer from '@/dom/atom/overlay/AlertContainer';
 import { InventoryProvider } from '@/../script/state/context/InventoryContext';
 import AudioContainer from '@/dom/atom/common/AudioContainer';
+import BottomAlertContainer from '@/dom/atom/overlay/BottomAlertContainer';
 
 
 // const { chains, publicClient } = configureChains([sepolia], [publicProvider()]);
@@ -91,9 +92,9 @@ function AppClientProvider({ session, children, }: { session: any, children: Rea
                   <AlertContainer {...{ s__msg: (val:any)=>(alertMap__do.set("success", val)), msg:alertMap.get("success")}}
                       badgeClass="bg-green-25 tx-green"
                   />
-                  <AlertContainer {...{
+                  <BottomAlertContainer {...{
                       s__msg: (val:any)=>(alertMap__do.set("warn", val)), msg:alertMap.get("warn")}}
-                      badgeClass="bg-b-10 tx-bold-8" 
+                      badgeClass="_ddo tx-bold-8  tx-white " 
                   />
                   <AlertContainer {...{
                       s__msg: (val:any)=>(alertMap__do.set("error", val)), msg:alertMap.get("error")}}

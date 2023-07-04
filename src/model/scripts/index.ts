@@ -8,12 +8,15 @@ export const createTradeObject = (x:any, y:any) => {
   };
   
   
-  export const handleFirstTutorialStages = (isBuying:any, tutoStage:any, callback:any) => {
+  export const handleFirstTutorialStages = (isBuying:any, tutoStage:any, setTutoStage:any) => {
     if (!!tutoStage && tutoStage.lvl === 1 && isBuying) {
-      callback(2);
+      setTutoStage(2);
+      return 2
     } else if (!!tutoStage && tutoStage.lvl === 2 && !isBuying) {
-      callback(3);
+      setTutoStage(3);
+      return 3
     }
+    return null
   };
   export const updateProfitHistory = (
     currentOrders: Record<string, any>,

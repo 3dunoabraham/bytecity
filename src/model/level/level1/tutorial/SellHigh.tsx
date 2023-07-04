@@ -23,7 +23,7 @@ function SellHigh ({}) {
                 </FontText> */}
                 <FontText position={[-1,2.3,-0.9]} fontSize={0.22} rotation={[1,0,0]} 
                     material={new MeshStandardMaterial({ side: 0, color: "#004400" })}>
-                    {"Growth = +Inhabitants "}
+                    {"Grow your population! "}
                 </FontText>
                 {/* <FontText position={[-2.5,-0.7,0]} fontSize={0.25} rotation={[0,Math.PI,0]} 
                     material={new MeshStandardMaterial({ side: 0, color: "#990000" })}> 

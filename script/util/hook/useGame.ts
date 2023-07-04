@@ -63,7 +63,7 @@ export const useGame: any = (initialConfig={form:{id:"BTCUSDT3M"},state:{eraName
   const turnBoxOn = (x:string) => {
     s__selectedBox(x)
     if (!tutoStage || !tutoStage.lvl) {
-      app.alert("neutral","Next Step: Add New Inhabitants")
+      app.alert("neutral","Next Step: Turn nearby humans into inhabitants")
       setTutoStage(1)
     }
     // console.log("x, selectedTimeframeIndex", x, selectedTimeframeIndex, 1)
@@ -202,13 +202,17 @@ const toggleTrade = async (x:any, y:any) => {
   const newTradeObj:any = createTradeObject(x, y);
   const isBuying = newTradeObj.side === "buy";
 
-  handleFirstTutorialStages(isBuying, tutoStage, setTutoStage);
+  let tutoChange = handleFirstTutorialStages(isBuying, tutoStage, setTutoStage);
+  if (tutoChange == 2) {
+    setTimeout(()=>{app.alert("neutral","Next Step: You need min. +2 new humans for growth") },3333)
+  }
+  // if (tutoChange == 3) { app.alert("neutral","Next Step: Add New Inhabitants") }
   s__orderHistory([...orderHistory, newTradeObj])
   updateTokenOrder(x,selectedTimeframeIndex,"buy",isBuying ? "1" : "0",{["price"]:y.price})
 
   if (isBuying) {
     app.audio("neutral","./sound/cas.wav")
-    app.alert("success",`Connecting to ${y.price} Humans...`)
+    app.alert("warn",`Connecting neutrino to ${y.price} Humans...`)
   }
 
   if (form.id in currentOrders) {

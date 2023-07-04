@@ -67,7 +67,7 @@ function BouncingThing ({_bouncingThing, tokensArrayArray, isSelectedId, token, 
     {!!tokensArrayArray && !clicked && <>
       <mesh   // BOUNCING THING CASE
         position={[ +0.325, -0.37, -0.38, ]}          
-        onClick={()=>{calls.app_tip("Tip: Neutrino Block = Source of energy for communication")}}
+        onClick={()=>{calls.app_tip("Tip: Neutrino Block = Source of Energy")}}
       >
         <boxGeometry args={[0.18, 0.18, 0.12]} />
         <meshStandardMaterial transparent={true} opacity={0.5} color={!isSelectedId ? "#777777" : "#777777"} />
