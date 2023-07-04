@@ -250,7 +250,7 @@ const handleExistingOrder = (newTradeObj:any): void => {
        if (points == 0) {
         app.alert("error","Failed: 0 new inhabitants")
        } else {
-          app.alert("error",`You loss ${points}`+" human connection(s)!")
+          app.alert("error",`You loss ${points*-1}`+" Human connection(s)!")
         }
       //  setTimeout(()=>{},2000)
       }
