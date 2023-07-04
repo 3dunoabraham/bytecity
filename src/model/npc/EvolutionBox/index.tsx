@@ -61,6 +61,14 @@ const EvolutionBox = forwardRef(({
 
 
   const toggleGame = () => {
+    
+    if (state.profitHistory.length > 4) {
+      app.alert("error", "Full Life Storage!")
+      return alert("New habitants can't enter the station! \n\n Please click the station button to \n add them to your Town Table");
+    }
+
+    // console.log("state.profitHistory", state.profitHistory)
+    // return
 
 
     if (clicked) {

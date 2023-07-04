@@ -39,7 +39,7 @@ function Component ({calls, state}:any) {
             <meshStandardMaterial color={"#ccc"}/>
           </Cylinder>
         </group>
-        <DynaText text={realProfitCount+"/4"}
+        <DynaText text={realProfitCount+"/5"}
           color={!!realProfitCount ? "#006600"   : "#fff"}
           rotation={[0,0,0]}
           position={[0,-0.15,0.303]} font={0.15}
@@ -63,7 +63,7 @@ function Component ({calls, state}:any) {
                     <HumanScale color={anOrder[1] != "profit" ? "#f00" : "#0f0"} width={0.1} length={0.3}   /> 
                   </group>
                   
-                    <DynaText text={anOrder[0]*100}
+                    <DynaText text={parseInt(`${(anOrder[0]*100) || 0}`) }
                       color={anOrder[1] != "profit" ? "#990000"   : "#090"}
                       // rotation={[0,0,0]}
                       position={[0,0.01,0.075]} font={0.05}

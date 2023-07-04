@@ -79,7 +79,7 @@ function TradingTextContainer({ tokensArrayArray, state, calls }: any) {
       </>}
       {!!tokensArrayArray && state.isSelectedId && state.selectedHasArray &&
         <DynaText text={!state.clicked ? "GET HELP" : "STOP"} // BUY / SELL
-        onClick={() => { app.alert("neutral","Click the RED Button to STOP") }} 
+          onClick={() => { app.alert("neutral",!state.clicked ? "Click the GREEN Button to Get Human Help" : "Click the RED Button to STOP") }} 
           color={!state.clicked ? "#006600" : "#990000"}
           position={new Vector3(!state.clicked ? - 0.05 : + 0.12, 0, 0.461)}
           isSelected={state.isSelectedId} font={0.065} 
