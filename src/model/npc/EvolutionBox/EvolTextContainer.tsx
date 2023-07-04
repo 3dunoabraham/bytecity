@@ -63,17 +63,17 @@ function TradingTextContainer({ tokensArrayArray, state, calls }: any) {
         />
       }
       {!!tokensArrayArray && <>
-        <DynaText color={state.selectedHasArray ? "#A09390" : "#9A3405"} // LIVE / DEMO
+        <DynaText color={state.selectedHasArray ? "#606360" : "#00f"} // LIVE / DEMO
           // onClick={state.selectedHasArray ? calls.turnOff : calls.turnOn} 
           position={new Vector3(0.4, 0, +0.4)} text={"DEMO"}
           onClick={() => { app.alert("neutral","DEMO mode is for testing and building") }} 
           isSelected={state.isSelectedId} font={0.055}
         />
 
-        <DynaText color={state.selectedHasArray ? "#007700" : "#A09390"} // LIVE / DEMO
+        <DynaText color={state.selectedHasArray ? "#007700" : "#9A3405"} // LIVE / DEMO
           // onClick={state.selectedHasArray ? calls.turnOff : calls.turnOn} 
           position={new Vector3(0.4, 0, +0.46)} text={"LIVE"}
-          onClick={() => { app.alert("neutral","LIVE mode enables the nearby inhabitants count") }} 
+          onClick={() => { app.alert("neutral","LIVE mode enables the nearby humans count") }} 
           isSelected={state.isSelectedId} font={state.selectedHasArray ? 0.06 : 0.06}
         />
       </>}
