@@ -27,10 +27,10 @@ function ArchitecturalCore ({state, calls, store}:any) {
   const [clicked, setClicked] = useState(false)
   const toggleGame = (boxName:string, tradeData:any)=> {
     console.log("state.profitHistory", state.profitHistory)
-    return
     if (state.profitHistory.length > 4) {
+      return
     }
-    return
+    // return
 
     setClicked(!!tradeData.value)
     // console.log("tradeData", boxName, tradeData, state.selectedHasArray)
