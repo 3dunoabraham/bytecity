@@ -22,7 +22,12 @@ import FarFarAway from "./goal/FarFarAway";
 const ByteTown = ({eraName="townEra"}:any) => {
   const app:any = useContext(AppContext)
   const gameLoop = useGame({state:{eraName},form:{ id:"BTCUSDT3M" }})
-  
+  const removeTransactionCouple = (theIndex:any) => {
+    gameLoop.calls.spliceProfitHistory(theIndex)
+    // alerts and sound here
+      app.audio("neutral","./sound/aaa.wav")
+      app.alert("success", "You redeemed (1) loss!")
+  }
   const goalPostTips = async () => {
     // return
     if (gameLoop.state.isDefaultUser) {
@@ -95,6 +100,7 @@ const ByteTown = ({eraName="townEra"}:any) => {
             eraName,
           },
           calls:{
+            spliceProfitHistory: gameLoop.calls.spliceProfitHistory,
             toggleGame: gameLoop.calls.toggleTrade,
             turnOn: gameLoop.calls.turnOn,
             turnOff: gameLoop.calls.turnOff,
@@ -105,6 +111,12 @@ const ByteTown = ({eraName="townEra"}:any) => {
       </group>
       <group position={[0,0,0]}>
         <FarFarAway {...{
+          state:{
+            ...gameLoop.state,
+          },
+          calls: {
+            removeTransactionCouple,
+          }
         }}/>
         </group>
 

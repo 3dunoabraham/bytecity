@@ -4,7 +4,7 @@ import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import DynaText from "@/model/core/DynaText";
 
-export function The3DPong() {
+export function The3DPong({calls}:any) {
   const [computerPosition, setComputerPosition] = useState(new THREE.Vector3(0, 0.8, 0));
   const [ballPosition, setBallPosition] = useState(new THREE.Vector3(0, 0, 0));
   const [ballYVelocity, setBallYVelocity] = useState(0.02);
@@ -36,6 +36,7 @@ export function The3DPong() {
         } else if (distanceFromCenter <= 0 && distanceFromCenter >= -0.25) {
           setBallZVelocity((score / 100) + (distanceFromCenter / 2 * (Math.random() / 2 + 0.5)));
         } else {
+          calls.endGame(score)
           s__Lastscore(score < lastScore ? lastScore : score)
           s__score(-1)
           setBallZVelocity(0);

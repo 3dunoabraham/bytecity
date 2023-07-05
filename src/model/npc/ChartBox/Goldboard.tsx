@@ -74,7 +74,7 @@ const Component = forwardRef(({
       refetchOnWindowFocus: false, enabled: false ,
       queryFn: async () =>{
         let myDiff =( myUnix - Date.now()) * -1
-        console.log("myDiff", myDiff)
+        // console.log("myDiff", myDiff)
         if (myDiff < 60000*5) {
           s__myUnix(Date.now())
           app.alert("error","Wait 5 minutes before clicking again: "+getBrowserTimeIn5Minutes())
@@ -187,7 +187,16 @@ const Component = forwardRef(({
     return parseDecimals((minPrice + maxPrice)  / 2)
   },[minPrice, maxPrice])
   const analogyLookup:any = {
-    "BTC": "Nearby",
+    "BTC": "Scan",
+  }
+  const triggerQBox = (e:any)=>{
+    if (prices.length == 0) {
+      app.alert("error","Data not found, click Scan")
+      return
+    }
+    _askAI(e)
+    app.alert("warn","Check the console for the logs")
+    e.stopPropagation()
   }
 
   return (
@@ -199,13 +208,13 @@ const Component = forwardRef(({
           <meshStandardMaterial color={"#f0f0f0"}/>
         </Box>
       </>} */}
-    <group onClick={()=>{ app.alert("warn","Check the console for the logs") }}>
+    <group onClick={(e)=>{ triggerQBox(e) }}>
       <DynaText text={"?"} color={"#ffffff"}
         position={new Vector3(-0.9,0.95+0.63,0.19)} rotation={[0, 0, 0]}
 
-        isSelected={false}  font={0.3} onClick={()=>{}}
+        isSelected={false}  font={0.3} 
       />
-      <Box onClick={(e)=>{_askAI(e)}} args={[0.26,0.34,0.15]} 
+      <Box  args={[0.26,0.34,0.15]} 
           position={[-0.9,0.99+0.6,0.1]} 
 
             onPointerOver={() => setHovered3(true)}
@@ -220,16 +229,16 @@ const Component = forwardRef(({
 
 
       <DynaText text={!!theToken ? analogyLookup[theToken.toUpperCase()] : ""} color={0xaaaaaa}
-        position={new Vector3(-0.17,1.36,0.19)} rotation={[0, 0, 0]}
+        position={new Vector3(-0.17,1.3,0.19)} rotation={[0, 0, 0]}
 
-        isSelected={false}  font={0.16} onClick={()=>{}}
+        isSelected={false}  font={0.2} onClick={()=>{}}
       />
       {/* !!timeframe ? timeframe.toLowerCase() : "" */}
-      <DynaText text={"humans"} color={0xaaaaaa}
+      {/* <DynaText text={"board"} color={0xaaaaaa}
         position={new Vector3(-0.14,1.22,0.19)} rotation={[0, 0, 0]}
 
         isSelected={false}  font={0.13} onClick={()=>{}}
-      />
+      /> */}
 
       
       {prices.length > 0 &&  <>
@@ -250,7 +259,7 @@ const Component = forwardRef(({
         />
     </>}
       
-      <Box onClick={()=>{q__asd.refetch()}} args={[0.6,0.4,0.15]}  receiveShadow castShadow
+      <Box onClick={()=>{q__asd.refetch()}} args={[0.6,0.3,0.15]}  receiveShadow castShadow
         position={[-0.15,0.99+0.3,0.1]} 
 
           onPointerOver={() => setHovered2(true)}

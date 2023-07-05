@@ -145,6 +145,7 @@ const EvolutionBox = forwardRef(({
 
 
           {/* CALL SCREEN */}
+          {state.selectedHasArray &&
           <group position={[0, -0.33, 0]}>
           <mesh castShadow receiveShadow scale={score.score ? 1 : 3}
               position={[+ 0.33, -0.125, - 0.38]}
@@ -153,6 +154,7 @@ const EvolutionBox = forwardRef(({
               <meshStandardMaterial color={"#777777"} />
             </mesh>
       </group>
+      }
         {clicked &&
           <group position={[0, -0.33, 0]}>
           <mesh castShadow receiveShadow scale={score.score ? 1 : 3}

@@ -324,6 +324,13 @@ const projectVirtualOrder = async (theid:any, thetrade:any) => {
   }
 }
 
+const spliceProfitHistory = (theIndex:any) => {
+  let aNewArray = [...profitHistory]
+    aNewArray.splice(theIndex, 1)
+    s__profitHistory(aNewArray)
+    
+}
+
 
 
 
@@ -355,6 +362,7 @@ const projectVirtualOrder = async (theid:any, thetrade:any) => {
       leave: leaveBox,
       turnOn: turnBoxOn,
       turnOff: turnBoxOff,
+      spliceProfitHistory,
           
     }
   }
