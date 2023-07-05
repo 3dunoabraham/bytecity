@@ -1,6 +1,6 @@
 "use client";
 import { useContext, useEffect, useMemo, useState } from "react";
-import { Cylinder } from "@react-three/drei";
+import { Box, Cylinder } from "@react-three/drei";
 import { useLocalStorage } from "usehooks-ts";
 import { useRouter, useSearchParams } from "next/navigation";
 
@@ -17,6 +17,7 @@ import RootScene from "@/model/core/RootScene"
 import TutorialContainer from "./tutorial/TutorialContainer";
 import GoalPost from "./goal/GoalPost";
 import TownCamera from "./TownCamera";
+import FarFarAway from "./goal/FarFarAway";
 
 const ByteTown = ({eraName="townEra"}:any) => {
   const app:any = useContext(AppContext)
@@ -102,6 +103,12 @@ const ByteTown = ({eraName="townEra"}:any) => {
           }
         }}/>
       </group>
+      <group position={[0,0,0]}>
+        <FarFarAway {...{
+        }}/>
+        </group>
+
+      {/* box close to pyramid, enable control station */}
       
       
       {/* local storage goal */}

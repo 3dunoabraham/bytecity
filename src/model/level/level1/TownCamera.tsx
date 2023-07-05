@@ -121,7 +121,7 @@ function TownCamera({ state, calls }: any) {
             onClick={handleBoxClick}
             args={[0.08, 1.5, 2.5, 3, 3]}
           >
-            <meshStandardMaterial color={"#994400"} />
+            <meshStandardMaterial color={"#eeeeee"} />
           </Cylinder>
 
       <MapControls

@@ -145,14 +145,23 @@ const EvolutionBox = forwardRef(({
 
 
           {/* CALL SCREEN */}
-        {clicked &&
           <group position={[0, -0.33, 0]}>
-            <mesh castShadow receiveShadow scale={score.score ? 1 : 3}
-              position={[+ 0.33, 0, - 0.41]}
+          <mesh castShadow receiveShadow scale={score.score ? 1 : 3}
+              position={[+ 0.33, -0.125, - 0.38]}
             >
-              <boxGeometry args={[0.1, 0.095, 0.01]} />
+              <boxGeometry args={[0.11, 0.01, 0.06]} />
               <meshStandardMaterial color={"#777777"} />
             </mesh>
+      </group>
+        {clicked &&
+          <group position={[0, -0.33, 0]}>
+          <mesh castShadow receiveShadow scale={score.score ? 1 : 3}
+            position={[+ 0.33, 0, - 0.41]}
+          >
+            <boxGeometry args={[0.09, 0.095, 0.01]} />
+            <meshStandardMaterial color={"#777777"} />
+          </mesh>
+          
             <mesh castShadow receiveShadow scale={score.score ? 1 : 3}
               position={[+ 0.33, - 0.02, - 0.40]}
             >
