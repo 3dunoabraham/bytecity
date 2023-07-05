@@ -19,7 +19,7 @@ function Component({ }) {
       <group position={[0, 1.7, 0]}>
         <FontText position={[0.9, 0, 1.55]} fontSize={0.08} rotation={[-Math.PI / 2, 0, 0]}
           material={new MeshStandardMaterial({ side: 0, color: "#990099" })}>
-          Call Cost: 0.001
+          Neutrino Cost: 0.001
         </FontText>
       </group>
     </group>

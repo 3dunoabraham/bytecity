@@ -21,9 +21,9 @@ function Component({ }) {
   return (
     <group position={[-0.31, -0.535, -2.4]} scale={0.35}  >
       <group position={[0, 1.7, 0]}>
-        <FontText position={[0.9, 0, 1.6]} fontSize={0.1} rotation={[-Math.PI / 2, 0, 0]}
+        <FontText position={[0.9, 0, 1.5]} fontSize={0.1} rotation={[-Math.PI / 2, 0, 0]}
           material={new MeshStandardMaterial({ side: 0, color: "#ff66ff" })}>
-          Call Cost: 0
+          Neutrino Cost: 5
         </FontText>
         <group ref={$textGroup} position={[1, 0, 1]} rotation={[0.3, 0, 0]}
       onClick={() => { app.alert("neutral","Tip: This counter resets on page reload") }} 

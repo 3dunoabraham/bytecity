@@ -3,7 +3,7 @@ import { BufferGeometry, DoubleSide, Mesh, MeshBasicMaterial, MeshStandardMateri
 import * as THREE from "three";
 import { useThree } from "@react-three/fiber";
 
-export default function Component({ position=[0,0,0], points=null,  length, width, wallWidth, roofWidth }:any) {
+export default function BankRoofContainer({ position=[0,0,0], points=null,  length, width, wallWidth, roofWidth }:any) {
     const { viewport } = useThree();
 
     const roofShape = [

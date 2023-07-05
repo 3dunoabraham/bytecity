@@ -77,12 +77,12 @@ function BouncingThing ({_bouncingThing, tokensArrayArray, isSelectedId, token, 
     <group position={[0,-0.3,0]}>
       <mesh castShadow receiveShadow ref={bouncingThing} position={[ 0.33, 0, -0.36, ]} >
         <boxGeometry args={[0.1, 0.1, 0.05]} />
-        {livestate.clickedPrice/livestate.queryUSDT.data < 1  && 
+        {/* {livestate.clickedPrice/livestate.queryUSDT.data < 1  && 
           <meshStandardMaterial  color={"#ff00ff"} />
-        }
-        {livestate.clickedPrice/livestate.queryUSDT.data < 1  && 
-          <meshStandardMaterial   color={"#009900"} />
-        }
+        } */}
+        {/* {livestate.clickedPrice/livestate.queryUSDT.data < 1  &&  */}
+          <meshStandardMaterial   color={livestate.clickedPrice/livestate.queryUSDT.data < 1 ? "#cc00cc" : "#009900"} />
+        {/* } */}
       </mesh>
     </group>
     }

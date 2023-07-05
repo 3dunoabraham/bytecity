@@ -5,7 +5,7 @@ import { Plane } from "@react-three/drei"
 
 import DynaText from "@/model/core/DynaText"
 
-function Component({ tokensArrayArray, state, calls }: any) {
+function MiniScreen({ tokensArrayArray, state, calls }: any) {
   const [translation, s__translation]: any = useState({
     btc: "gold",
     eth: "dola",
@@ -40,4 +40,4 @@ function Component({ tokensArrayArray, state, calls }: any) {
   </>)
 }
 
-export default Component
+export default MiniScreen

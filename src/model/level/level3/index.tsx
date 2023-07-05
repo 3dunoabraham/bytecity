@@ -17,7 +17,7 @@ import { Plane } from "@react-three/drei";
 import ThousandZone from "@/model/npc/ThousandZone";
 import GridFloor from "@/model/npc/ThousandZone/GridFloor";
 
-function Component ({}) {
+function Level3 ({}) {
   const app:any = useContext(AppContext)
   const searchParams:any = useSearchParams();
   const { user, superuser, do:{login, logout, fetchSupaPlayer, demo,},  jwt }:any = useAuth()
@@ -62,4 +62,4 @@ function Component ({}) {
   </>)
 }
 
-export default Component
+export default Level3

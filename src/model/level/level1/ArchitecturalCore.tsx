@@ -18,10 +18,14 @@ import { useQuery } from "@tanstack/react-query";
 import BouncingThing from "@/model/npc/TradingBox/output/BouncingThing";
 import TownSign from "@/model/npc/EvolutionBox/TownSign";
 import CallForHab from "@/model/npc/EvolutionBox/CallForHab";
+import ChartBox from "@/model/npc/ChartBox";
+import Goldboard from "@/model/npc/ChartBox/Goldboard";
+import { useAI } from "../../../../script/util/hook/useHooksHelper";
 
 function ArchitecturalCore ({state, calls, store}:any) {
   const app:any = useContext(AppContext)
   const { user, superuser, do:{login, logout, demo,},  jwt }:any = useAuth()
+  const ask_angelInvestorSimulator = useAI(state.timeframe,true)
   const position = new Vector3(-0.75,0,-0.75)
   const $evolBox: any = useRef(null);
   const [clicked, setClicked] = useState(false)
@@ -67,7 +71,10 @@ function ArchitecturalCore ({state, calls, store}:any) {
   //   if (!$evolBox || !$evolBox.current) return false
   //   return $evolBox.current.clicked
   // }, [])
-
+  const triggerAI = (e:any,data:any) => {
+    ask_angelInvestorSimulator(data)
+    e.stopPropagation()
+  }
 
 
   return (<>
@@ -107,15 +114,17 @@ function ArchitecturalCore ({state, calls, store}:any) {
     {!state.hasAnyToken && <TownTextStart calls={{}} />}
 
     {/* CHAPTER X */}
-    {/* {state.hasAnyToken && !state.isDefaultUser && !!state.tokensArrayObj[state.selectedToken] && state.isSelectedTokenDowntrend && <>
-      <group scale={[0.4,0.4,0.4]}  position={state.chartPos} rotation={state.chartRot}>
-        <ChartBox boundaries={[1,0.1,0.04]} score={{score:0}} timeframe={state.selectedTimeframe.toLowerCase() || "1d"}
-          position={[0,0,0]} velocityX={0}  theToken={state.form.id.split("USDT")[0]} askAI={(data:any)=>{askAI(data)}}
+    {!!store && state.hasAnyToken && !!state.tutoStage && state.tutoStage?.lvl > 3 && // !state.isDefaultUser && !!state.tokensArrayObj[state.selectedToken] && // state.isSelectedTokenDowntrend &&
+    <>
+      <group scale={[0.4,0.4,0.4]}  position={[-1.25,0,-0.7]} rotation={[0,Math.PI/2,0]}>
+        <Goldboard boundaries={[1,0.1,0.04]} score={{score:0}} timeframe={state.timeframe.toLowerCase() || "1d"}
+          position={[0,0,0]} velocityX={0}  theToken={state.token}
+          askAI={(e:any,data:any)=>{ triggerAI(e,data) }}
           velocityY={0} setVelocityX={()=>{}} setVelocityY={()=>{}} {...{chartBoxPos:state.chartBoxPos, s__chartBoxPos:calls.s__chartBoxPos}}
-          tokensArrayObj={state.tokensArrayObj}
+          tokensArrayObj={store}
         />
       </group>
-    </>} */}
+    </>}
   </>)
 }
 

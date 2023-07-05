@@ -3,7 +3,7 @@ import { Vector3 } from "three"
 const DEFAULT_TIMEFRAME_ARRAY = ["3m","15m","4h","1d","1w"]  
 
 
-function Component ({ tokensArrayArray, state, calls }:any) {
+function TimeframeButtons ({ tokensArrayArray, state, calls }:any) {
     return ( <>
         
         {state.isSelectedId && !!tokensArrayArray && <>
@@ -51,4 +51,4 @@ function Component ({ tokensArrayArray, state, calls }:any) {
             })}
     </>)
 }
-export default Component
+export default TimeframeButtons

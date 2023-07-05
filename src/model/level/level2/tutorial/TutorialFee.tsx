@@ -5,7 +5,7 @@ import { MeshStandardMaterial } from 'three';
 
 import FontText from '@/model/core/FontText';
 
-function Component({ }) {
+function TutorialFee({ }) {
   const $textGroup: any = useRef()
   useFrame((ctx, delta) => {
     if (!$textGroup.current) return
@@ -25,4 +25,4 @@ function Component({ }) {
     </group>
   )
 }
-export default Component
+export default TutorialFee

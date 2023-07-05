@@ -22,7 +22,7 @@ let colors = new Float32Array([
   0.0, 0.0, 1.0, // Vertex 7 (Blue)
 ]);
 
-export default function Component({
+export default function KLineChart3d({
   count = 500,
   temp = new THREE.Object3D(),
   positions = [],

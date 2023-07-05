@@ -64,7 +64,7 @@ function TownCamera({ state, calls }: any) {
               position={[0, 0, -0.35]}
             />
           </group>
-          <group position={[0.7, -1.05, 3.2]} rotation={[0, 0, 0]}>
+          {/* <group position={[0.7, -1.05, 3.2]} rotation={[0, 0, 0]}>
             <DynaText
               color={"#994400"}
               rotation={[0, Math.PI, 0]}
@@ -73,7 +73,7 @@ function TownCamera({ state, calls }: any) {
               font={0.12}
               position={[0, 0, -0.35]}
             />
-          </group>
+          </group> */}
         </>
       )}
       {!cameraLocked && (

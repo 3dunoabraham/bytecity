@@ -69,4 +69,30 @@ export const getComputedLevels = (config:any)=> {
     return theLevels
   }
 
+  export function getBrowserTimeIn5Minutes(): string {
+    // Get the current date and time.
+    const now = new Date();
+  
+    // Get the hour and minute from the current date and time.
+    let hour = now.getHours();
+    let minute = now.getMinutes();
+  
+    // Calculate the time in 5 minutes.
+    let minutesIn5Minutes = minute + 5;
+  
+    // If the minutes are greater than 59, then add 1 to the hour.
+    if (minutesIn5Minutes > 59) {
+      hour += 1;
+      minutesIn5Minutes -= 60;
+    }
+  
+  // Return the hour and minute in a string, padded with zeros to the left of the minute.
+  const paddedMinute = String(minutesIn5Minutes).padStart(2, '0');
+  return `${hour}:${paddedMinute}`;
+}
+
+  
+  // Example
+  const timeIn5Minutes = getBrowserTimeIn5Minutes();
+  console.log(timeIn5Minutes); // 19:38
   

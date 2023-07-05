@@ -7,7 +7,7 @@ import * as THREE from "three";
 import { useContext,  } from 'react'
 import { AppContext } from "@/../script/state/context/AppContext";
 import DynaText from "@/model/core/DynaText";
-import { parseDecimals } from "@/../script/util/helper";
+import { getBrowserTimeIn5Minutes, parseDecimals } from "@/../script/util/helper";
 import { tokenColors } from "@/model/npc/TradingBox";
 import KLineChart3d from "./KLineChart3d";
 import { useQueryPlus } from "@/../script/util/hook/useHooksHelper";
@@ -48,8 +48,8 @@ const Component = forwardRef(({
   timeframe, theToken,
   chartBoxPos, s__chartBoxPos, tokensArrayObj
 }: any, ref) => {
-  const _askAI = ()  => {
-    askAI(prices)
+  const _askAI = (e:any)  => {
+    askAI(e,prices)
   }
   const app:any = useContext(AppContext)
   const [hovered, setHovered] = useState(false);
@@ -68,13 +68,22 @@ const Component = forwardRef(({
   const isClient = useIsClient()
 
 
+  const [myUnix, s__myUnix] = useState(0)
   
   const [q__asd, asd]:any = useQueryPlus({ queryKey: ['asdasd'], 
       refetchOnWindowFocus: false, enabled: false ,
       queryFn: async () =>{
+        let myDiff =( myUnix - Date.now()) * -1
+        console.log("myDiff", myDiff)
+        if (myDiff < 60000*5) {
+          s__myUnix(Date.now())
+          app.alert("error","Wait 5 minutes before clicking again: "+getBrowserTimeIn5Minutes())
+          return []
+        }
         let t = timeframe || "3m"
         // let startUnixDate = getRandomUnixDate()
           // let urlBase = `https://api.binance.com/api/v3/klines?interval=${t}&startTime=${startUnixDate}&symbol=`
+          app.alert("success","Scanning region...")
           let urlBase = `https://api.binance.com/api/v3/klines?interval=${t}&symbol=`
           urlBase += (theToken || "btc").toUpperCase()+"USDT"
           const theListRes = await fetch(urlBase)
@@ -84,11 +93,11 @@ const Component = forwardRef(({
           let lastUnix:any =  parseInt(theList[0][0])
           s__liveUnix(firstUnix - 2)
           s__diffUnix(lastUnix - firstUnix)
-          
+          s__myUnix(Date.now())
       const closingPrices = theList.map((item: any) => parseFloat(item[4]));
       setPrices(closingPrices);
 
-          app.alert("success","Chart refreshed")
+          app.alert("success","Scan timestamp: "+firstUnix/1000)
           return theList
       }
   },[theToken])
@@ -177,7 +186,9 @@ const Component = forwardRef(({
   const midPrice = useMemo(()=>{
     return parseDecimals((minPrice + maxPrice)  / 2)
   },[minPrice, maxPrice])
-
+  const analogyLookup:any = {
+    "BTC": "Nearby",
+  }
 
   return (
     <group  ref={chartRef}>
@@ -188,21 +199,39 @@ const Component = forwardRef(({
           <meshStandardMaterial color={"#f0f0f0"}/>
         </Box>
       </>} */}
-      <DynaText text={!!theToken ? theToken.toUpperCase() : ""} color={0xaaaaaa}
-        position={new Vector3(-0.17,0.95+0.36,0.19)} rotation={[0, 0, 0]}
-
-        isSelected={false}  font={0.26} onClick={()=>{}}
-      />
-      <DynaText text={!!timeframe ? timeframe.toLowerCase() : ""} color={0xaaaaaa}
-        position={new Vector3(0,1.16,0.19)} rotation={[0, 0, 0]}
-
-        isSelected={false}  font={0.1} onClick={()=>{}}
-      />
-      <DynaText text={"?"} color={0xaaaaaa}
+    <group onClick={()=>{ app.alert("warn","Check the console for the logs") }}>
+      <DynaText text={"?"} color={"#ffffff"}
         position={new Vector3(-0.9,0.95+0.63,0.19)} rotation={[0, 0, 0]}
 
         isSelected={false}  font={0.3} onClick={()=>{}}
       />
+      <Box onClick={(e)=>{_askAI(e)}} args={[0.26,0.34,0.15]} 
+          position={[-0.9,0.99+0.6,0.1]} 
+
+            onPointerOver={() => setHovered3(true)}
+            onPointerOut={() => setHovered3(false)}
+        >
+            <meshStandardMaterial color={tokenColors[theToken.toLowerCase()] } 
+              opacity={0.75}
+              transparent={!hovered3}
+            />
+        </Box>
+        </group>
+
+
+      <DynaText text={!!theToken ? analogyLookup[theToken.toUpperCase()] : ""} color={0xaaaaaa}
+        position={new Vector3(-0.17,1.36,0.19)} rotation={[0, 0, 0]}
+
+        isSelected={false}  font={0.16} onClick={()=>{}}
+      />
+      {/* !!timeframe ? timeframe.toLowerCase() : "" */}
+      <DynaText text={"humans"} color={0xaaaaaa}
+        position={new Vector3(-0.14,1.22,0.19)} rotation={[0, 0, 0]}
+
+        isSelected={false}  font={0.13} onClick={()=>{}}
+      />
+
+      
       {prices.length > 0 &&  <>
         <DynaText text={`${maxPrice}`} color={0x333333}
           position={new Vector3(-1.12,1.02,0.145)} rotation={[0, 0, 0]}
@@ -230,14 +259,7 @@ const Component = forwardRef(({
           <meshStandardMaterial color={!hovered2 ? "#888888" : tokenColors[theToken.toLowerCase()] } />
       </Box>
       
-      <Box onClick={()=>{_askAI()}} args={[0.2,0.3,0.15]} 
-          position={[-0.9,0.99+0.6,0.1]} 
-
-            onPointerOver={() => setHovered3(true)}
-            onPointerOut={() => setHovered3(false)}
-        >
-            <meshStandardMaterial color={!hovered3 ? "#888888" : tokenColors[theToken.toLowerCase()] } />
-        </Box>
+      
         <group position={[0.15,0,0.12]}>
             <KLineChart3d
                 boundaries={boundaries}

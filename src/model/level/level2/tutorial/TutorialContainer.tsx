@@ -8,7 +8,7 @@ import TutorialGoal from "./TutorialGoal"
 import TutorialFee from "./TutorialFee"
 import FontText from "@/model/core/FontText"
 
-function Component({ state }: any) {
+function TutorialContainer({ state }: any) {
   return (<>
     {state.hasAnyToken && !state.tutoStage.lvl && <SetDemoOff />}
     {state.hasAnyToken && state.tutoStage.lvl == 1 && <GreenBuy />}
@@ -29,4 +29,4 @@ function Component({ state }: any) {
   </>)
 }
 
-export default Component
+export default TutorialContainer

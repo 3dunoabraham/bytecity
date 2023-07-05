@@ -6,7 +6,7 @@ import { useAuth } from '../../state/context/AuthContext'
 import { AppContext } from '../../state/context/AppContext'
 import { DEFAULT_BOX_OBJ, DEFAULT_TIMEFRAME_ARRAY } from '../../constant/game'
 import { getComputedLevels } from '../helper'
-import { pov_isDefaultUser } from '../helper/gameHelper'
+import { getPointsFromChange, pov_isDefaultUser } from '../helper/gameHelper'
 import { countProfitableTrades, createTradeObject, handleFirstTutorialStages, updateProfitHistory } from "@/model/scripts";
 import { fetchPost } from '../helper/fetchHelper'
 
@@ -204,7 +204,8 @@ const toggleTrade = async (x:any, y:any) => {
 
   let tutoChange = handleFirstTutorialStages(isBuying, tutoStage, setTutoStage);
   if (tutoChange == 2) {
-    setTimeout(()=>{app.alert("neutral","Next Step: You need min. +2 new humans for growth") },3333)
+    app.alert("neutral","Next Step: You need min. +2 new humans for growth") 
+    // setTimeout(()=>{app.alert("neutral","Next Step: You need min. +2 new humans for growth") },3333)
   }
   // if (tutoChange == 3) { app.alert("neutral","Next Step: Add New Inhabitants") }
   s__orderHistory([...orderHistory, newTradeObj])
@@ -212,8 +213,11 @@ const toggleTrade = async (x:any, y:any) => {
 
   if (isBuying) {
     app.audio("neutral","./sound/cas.wav")
-    app.alert("warn",`Connecting neutrino to ${y.price} Humans...`)
-  }
+    // console.log("tutoStage", tutoStage)
+    if (tutoStage.lvl > 2) {
+      app.alert("neutral",`Connecting to ${y.price} Humans...`)
+    }
+}
 
   if (form.id in currentOrders) {
     handleExistingOrder(newTradeObj);
@@ -236,7 +240,7 @@ const handleExistingOrder = (newTradeObj:any): void => {
     let lastProfitCount = realProfitCount
     let newprofithi = updateProfitHistory(currentOrders, form, newTradeObj, profitHistory, feePercent);
     s__profitHistory(newprofithi);
-    let newProfitCount = newprofithi.filter((atrade:any, index:any) => {
+    let newProfitCount:any = newprofithi.filter((atrade:any, index:any) => {
       return !!atrade[1] && atrade[1] == "profit"
     }).length
     // console.log("newProfitCount  > lastProfitCount", newProfitCount  , lastProfitCount)
@@ -244,8 +248,10 @@ const handleExistingOrder = (newTradeObj:any): void => {
      app.audio("neutral","./sound/cassh.wav")
     //  let theLastProfit 
       // console.log("new profit trade obj", newTradeObj, newprofithi[newprofithi.length-1])
-      let pointsNumber = parseFloat(`${newprofithi[newprofithi.length-1]}`)*100
+      let pointsNumber = getPointsFromChange(newprofithi[newprofithi.length-1][2].price,newprofithi[newprofithi.length-1][3].price)
+      // let pointsNumber = parseFloat(`${newprofithi[newprofithi.length-1]}`)*100
       let points = parseInt(`${pointsNumber}`)
+      // let points = parseInt(`${pointsNumber}`)
      app.alert("success",`${points}  new inhabitant(s)!`)
     } else {
       let pointsNumber = parseFloat(`${newprofithi[newprofithi.length-1]}`)*100

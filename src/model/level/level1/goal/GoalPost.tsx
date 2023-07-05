@@ -3,11 +3,13 @@ import HumanScale from "@/model/core/HumanScale"
 import { Box, Cylinder } from "@react-three/drei"
 import { useFrame } from "@react-three/fiber"
 import { useMemo, useRef } from "react"
+import { getPointsFromChange } from "../../../../../script/util/helper/gameHelper"
 
 
-function Component ({calls, state}:any) {
+function GoalPost ({calls, state}:any) {
   const $claimButton:any = useRef()
   const realProfitCount = useMemo(()=>{
+    console.log("state.profitHistory", state.profitHistory)
     return state.profitHistory.filter((atrade:any, index:any) => {
       return atrade[1] == "profit"
     }).length
@@ -57,22 +59,19 @@ function Component ({calls, state}:any) {
       {state.hasAnyToken && <>
         <group position={[-0.15,-0.55,0]}>
             {state.profitHistory.slice(0,5).map((anOrder:any, index:any)=>{
-              return (<>
-                <group  position={[index*0.075,0.6,0]} >
+              return (
+                <group  position={[index*0.075,0.6,0]}  key={index}>
                   <group scale={0.06}  position={[0,0.06,0]} >
                     <HumanScale color={anOrder[1] != "profit" ? "#f00" : "#0f0"} width={0.1} length={0.3}   /> 
                   </group>
                   
-                    <DynaText text={parseInt(`${(anOrder[0]*100) || 0}`) }
+                    <DynaText text={parseInt(`${getPointsFromChange(anOrder[2].price,anOrder[3].price) || 0}`) }
                       color={anOrder[1] != "profit" ? "#990000"   : "#090"}
                       // rotation={[0,0,0]}
                       position={[0,0.01,0.075]} font={0.05}
                     />
                 </group>
-                {/* <Box args={[0.07,0.11,0.07]} position={[index*0.075,0.6,0]}  castShadow receiveShadow key={index}>
-                  <meshStandardMaterial color={anOrder[1] != "profit" ? "#f00" : "#ccc"}/>
-                </Box> */}
-              </>)
+              )
             })}
             {/* {state.profitHistory.slice(0,5).map((anOrder:any, index:any)=>{
               return (<>
@@ -100,4 +99,4 @@ function Component ({calls, state}:any) {
   )
 }
 
-export default Component
+export default GoalPost

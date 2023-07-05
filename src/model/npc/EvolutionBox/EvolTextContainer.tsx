@@ -4,6 +4,7 @@ import { AppContext } from "@/../script/state/context/AppContext"
 
 
 import DynaText from "@/model/core/DynaText"
+import { getPointsFromChange } from "../../../../script/util/helper/gameHelper"
 
 function TradingTextContainer({ tokensArrayArray, state, calls }: any) {
   const app:any = useContext(AppContext)
@@ -30,47 +31,58 @@ function TradingTextContainer({ tokensArrayArray, state, calls }: any) {
           >
 
       {state.clicked && // CLICKED PRICE 
-        <DynaText text={"Nearby \n Human Change " + "" || ""} color={0x000000}
+        <DynaText text={"Population"} color={0x000000}
           position={new Vector3(0.33, 0.21, -0.38)} rotation={[0, 0, 0]}
-          isSelected={state.isSelectedId} font={0.03}
+          isSelected={state.isSelectedId} font={0.04}
         />
       }
-      {state.clicked &&
-        <DynaText text={"" + (state.queryUSDT.data-state.clickedPrice) + "" || ""} color={0x660066}
+      {/* {state.clicked &&
+        <DynaText text={parseInt(`${(((state.clickedPrice / state.queryUSDT.data) - 1) * -100)-0.005}`)} color={0x660066}
           position={new Vector3(0.33, 0.14, -0.38)} rotation={[0, 0, 0]}
           isSelected={state.isSelectedId} font={0.08}
         />
-      }
+      } */}
 
       </group>
       
-<group
-          onClick={() => { app.alert("neutral","Tip: You need min. +0.001 growth for success") }} 
+<group 
+          onClick={() => { app.alert("neutral","Tip: Plan your next move while waiting for growth...") }} 
           // onClick={() => { app.alert("neutral","Tip: ") }} 
         >
       {state.clicked && // PROFIT LOSS
         <DynaText text={"growth"}
         // onClick={() => { app.alert("neutral","Tip: Growth = New Inhabitants > 1") }} 
-          color={state.clickedPrice / state.queryUSDT.data < 1 ? 0x009900 : 0x777777}
-          position={new Vector3(0.295, 0.09, -0.38)} rotation={[0, 0, 0]}
-          isSelected={state.isSelectedId} font={0.044}
+          color={getPointsFromChange(state.clickedPrice,state.queryUSDT.data) > 0 ? 0x009900 : 0x777777}
+          position={new Vector3(0.3, 0.17, -0.38)} rotation={[0, 0, 0]}
+          isSelected={state.isSelectedId} font={(
+            getPointsFromChange(state.clickedPrice,state.queryUSDT.data) > 0
+            ? 0.044
+            : 0.03
+          )}
         />
       }
       {state.clicked && // PROFIT LOSS
         <DynaText text={"loss"}
         // onClick={() => { app.alert("neutral","Tip: Loss = New Inhabitants <= 1") }} 
-        color={state.clickedPrice / state.queryUSDT.data < 1 ? 0x777777 : 0xff0000}
-          position={new Vector3(0.41, 0.09, -0.38)} rotation={[0, 0, 0]}
-          isSelected={state.isSelectedId} font={0.035}
+        color={getPointsFromChange(state.clickedPrice,state.queryUSDT.data) > 0 ? 0x777777 : 0xff0000}
+          position={new Vector3(0.41, 0.17, -0.38)} rotation={[0, 0, 0]}
+          isSelected={state.isSelectedId}  font={(
+            getPointsFromChange(state.clickedPrice,state.queryUSDT.data) > 0
+            ? 0.03
+            : 0.044
+          )}
         />
       }
 
       {state.clicked && // PRICE DIFFERENCE PERCENT
-        <DynaText text={((((state.clickedPrice / state.queryUSDT.data) - 1) * -100)-0.005).toFixed(3)}
+        <DynaText text={(
+          // Math.round(parseFloat(((((state.clickedPrice / state.queryUSDT.data) - 1) * -100)-0.005).toFixed(3))*1000)
+          getPointsFromChange(state.clickedPrice,state.queryUSDT.data)
+        )}
 
-          color={state.clickedPrice / state.queryUSDT.data < 1 ? 0x009900 : 0xff0000}
-          position={new Vector3(0.33, 0.03, -0.38)} rotation={[0, 0, 0]}
-          isSelected={state.isSelectedId} font={0.08}
+          color={getPointsFromChange(state.clickedPrice,state.queryUSDT.data) > 0 ? 0x009900 : 0xff0000}
+          position={new Vector3(0.33, 0.067, -0.38)} rotation={[0, 0, 0]}
+          isSelected={state.isSelectedId} font={0.12}
         />
       }
       </group>

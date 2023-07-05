@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import React, { useState, useEffect, useMemo } from 'react';
-import { useMap, MapOrEntries, useMediaQuery } from 'usehooks-ts';
+import { useMap, MapOrEntries, useMediaQuery, useCopyToClipboard } from 'usehooks-ts';
 
 export const useDeviceXS_SM = () => useMediaQuery('(max-width: 600px)')
 export const useDeviceXS_MD = () => useMediaQuery('(max-width: 900px)')
@@ -92,4 +92,42 @@ export function useUnloadHandler(router:any, notSaved:any) {
       router.events && router.events.off('routeChangeStart', beforeRouteHandler);
     };
   }, [notSaved, router.events, router.pathname]);
+}
+export const useAI = (selectedTimeframe:any,copyToClipboard=false) => {
+  
+  const [AIdata, s__AIdata] = useState({})
+  
+
+  
+  const [clipbloardValue, clipbloard__do] = useCopyToClipboard()
+  const AI_BASE = `
+    act as a professional bitcoin market researcher
+    analyze this simulated data and make a report:
+    include trend direction and most levels to watch
+
+    each object property has an array,
+    each array represents candlestick chart data with the latest closing prices separated by a length of time specified by the key name
+    your task is to generate the report including all timeframes in the json object
+    
+    \n\n candles data:
+  `
+  const askAI = (data:any) => {
+    let verbose:any = {
+      "3m": "3 minutes between prices",
+      "15m": "15 minutes between prices",
+      "4h": "4 hours between prices",
+      "1d": "1 day between prices",
+    }
+    let newPrompt:any = AIdata
+    newPrompt[verbose[selectedTimeframe.toLowerCase()]] = ([...data]).splice(400,499)
+    s__AIdata(newPrompt)
+    console.log("Prompt: ", newPrompt)
+    if (copyToClipboard) {
+      clipbloard__do(AI_BASE + JSON.stringify(newPrompt))
+    }
+    return newPrompt
+}
+
+
+  return askAI
 }

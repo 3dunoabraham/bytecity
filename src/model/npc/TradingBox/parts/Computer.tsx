@@ -3,7 +3,7 @@ import { useState } from "react"
 import { Cylinder, Plane, Torus } from "@react-three/drei"
 import DynaText from "@/model/core/DynaText"
 
-function Component ({tokensArrayArray, state, calls}:any) {
+function Computer ({tokensArrayArray, state, calls}:any) {
   const [translation,s__translation]:any = useState({
     btc:"Bitcoin",
     eth:"Ethereum",
@@ -103,4 +103,4 @@ function Component ({tokensArrayArray, state, calls}:any) {
     </group>)
 }
 
-export default Component
+export default Computer
