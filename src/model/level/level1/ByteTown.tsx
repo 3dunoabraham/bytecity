@@ -18,6 +18,7 @@ import TutorialContainer from "./tutorial/TutorialContainer";
 import GoalPost from "./goal/GoalPost";
 import TownCamera from "./TownCamera";
 import FarFarAway from "./goal/FarFarAway";
+import { ResourcesStore } from "./ResourcesStore";
 
 const ByteTown = ({eraName="townEra"}:any) => {
   const app:any = useContext(AppContext)
@@ -50,7 +51,11 @@ const ByteTown = ({eraName="townEra"}:any) => {
 
           // app.alert("neutral", "Tip: Remove bad orders (losses) by fixing (click) white-roofed cars!")
         } else {
-          app.alert("neutral", "Tip: GET HELP 4 times to level up")
+          if (gameLoop.state.realProfitCount >= 4) {
+            app.alert("neutral", "Tip: Touch grass to buy resources")
+          } else {
+            app.alert("neutral", "Tip: GET HELP 4 times to level up")
+          }
         }
 
       }
@@ -90,6 +95,18 @@ const ByteTown = ({eraName="townEra"}:any) => {
         isDefaultUser: gameLoop.state.isDefaultUser  
       }}
     />
+    
+    {/* MAIN FLOOR */}
+    <ResourcesStore  {...{
+          state:{
+            ...gameLoop.state,
+            form: gameLoop.form,
+            eraName,
+          },}}>
+
+    </ResourcesStore>
+
+
 
       <group position={[0,0,0]}>
         <ArchitecturalCore {...{

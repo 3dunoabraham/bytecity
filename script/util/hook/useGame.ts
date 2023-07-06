@@ -56,7 +56,8 @@ export const useGame: any = (initialConfig={form:{id:"BTCUSDT3M"},state:{eraName
     updateTokenOrder(x, selectedTimeframeIndex, "state", 0)
     if (!tutoStage || !tutoStage.lvl) {
       app.alert("success", "The Game has Started!")
-      app.audio("neutral","./sound/aaa.wav")
+      // app.audio("neutral","./sfx/welcome.ogg")
+      app.audio("neutral","./sfx/correct.wav")
     }
   }
   
@@ -212,7 +213,7 @@ const toggleTrade = async (x:any, y:any) => {
   updateTokenOrder(x,selectedTimeframeIndex,"buy",isBuying ? "1" : "0",{["price"]:y.price})
 
   if (isBuying) {
-    app.audio("neutral","./sound/cas.wav")
+    app.audio("neutral","./sfx/static typing.wav")
     // console.log("tutoStage", tutoStage)
     if (tutoStage.lvl > 2) {
       app.alert("neutral",`Connecting to ${y.price} Humans...`)
@@ -256,7 +257,7 @@ const handleExistingOrder = (newTradeObj:any): void => {
     } else {
       let pointsNumber = parseFloat(`${newprofithi[newprofithi.length-1]}`)*100
       let points = parseInt(`${pointsNumber}`)
-       app.audio("neutral","./sound/wrong.wav")
+       app.audio("neutral","./sfx/bad.wav")
        if (points == 0) {
         app.alert("error","Failed: 0 new inhabitants")
        } else {

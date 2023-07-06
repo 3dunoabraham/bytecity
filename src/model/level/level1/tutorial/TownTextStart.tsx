@@ -16,7 +16,7 @@ function FloatingStart({ calls }: any) {
 
   const triggerStartClick = ()=> {
     app.alert("error", "Click the RED Button!")
-    app.audio("neutral", "./sound/info.wav")
+    app.audio("neutral", "./sfx/bad.wav")
   }
 
   return (<>

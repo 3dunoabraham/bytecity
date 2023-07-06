@@ -6,12 +6,15 @@ export function RedButton({ state, calls }: any) {
   const app:any = useContext(AppContext)
 
   const triggerClick = (e:any)=>{
-    app.audio("neutral","./sound/click33.wav")
     
     if (!state.isOn) {
-      if (calls.join) { calls.join(e) }
+      if (calls.join) {
+        calls.join(e)
+      }
     } else {
-      if (calls.leaveAsset) { calls.leaveAsset(e) }
+      if (calls.leaveAsset) {
+        calls.leaveAsset(e)
+      }
     }
     e.stopPropagation()
   }

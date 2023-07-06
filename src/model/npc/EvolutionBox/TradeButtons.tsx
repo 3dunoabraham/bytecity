@@ -4,12 +4,14 @@ import { AppContext } from "@/../script/state/context/AppContext"
 export function TradeButtons({ tokensArrayArray, state, calls }: any) {
   const app:any = useContext(AppContext)
   const triggerDemoLive = (e:any)=> {
-    app.audio("neutral","./sound/click47.wav")
 
     if (state.selectedHasArray) {
       calls.turnOff(e)
-     } else {
-       calls.turnOn(e)
+      app.audio("neutral","./sfx/turnoff.wav")
+    } else {
+      calls.turnOn(e)
+      app.audio("neutral","./sfx/turnon.wav")
+
      }
     e.stopPropagation()
   }

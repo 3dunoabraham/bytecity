@@ -85,9 +85,13 @@ const EvolutionBox = forwardRef(({
     s__clickedPrice(queryUSDT.data)
   }
 
-  const triggerJoin = () => { calls.join(form.id) }
+  const triggerJoin = () => {
+    app.audio("neutral","./sound/click33.wav")
+    calls.join(form.id)
+  }
   const triggerLeave = () => {
     if (prompt("Confirm end of game (y/n)","y") !== "y") return    
+    app.audio("neutral","./sound/click33.wav")
 
     if (clicked) {
       let answ = prompt("You have a pending transaction \n\n do you want to cancel it? (y/n)","y")
@@ -98,7 +102,9 @@ const EvolutionBox = forwardRef(({
     calls.leaveAsset(form.id)
   }
   const triggerTurnOn = () => {
-    if (clicked) { return app.alert("error", "Pending action found! Click the RED Button first") }
+    if (clicked) {
+      return app.alert("error", "Pending action found! Click the RED Button first")
+    }
     calls.turnOn(form.id)
   }
   const triggerTurnOff = () => {

@@ -40,9 +40,15 @@ function ArchitecturalCore ({state, calls, store}:any) {
     // console.log("tradeData", boxName, tradeData, state.selectedHasArray)
     if (!state.selectedHasArray) {
       if (!!tradeData.value) {
-        app.alert("neutral","DEMO Action started")
+
+    app.audio("neutral", "./sfx/notnot.wav")
+    app.alert("neutral","DEMO Action started")
+
       } else {
-        app.alert("neutral","DEMO Action stopped")
+
+    app.audio("neutral", "./sfx/notnot.wav")
+    app.alert("neutral","DEMO Action stopped")
+
       }
       return
     }
@@ -79,11 +85,6 @@ function ArchitecturalCore ({state, calls, store}:any) {
 
   return (<>
   
-    {/* MAIN FLOOR */}
-    <Box args={[2.5,0.2,2.8]} position={[0,-1.1,0]} castShadow receiveShadow>
-      <meshStandardMaterial color={!!state.tutoStage && state.tutoStage?.lvl > 4 ? "#84BC4E" : "#fff"}/>
-    </Box>
-
     <group position={position}>
       <EvolutionBox {...{state, calls:{...calls,...{toggleGame}}, store}}  ref={$evolBox} queryUSDT={queryUSDT}>
 
