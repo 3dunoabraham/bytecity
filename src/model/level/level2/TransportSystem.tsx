@@ -33,7 +33,7 @@ function Level1_Index3 ({state, calls, }:any) {
     let aNewArray = [...state.profitHistory]
     aNewArray.splice(theIndex, 1)
     calls.s__profitHistory(aNewArray)
-      app.audio("neutral","./sound/aaa.wav")
+      app.audio("neutral","./sound/magic.wav")
       app.alert("success", "You redeemed (1) local loss!")
   }
 

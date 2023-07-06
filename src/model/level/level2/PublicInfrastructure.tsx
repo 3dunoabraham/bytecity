@@ -36,7 +36,7 @@ function Level1_Index2 ({state, calls, }:any) {
 
       } else {
         calls.s__profitHistory([])
-        app.audio("neutral", "./sound/aaa.wav")
+        app.audio("neutral", "./sound/magic.wav")
         app.alert("success", "Local Storage Station has been cleared!")
       }
     }

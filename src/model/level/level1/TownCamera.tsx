@@ -54,7 +54,7 @@ function TownCamera({ state, calls }: any) {
 
       {!!state.tutoStage && state.tutoStage.lvl > 2 && !!state.hasAnyToken && (
         <>
-          <group position={[0.551, -1.05, -1.8]} rotation={[0, 0, 0]}>
+          <group position={[0.551, -.6, -1.8]} rotation={[0, 0, 0]}>
             <DynaText
               color={"#994400"}
               rotation={[0, Math.PI / 2, 0]}

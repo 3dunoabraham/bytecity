@@ -104,7 +104,7 @@ function AppClientProvider({ session, children, }: { session: any, children: Rea
                   <AudioContainer
                     {...{
                       s__src: (val: any) => audioNotification("neutral", val),
-                      src: "./sound/aaa.wav" // Set the audio source here
+                      src: "./sound/magic.wav" // Set the audio source here
                     }}
                   />
                 </div>

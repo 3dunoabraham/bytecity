@@ -111,7 +111,7 @@ function Level2 ({eraName="cityEra"}:any) {
   const onTextClick = (x: any) => s__selectedToken(x)
   const setTutoStage = (lvl: any) => s__LS_tutoStage(JSON.stringify({ ...tutoStage, lvl }))
   const join = (x: any) => {
-    app.audio("neutral","./sound/aaa.wav")
+    app.audio("neutral","./sound/magic.wav")
     s__selectedToken(x);
     updateTokenOrder(x, selectedTimeframeIndex, "state", 0)
     if (!tutoStage.lvl) { app.alert("success","Game Started!") }
@@ -210,7 +210,7 @@ function Level2 ({eraName="cityEra"}:any) {
         app.audio("neutral","./sound/dead.wav")
         return
       }
-      app.audio("neutral","./sound/aaa.wav")
+      app.audio("neutral","./sound/magic.wav")
       app.alert("success", "Successfully Syncing Good Trades!")
       setTimeout(()=>{window.location.reload()},1000)
     } catch (e: unknown) {

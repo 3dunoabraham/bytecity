@@ -26,7 +26,7 @@ const ByteTown = ({eraName="townEra"}:any) => {
   const removeTransactionCouple = (theIndex:any) => {
     gameLoop.calls.spliceProfitHistory(theIndex)
     // alerts and sound here
-      app.audio("neutral","./sound/aaa.wav")
+      app.audio("neutral","./sound/magic.wav")
       app.alert("success", "You redeemed (1) loss!")
   }
   const goalPostTips = async () => {
@@ -72,7 +72,7 @@ const ByteTown = ({eraName="townEra"}:any) => {
 
       } else {
         // calls.s__profitHistory([])
-        app.audio("neutral", "./sound/aaa.wav")
+        app.audio("neutral", "./sound/magic.wav")
         app.alert("success", "Local Storage Station has been cleared!")
       }
     }
