@@ -105,6 +105,7 @@ const EvolutionBox = forwardRef(({
     if (clicked) {
       return app.alert("error", "Pending action found! Click the RED Button first")
     }
+    app.audio("neutral","./sfx/turnon.wav")
     calls.turnOn(form.id)
   }
   const triggerTurnOff = () => {
@@ -113,6 +114,7 @@ const EvolutionBox = forwardRef(({
       if (answ != "y") { return }
       toggleGame()
     }
+    app.audio("neutral","./sfx/turnoff.wav")
     calls.turnOff(form.id)
   }
   const isOn = useMemo(() => { return form.id in store }, [store])
@@ -122,7 +124,7 @@ const EvolutionBox = forwardRef(({
 
   return (
     <group>
-      <group position={[0, 0, 0]}>
+      <group position={[0, 0, 0]} onClick={(e) => { e.stopPropagation() }}>
         <EdenBlock />
         <EdenGenesis />
       </group>

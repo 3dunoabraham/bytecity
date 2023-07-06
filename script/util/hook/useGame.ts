@@ -213,7 +213,7 @@ const toggleTrade = async (x:any, y:any) => {
   updateTokenOrder(x,selectedTimeframeIndex,"buy",isBuying ? "1" : "0",{["price"]:y.price})
 
   if (isBuying) {
-    app.audio("neutral","./sfx/static typing.wav")
+    app.audio("neutral","./sfx/enter.wav")
     // console.log("tutoStage", tutoStage)
     if (tutoStage.lvl > 2) {
       app.alert("neutral",`Connecting to ${y.price} Humans...`)

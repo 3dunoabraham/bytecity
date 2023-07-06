@@ -7,11 +7,8 @@ export function TradeButtons({ tokensArrayArray, state, calls }: any) {
 
     if (state.selectedHasArray) {
       calls.turnOff(e)
-      app.audio("neutral","./sfx/turnoff.wav")
     } else {
       calls.turnOn(e)
-      app.audio("neutral","./sfx/turnon.wav")
-
      }
     e.stopPropagation()
   }

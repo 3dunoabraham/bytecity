@@ -7,7 +7,7 @@ import { Mesh, Vector3 } from 'three';
 import { AppContext } from "@/../script/state/context/AppContext";
 import { useAuth } from "@/../script/state/context/AuthContext";
 import { useCopyToClipboard } from "usehooks-ts";
-import EvolutionBox from "@/model/npc/EvolutionBox";
+import EvolutionBox from "@/model/npc/EvolutionBox/EvoBox";
 import FloatingStart from "../../core/FloatingStart";
 import TownTextStart from "./tutorial/TownTextStart";
 import { useGame } from "@/../script/util/hook/useGame";
