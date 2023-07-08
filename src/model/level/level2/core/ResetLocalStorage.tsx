@@ -7,7 +7,7 @@ import { Cylinder } from "@react-three/drei"
 function ResetLocalStorage ({calls, state}: any) {
     return (<>
       {/* RESET LOCAL STORAGE */}
-      <Cylinder args={[0.05,0.05,0.02,12]} position={[1.1,-1.2,1.125]} 
+      <Cylinder args={[0.05,0.05,0.2,12]} position={[1.1,-1.2,1.125]} 
         castShadow receiveShadow  onClick={()=>{ calls.triggerResetLocalStorage() }}
       >
         <meshStandardMaterial color={ "#f99"}/>

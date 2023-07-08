@@ -97,6 +97,15 @@ const ByteTown = ({eraName="townEra"}:any) => {
     />
     
     {/* MAIN FLOOR */}
+    <Box args={[2.5,0.2,2.8]} position={[0,-1.1,0]} castShadow receiveShadow
+      onClick={(e)=>{e.stopPropagation()}}
+    >
+      <meshStandardMaterial color={ !!gameLoop.state.tutoStage && gameLoop.state.tutoStage?.lvl > 4 ? "#84BC4E" : "#fff"}/>
+    </Box>
+
+
+
+
     <ResourcesStore  {...{
           state:{
             ...gameLoop.state,
