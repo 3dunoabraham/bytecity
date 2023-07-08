@@ -333,6 +333,20 @@ const spliceProfitHistory = (theIndex:any) => {
 }
 
 
+const spliceGoodProfitHistory = () => {
+  let aNewArray = [...profitHistory]
+    if (realProfitCount == 0) return 
+
+    let theDeleteIndex = aNewArray.findIndex((aTradeCouple:any,index:number) => {
+      return !!aTradeCouple[1] && aTradeCouple[1] == "profit"
+    })
+    aNewArray.splice(theDeleteIndex, 1)
+    app.audio("neutral","./sfx/cas.wav")
+    s__profitHistory(aNewArray)
+    
+}
+
+
 
 
   return {
@@ -364,6 +378,7 @@ const spliceProfitHistory = (theIndex:any) => {
       turnOn: turnBoxOn,
       turnOff: turnBoxOff,
       spliceProfitHistory,
+      spliceGoodProfitHistory,
           
     }
   }

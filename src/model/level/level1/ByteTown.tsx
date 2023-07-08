@@ -107,6 +107,7 @@ const ByteTown = ({eraName="townEra"}:any) => {
 
 
     <ResourcesStore  {...{
+          calls: gameLoop.calls,
           state:{
             ...gameLoop.state,
             form: gameLoop.form,
