@@ -7,7 +7,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 
 import { useAuth } from "@/../script/state/context/AuthContext";
 import { AppContext } from "@/../script/state/context/AppContext";
-import { useUnloadHandler } from "@/../script/util/hook/useHooksHelper";
+import { useAI, useUnloadHandler } from "@/../script/util/hook/useHooksHelper";
 import MetaOrbitControls from "@/model/core/MetaOrbitControls";
 import SceneSessionNucleus from "@/model/core/SceneSessionNucleus";
 import StandardSkyEnv from "@/model/core/StandardSkyEnv";
@@ -82,6 +82,12 @@ const ByteTown = ({eraName="townEra"}:any) => {
     // }
   }
 
+  const ask_angelInvestorSimulator = useAI(gameLoop.state.timeframe,true)
+  const triggerAI = (e:any,data:any) => {
+    ask_angelInvestorSimulator(data)
+    e.stopPropagation()
+  }
+
   return (
     <RootScene>
 
@@ -107,6 +113,7 @@ const ByteTown = ({eraName="townEra"}:any) => {
 
 
     <ResourcesStore  {...{
+          store: gameLoop.store,
           calls: gameLoop.calls,
           state:{
             ...gameLoop.state,
@@ -138,6 +145,7 @@ const ByteTown = ({eraName="townEra"}:any) => {
       </group>
       <group position={[0,0,0]}>
         <FarFarAway {...{
+          store: gameLoop.store,
           state:{
             ...gameLoop.state,
           },

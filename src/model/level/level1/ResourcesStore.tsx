@@ -3,8 +3,10 @@ import { useFrame, } from "@react-three/fiber";
 import { useMemo, useContext, useRef, useState } from "react";
 import { InventoryContext } from "../../../../script/state/context/InventoryContext";
 import { AppContext } from "../../../../script/state/context/AppContext";
+import Goldboard from "@/model/npc/ChartBox/Goldboard";
+import { useAI } from "../../../../script/util/hook/useHooksHelper";
 
-export function ResourcesStore ({state, calls}:any) {
+export function ResourcesStore ({state, calls, store}:any) {
   const app:any = useContext(AppContext)
   const inv = useContext(InventoryContext)
   const triggerUseItem = (e:any,shopItemData:any, index:number) => {
@@ -102,6 +104,22 @@ export function ResourcesStore ({state, calls}:any) {
     $shopItems.current.position.y = Math.sin(Date.now() / 500) / 50 + 0.25
   }
 
+  const ask_angelInvestorSimulator = useAI(state.timeframe,true)
+  const triggerAI = (e:any,data:any) => {
+    ask_angelInvestorSimulator(data)
+    e.stopPropagation()
+  }
+
+  const hasAtleastABillboard = useMemo(()=>{
+    if (inv.usedUnitsArray.length == 0) return
+
+    let billboardIndex = inv.usedUnitsArray.findIndex((invUnit:any,index:number) => {
+      return invUnit.type == 0
+    })
+    return billboardIndex != -1
+  },[inv.usedUnitsArray])
+
+
 
   return (<>
     {readyForStore && <>
@@ -132,7 +150,7 @@ export function ResourcesStore ({state, calls}:any) {
           <group position={[-1.95,0.1,0]} ref={$shopItems} scale={[1,1,1]}>
             {theBoxesPosArray.map((aShopItemPos:any,index:number)=>{
               return (<>
-                <group position={[0,0,index*0.22]} onClick={(e)=>{ triggerBuyItem(e,{},index) }}>
+                <group position={[0,0,index*0.22]} onDoubleClick={(e)=>{ triggerBuyItem(e,{},index) }}>
                   {index == 0 && <BillboardShopItem /> }
                   {index == 1 && <TableShopItem /> }
                   {index == 2 && <TableLandShopItem /> }
@@ -148,7 +166,7 @@ export function ResourcesStore ({state, calls}:any) {
           <group position={[0.4,0.75,-0.4]}  scale={[1,1,1]}>
             {inv.unitsArray.map((aShopItem:any,index:number)=>{
               return (<>
-                <group position={[0,0.1,-index*0.2]} rotation={[0,-Math.PI/2,0]} onClick={(e)=>{ triggerUseItem(e,aShopItem,index) }}>
+                <group position={[0,0.1,-index*0.2]} rotation={[0,-Math.PI/2,0]} onDoubleClick={(e)=>{ triggerUseItem(e,aShopItem,index) }}>
                   {aShopItem.type == 0 && <BillboardShopItem /> }
                   {aShopItem.type == 1 && <TableShopItem /> }
                   {aShopItem.type == 2 && <TableLandShopItem /> }
@@ -162,6 +180,28 @@ export function ResourcesStore ({state, calls}:any) {
 
       </group>
     </>}
+
+
+
+    
+    {/* CHAPTER X */}
+    {!!store && state.hasAnyToken && !!state.tutoStage && state.tutoStage?.lvl > 3 && hasAtleastABillboard &&
+    // !state.isDefaultUser && !!state.tokensArrayObj[state.selectedToken] && // state.isSelectedTokenDowntrend &&
+    <>
+      <group scale={[0.4,0.4,0.4]}  position={[-1.25,0,-0.7]} rotation={[0,Math.PI/2,0]}>
+        <Goldboard boundaries={[1,0.1,0.04]} score={{score:0}} timeframe={state.timeframe.toLowerCase() || "1d"}
+          position={[0,0,0]} velocityX={0}  theToken={state.token}
+          askAI={(e:any,data:any)=>{ triggerAI(e,data) }}
+          velocityY={0} setVelocityX={()=>{}} setVelocityY={()=>{}} {...{chartBoxPos:state.chartBoxPos, s__chartBoxPos:calls.s__chartBoxPos}}
+          tokensArrayObj={store}
+        />
+      </group>
+    </>}
+
+
+
+
+
   </>)
 }
 
