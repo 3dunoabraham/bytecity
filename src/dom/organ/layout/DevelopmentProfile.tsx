@@ -72,15 +72,18 @@ function DevelopmentProfile ({foundUser, foundJWT, eraName}:any) {
           <div className='pos-abs top-0 right-0'>
               <DisconnectPlayerForm eraName={eraName} />
             </div>
-                <div className="pos-abs top-0 left-0 pa-3 opaci-chov--75"
-                        onClick={()=>{s__asd("")}} 
+                <div className="pos-abs top-0 left-0  "
+                        
                     >
-                        <div className="flex-center box-shadow-2-b pa-1 block bord-r-10" style={{background:"#ffffff"}}
-                            
-                        >
-                            <Image src={"/bytecity.png"} alt="bytecity" width={32} height={32} />
-                            <small className="tx-black">Back</small>
+                        <div onClick={()=>{s__asd("")}}  className="pa-3 opaci-chov--75"> 
+                            <div className="flex-center box-shadow-2-b pa-1 block bord-r-10" style={{background:"#ffffff"}}
+                                
+                            >
+                                <Image src={"/bytecity.png"} alt="bytecity" width={32} height={32} />
+                                <small className="tx-black">Back</small>
+                            </div>
                         </div>
+                    
                     </div>
                 <div className="pos-abs bottom-0 right-0 pa-3 opaci-chov--75"
                         onClick={()=>{s__asd("")}} 

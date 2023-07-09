@@ -124,16 +124,27 @@ function Component({ }) {
                     <ConnectButton />
                 </>} */}
 
-          <div className="pos-abs top-0 left-0 pa-3 opaci-chov--75"
-            onClick={() => { s__asd("") }}
-          >
-            <div className="flex-center box-shadow-2-b pa-1 block bord-r-10" style={{ background: "#ffffff" }}
-
-            >
-              <Image src={"/bytecity.png"} alt="bytecity" width={32} height={32} />
-              <small className="tx-black">Back</small>
+<div className="pos-abs top-0 left-0  "
+                        
+                        >
+                            <div onClick={()=>{s__asd("")}}  className="pa-3 opaci-chov--75"> 
+                                <div className="flex-center box-shadow-2-b pa-1 block bord-r-10" style={{background:"#ffffff"}}
+                                    
+                                >
+                                    <Image src={"/bytecity.png"} alt="bytecity" width={32} height={32} />
+                                    <small className="tx-black">Back</small>
+                                </div>
+                            </div>
+                            
+          <a href="/w" rel="noopener noreferrer" className='nodeco opaci-chov--50  z-800 pos-rel  flex-center ' title='Byte Town'>
+            <div className='pt- flex-col'>
+              <div className="box-shadow-2-b pa-1 pb-0 block bord-r-10" style={{background:"#ffffff"}}>
+                <Image src={"/webpov2.jpg"} alt="bytetown" width={32} height={32} />
+              </div>
+              {/* <span className="tx-white tx-center">Play <br /> Byte Town</span> */}
             </div>
-          </div>
+          </a>
+                        </div>
           <div className="pos-abs bottom-0 right-0 pa-3 opaci-chov--75"
             onClick={() => { s__asd("") }}
           >

@@ -20,15 +20,25 @@ export default async function Page() {
       {/* <SignInHeaderMenu foundJWT={foundJWT} eraName={eraName} /> */}
     <div className='  h-min-100vh pos-rel w-100 '>      
        
-    <div className='flex '>
-          {!foundJWT &&  <> <div className='py-2'></div> </>}
-          <a href="/" rel="noopener noreferrer" className='nodeco  w-min-80px z-800 pos-rel  flex-center ' >
-            <div className='pt-3'>
+    <div className='flex-col flex-align-start gap-3 pt-2'>
+          {/* {!foundJWT &&  <> <div className='py-2'></div> </>} */}
+          
+          <a href="/w" rel="noopener noreferrer" className='nodeco   z-800 pos-rel  flex-center ' title='Byte Town'>
+            <div className='pt-'>
+              <div className="box-shadow-2-b pa-1 pb-0 block bord-r-10" style={{background:"#ffffff"}}>
+                <Image src={"/webpov2.jpg"} alt="bytetown" width={32} height={32} />
+              </div>
+            </div>
+          </a>
+          
+          <a href="/" rel="noopener noreferrer" className='nodeco   z-800 pos-rel  flex-center ' title="Byte City">
+            <div className='pt-'>
               <div className="box-shadow-2-b pa-1 block bord-r-10" style={{background:"#ffffff"}}>
                 <Image src={"/bytecity.png"} alt="bytecity" width={32} height={32} />
               </div>
             </div>
           </a>
+
         </div>
     </div>
       
