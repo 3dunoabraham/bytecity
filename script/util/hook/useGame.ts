@@ -179,6 +179,12 @@ const timeframe = useMemo(()=>{
 
 
 const toggleTrade = async (x:any, y:any) => {
+  console.log("x, y, token")
+  console.log(x, y, token)
+  // if (token != "btc") {
+
+  //   return
+  // }
   if (profitHistory.length > 4) {
     app.alert("error", "Your Life Storage Station is FULL!")
     return alert("New habitants can't migrate, your Life Storage Station is FULL! \n\n Please click the station button to \n add them to your Town Table");
@@ -239,7 +245,7 @@ const handleExistingOrder = (newTradeObj:any): void => {
        if (pointsNumber == 0) {
         app.alert("error","Failed: 0 new inhabitants")
        } else {
-          app.alert("error",`You loss -${pointsNumber}`+" Human connection(s)!")
+          app.alert("error",`You loss ${pointsNumber}`+" Human connection(s)!")
         }
       }
 

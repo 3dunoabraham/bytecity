@@ -208,8 +208,8 @@ const ByteTown = ({eraName="townEra"}:any) => {
               },
               calls:{
                 spliceProfitHistory: gameLoop.calls.spliceProfitHistory,
-                toggleGame: gameLoop.calls.toggleTrade,
-                
+                toggleTrade: gameLoop.calls.toggleTrade,
+
                 turnOn: gameLoop.calls.turnOn,
                 turnOff: gameLoop.calls.turnOff,
                 join: gameLoop.calls.join,
