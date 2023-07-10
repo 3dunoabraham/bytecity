@@ -25,7 +25,7 @@ export function ResourcesStore ({state, calls, store}:any) {
   const triggerBuyItem = (e:any,shopItemData:any, index:number) => {
     // if ()
     if (state.realProfitCount == 0) {
-      // return app.alert("error", "Not enough usable energy")
+      return app.alert("error", "Not enough usable energy")
     }
 
     calls.spliceGoodProfitHistory()

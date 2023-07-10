@@ -91,12 +91,19 @@ function GrowZone1 ({state, calls, store, position, FORM_ID}:any) {
     console.log("calls.leaveAsset(keyname)")
     calls.leaveAsset(keyname)
   }
+
+  // console.log("statestatestatestatestate", state)
+  console.log("state.selectedHasArray", state.selectedHasArray)
   return (<>
   
     <group position={position}>
-      <EvolutionBox {...{state, calls:{...calls,toggleGame, leaveAsset}, store}} 
-      ref={$evolBox} form={{id:FORM_ID}}
-        queryUSDT={queryUSDT}>
+      <EvolutionBox
+        state={{...state,}}
+        calls={{...calls,toggleGame, leaveAsset}}
+        ref={$evolBox} form={{id:FORM_ID}}
+        queryUSDT={queryUSDT}
+        store={store}
+      >
 
       </EvolutionBox>
     </group>    

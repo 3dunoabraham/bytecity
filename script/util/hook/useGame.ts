@@ -61,7 +61,7 @@ export const useGame: any = (initialConfig={form:{id:"BTCUSDT3M"},state:{eraName
   }
   
   const turnBoxOn = (x:string) => {
-    console.log("xxxx", x)
+    console.log("turnBoxOn x ", x)
     s__selectedBox(x)
     if (!tutoStage || !tutoStage.lvl) {
       app.alert("neutral","Next Step: Turn nearby humans into inhabitants")
@@ -70,7 +70,7 @@ export const useGame: any = (initialConfig={form:{id:"BTCUSDT3M"},state:{eraName
     updateTokenOrder(x, selectedTimeframeIndex, "state", 1)
   }
   const turnBoxOff = (x:string) => {
-    console.log("xxxx", x)
+    console.log("turnBoxOff x ", x)
     s__selectedBox(x)
     updateTokenOrder(x, selectedTimeframeIndex, "state", 0)
   }

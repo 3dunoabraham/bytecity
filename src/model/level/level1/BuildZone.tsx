@@ -30,9 +30,9 @@ function GrowZone ({state, calls, store, eraName}:any) {
             state:{
               ...state,
               
-              tokensArrayArray: null,
-              selectedHasArray:false,
-              isSelectedId: false,
+              tokensArrayArray: store["ETHUSDT3M"],
+              selectedHasArray: !!store["ETHUSDT3M"] && !!store["ETHUSDT3M"][state.selectedTimeframeIndex] && !!store["ETHUSDT3M"][state.selectedTimeframeIndex].state,
+              isSelectedId: true,
 
               // rpi,
               // hasAnyToken,
@@ -52,15 +52,21 @@ function GrowZone ({state, calls, store, eraName}:any) {
               // tutoStage,
               // gameStageAvailability,
 
-              form: state.form,
+              form: {id:"ETHUSDT3M"},
               eraName,
               token:"eth"
             },
             calls:{
               spliceProfitHistory: calls.spliceProfitHistory,
               toggleGame: calls.toggleTrade,
-              turnOn: () => calls.turnOn("ETHUSDT3M"),
-              turnOff: () => calls.turnOff("ETHUSDT3M"),
+              turnOn: () => {
+                console.log(`calls.turnOn("ETHUSDT3M")`)
+                calls.turnOn("ETHUSDT3M")
+              },
+              turnOff: () => {
+                console.log(`calls.turnOff("ETHUSDT3M")`)
+                calls.turnOff("ETHUSDT3M")
+              },
               join: () => calls.join("ETHUSDT3M"),
               leaveAsset: () => calls.leaveAsset("ETHUSDT3M"),
             }
