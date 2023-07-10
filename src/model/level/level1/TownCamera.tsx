@@ -18,21 +18,9 @@ function TownCamera({ state, calls }: any) {
     setCameraKindaLocked(!cameraLocked)
   };
 
-  // const handleCenterButtonClick = () => {
-  //   if (cameraLocked) {
-  //     console.log("asd")
-  //     setCameraKindaLocked(true)
-  //     setCameraPosition(initialCameraPosition);
-  //     setCurrentTarget(new THREE.Vector3(...targetPosition));
-  //   }
-  // };
 
   useFrame(() => {
     if (controlsRef.current && (cameraLocked || cameraKindaLocked)) {
-      // if (cameraPosition == controlsRef.current.object.position) {
-      //   console.log("thesame")
-      // }
-      // console.log("framinnn")
       const currentPosition = controlsRef.current.object.position;
       const newPosition = currentPosition.clone().lerp(
         new THREE.Vector3(...cameraPosition),
@@ -64,16 +52,6 @@ function TownCamera({ state, calls }: any) {
               position={[0, 0, -0.35]}
             />
           </group>
-          {/* <group position={[0.7, -1.05, 3.2]} rotation={[0, 0, 0]}>
-            <DynaText
-              color={"#994400"}
-              rotation={[0, Math.PI, 0]}
-              onClick={handleBoxClick}
-              text={cameraLocked ? "ENABLE CONTROL" : "START TRAVEL"}
-              font={0.12}
-              position={[0, 0, -0.35]}
-            />
-          </group> */}
         </>
       )}
       {!cameraLocked && (
@@ -105,13 +83,6 @@ function TownCamera({ state, calls }: any) {
           >
             <meshStandardMaterial color={"#994400"} />
           </Cylinder>
-          {/* <Cylinder
-            position={[0., -0.2, 12.9]}
-            onClick={handleCenterButtonClick}
-            args={[0.15, 0.15, 0.2, 12, 3]}
-          >
-            <meshStandardMaterial color={"#994400"} />
-          </Cylinder> */}
         </>
       )}
 

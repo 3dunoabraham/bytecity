@@ -80,15 +80,11 @@ export async function fetchPutPlayerAPI(supabase:any, playerObj:any, playerHash:
         subscription: newsubLevel,
         binancekeys: `${binancePublic}:${binanceSecret}`
     }
-    // console.log("dataPack")
-    // console.table(dataPack)
     const { data: removeattempt, error:error_removeattempt } = await supabase.from('player')
         .update(dataPack)
         .match({ hash: playerHash })
         .single()
 
-    // console.log("removeattempt, error_removeattempt" , removeattempt, error_removeattempt)
-  
     return !removeattempt
 }
 
@@ -105,14 +101,11 @@ export async function fetchPutPlayerBattleMode(supabase:any, playerObj:any, play
     if (newMode < 0) {
         dataPack.src = null
     } 
-    // console.log("dataPack")
-    // console.table(dataPack)
     const { data: removeattempt, error:error_removeattempt } = await supabase.from('player')
         .update(dataPack)
         .match({ hash: playerHash })
         .single()
 
-    // console.log("removeattempt, error_removeattempt" , removeattempt, error_removeattempt)
   
     return !removeattempt
 }
@@ -125,14 +118,10 @@ export async function fetchPutEloBattle(supabase:any, playerHash:any, player_elo
         href:"",
         src:null,
     }
-    // console.log("dataPack")
-    // console.table(dataPack)
     const { data: removeattempt, error:error_removeattempt } = await supabase.from('player')
         .update(player_dataPack)
         .match({ hash: playerHash })
         .single()
-
-    // console.log("removeattempt, error_removeattempt" , removeattempt, error_removeattempt)
 
     
     let oppo_dataPack = {
@@ -141,14 +130,10 @@ export async function fetchPutEloBattle(supabase:any, playerHash:any, player_elo
         href:"",
         src:null,
     }
-    // console.log("dataPack")
-    // console.table(dataPack)
     const { data: removeoppo, error:error_removeoppo } = await supabase.from('player')
         .update(oppo_dataPack)
         .match({ hash: oppo })
         .single()
-
-    // console.log("removeattempt, error_removeattempt" , removeattempt, error_removeattempt)
 
   
     return !removeattempt

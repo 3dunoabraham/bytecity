@@ -74,7 +74,6 @@ const Component = forwardRef(({
       refetchOnWindowFocus: false, enabled: false ,
       queryFn: async () =>{
         let myDiff =( myUnix - Date.now()) * -1
-        // console.log("myDiff", myDiff)
         if (myDiff < 60000*5) {
           s__myUnix(Date.now())
           app.alert("error","Wait 5 minutes before clicking again: "+getBrowserTimeIn5Minutes())

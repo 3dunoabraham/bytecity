@@ -9,7 +9,6 @@ import { getPointsFromChange } from "../../../../../script/util/helper/gameHelpe
 function GoalPost ({calls, state}:any) {
   const $claimButton:any = useRef()
   const realProfitCount = useMemo(()=>{
-    console.log("state.profitHistory", state.profitHistory)
     return state.profitHistory.filter((atrade:any, index:any) => {
       return atrade[1] == "profit"
     }).length

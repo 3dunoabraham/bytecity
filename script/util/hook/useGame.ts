@@ -33,7 +33,6 @@ export const useGame: any = (initialConfig={form:{id:"BTCUSDT3M"},state:{eraName
 
   const tutoStage:any = useMemo(()=> {
     try {
-      // console.log("_tutoStage")
       return JSON.parse(_tutoStage)
     } catch (e:unknown) {
       return {lvl:null}
@@ -67,14 +66,11 @@ export const useGame: any = (initialConfig={form:{id:"BTCUSDT3M"},state:{eraName
       app.alert("neutral","Next Step: Turn nearby humans into inhabitants")
       setTutoStage(1)
     }
-    // console.log("x, selectedTimeframeIndex", x, selectedTimeframeIndex, 1)
     updateTokenOrder(x, selectedTimeframeIndex, "state", 1)
-    // alert("asdasd")
   }
   const turnBoxOff = (x:string) => {
     s__selectedBox(x)
     updateTokenOrder(x, selectedTimeframeIndex, "state", 0)
-    // alert("asdasd")
   }
   
   const updateTokenOrder = async (_token:string, timeframe:any, substate:string,val:any="",subobj:any=null) => {
@@ -106,25 +102,20 @@ export const useGame: any = (initialConfig={form:{id:"BTCUSDT3M"},state:{eraName
     let bigTokensObj = {...tokensArrayObj, ...{[_token]:old_tokensArrayObjArray}}
     s__tokensArrayObj(bigTokensObj)
     s__LS_tokensArrayObj((prevValue) => JSON.stringify(bigTokensObj))
-
-    // console.log("tokensArrayObj", bigTokensObj)
   }
 
   
   useEffect(()=>{
-    // console.log("LS_tokensArrayObj", LS_tokensArrayObj)
     if (LS_tokensArrayObj == "{}" || Object.keys(LS_tokensArrayObj).length == 0) {
       app.alert("neutral", "Click the Red Button ")
       return
     }
     let LS_tutoStage:any = _tutoStage
     if (!LS_tutoStage.lvl) {
-      
       // app.alert("Season ")
     } else if (LS_tutoStage.lvl == 1) {
       // app.alert("")
     }
-    // console.log("asdasda", _tutoStage.lvl)
   },[])
   
   useEffect(()=>{
@@ -144,19 +135,8 @@ const tokensArrayArray = useMemo(()=>{
 },[tokensArrayObj[form.id]])
   
 const selectedHasArray = useMemo(()=>{
-  // if (tokensArrayObj[selectedTimeframeIndex]) {
-
-  //   console.log("!!tokensArrayObj && !!tokensArrayObj[selectedTimeframeIndex] && !!tokensArrayObj[selectedTimeframeIndex].state")
-  //   console.log(tokensArrayObj[selectedTimeframeIndex] , tokensArrayObj[selectedTimeframeIndex].state)
-  // } else {
-  //   console.log("no no no no o", tokensArrayObj, selectedTimeframeIndex)
-  // }
   return !!tokensArrayArray && !!tokensArrayArray[selectedTimeframeIndex] && !!tokensArrayArray[selectedTimeframeIndex].state
 },[tokensArrayArray, selectedTimeframeIndex])
-
-// const selectedTimeframeIndex = useMemo(()=>{
-//   return DEFAULT_TIMEFRAME_ARRAY.indexOf(selectedTimeframe)
-// },[selectedTimeframe])
 
 
 
@@ -214,7 +194,6 @@ const toggleTrade = async (x:any, y:any) => {
 
   if (isBuying) {
     app.audio("neutral","./sfx/enter.wav")
-    // console.log("tutoStage", tutoStage)
     if (tutoStage.lvl > 2) {
       app.alert("neutral",`Connecting to ${y.price} Humans...`)
     }
@@ -244,15 +223,10 @@ const handleExistingOrder = (newTradeObj:any): void => {
     let newProfitCount:any = newprofithi.filter((atrade:any, index:any) => {
       return !!atrade[1] && atrade[1] == "profit"
     }).length
-    // console.log("newProfitCount  > lastProfitCount", newProfitCount  , lastProfitCount)
     if (newProfitCount  > lastProfitCount ) {
      app.audio("neutral","./sound/cassh.wav")
-    //  let theLastProfit 
-      // console.log("new profit trade obj", newTradeObj, newprofithi[newprofithi.length-1])
       let pointsNumber = getPointsFromChange(newprofithi[newprofithi.length-1][2].price,newprofithi[newprofithi.length-1][3].price)
-      // let pointsNumber = parseFloat(`${newprofithi[newprofithi.length-1]}`)*100
       let points = parseInt(`${pointsNumber}`)
-      // let points = parseInt(`${pointsNumber}`)
      app.alert("success",`${points}  new inhabitant(s)!`)
     } else {
       let pointsNumber = parseFloat(`${newprofithi[newprofithi.length-1]}`)*100
@@ -263,7 +237,6 @@ const handleExistingOrder = (newTradeObj:any): void => {
        } else {
           app.alert("error",`You loss ${points*-1}`+" Human connection(s)!")
         }
-      //  setTimeout(()=>{},2000)
       }
 
     let counting = countProfitableTrades(newprofithi);

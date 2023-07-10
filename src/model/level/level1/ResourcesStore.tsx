@@ -35,8 +35,6 @@ export function ResourcesStore ({state, calls, store}:any) {
       app.alert("error", "Full inventory")
       return
     }
-    // console.log("shopItemData name", shopLookupObj[index], )
-    // console.log("item data", index, shopItemData, )
     let completeProduct = { 
       type: index,
       name: shopLookupObj[index],

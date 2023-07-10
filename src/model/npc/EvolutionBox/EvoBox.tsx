@@ -67,8 +67,6 @@ const EvolutionBox = forwardRef(({
       return alert("New inhabitants can't enter the station! \n\n Please click the station button to reload the page \n or to add them to your Town Table");
     }
 
-    // console.log("state.profitHistory", state.profitHistory)
-    // return
 
 
     if (clicked) {

@@ -52,14 +52,11 @@ const AuthProvider:FC<{
         let ownplayer = await fetchUserByRPI(key, secret)
         let oppoUser = await fetchOppoUserByHash(ownplayer.href)
         return oppoUser
-        // console.log("ownplayer", ownplayer)
-        // console.log("oppoUser", oppoUser)
       }
   }
   useEffect( () => {
     if (!LH_rpi || LH_rpi == "user:0000") return
     let [referral, pin] = LH_rpi.split(":")
-    // console.log("sesss", session, props.session.user, props.session.jwt, )
     
     if (!pin) return
     if (!props.session.jwt) {

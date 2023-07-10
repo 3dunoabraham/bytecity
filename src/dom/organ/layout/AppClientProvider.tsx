@@ -71,7 +71,6 @@ function AppClientProvider({ session, children, }: { session: any, children: Rea
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   },[alertMap, filters, searchParams,sidebarLinks, sidebarPages])
-  // useNavigationEvent( ()=>{ console.log("loaded page") }, () => ()=>{ console.log("navigated") });
 
   const audioNotification = (category = "neutral", src = "") => {
     const audio = new Audio(src);

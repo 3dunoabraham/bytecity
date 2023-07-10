@@ -154,10 +154,8 @@ function Level2 ({eraName="cityEra"}:any) {
         binancePublic: binanceapikeys.split(":")[0],
         binanceSecret: binanceapikeys.split(":")[1],
       }
-      // console.log("thedata", thedata)
       app.alert("neutral", "Setting api keys")
       let fetchRes: any = await fetchPost("/api/player/apikeys", thedata)
-      // console.log("fetchRes", fetchRes)
 
       
       if (fetchRes.status >= 400)
@@ -168,7 +166,6 @@ function Level2 ({eraName="cityEra"}:any) {
 
       fetchSupaPlayer()
     } catch (e: unknown) {
-      // console.log("e", e)
       app.alert("error", "Failed api setting!")
     }
   }
@@ -273,11 +270,8 @@ function Level2 ({eraName="cityEra"}:any) {
       let newProfitCount = newprofithi.filter((atrade:any, index:any) => {
         return !!atrade[1] && atrade[1] == "profit"
       }).length
-      // console.log("newProfitCount  > lastProfitCount", newProfitCount  , lastProfitCount)
       if (newProfitCount  > lastProfitCount ) {
        app.audio("neutral","./sound/cassh.wav")
-      //  let theLastProfit 
-        // console.log("new profit trade obj", newTradeObj, newprofithi[newprofithi.length-1])
         let pointsNumber = parseFloat(`${newprofithi[newprofithi.length-1]}`)*100
         let points = parseInt(`${pointsNumber}`)
        app.alert("success",`You won ${points} point(s) on ${newTradeObj.token.toUpperCase()} (${newTradeObj.price})!`)

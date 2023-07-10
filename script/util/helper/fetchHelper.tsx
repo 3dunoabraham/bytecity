@@ -100,7 +100,6 @@ export const fetchPostImage = async (url:any,file:any,config:any)=>{
     })
 }
 export function returnError(_a:any,err:any,theUrl:any,returnNull = false) {
-    // console.log("error fetching: "+theUrl,err)
     return returnNull ? null : _a
 }
 export async function fetchJsonArray(theUrl:any, propName = "", returnNull = false) {

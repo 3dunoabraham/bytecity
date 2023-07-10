@@ -57,14 +57,11 @@ export function BattleLiveToggles ({state, calls}:any) {
         const closingPrices = theList.map((item: any) => parseFloat(item[4]));
         setPrices(closingPrices);
 
-        // console.log("qweqwe", lastLocalUnix)
 
         return theList
       }
   },[theToken])
   const theUnixDayProgress = useMemo(()=>{
-    // console.log("lastUnix-firstUnixOfDay", lastUnix, firstUnixOfDay)
-    // console.log("lastUnix-firstUnixOfDay", parseInt(`${lastUnix/1000000}`), parseInt(`${firstUnixOfDay/1000000}`))
     return parseInt(`${(1672545600000-lastUnix) * -1 / 1000 / 60 }`)
     return (lastUnix-firstUnixOfDay) * -1
   },[lastUnix,firstUnixOfDay])

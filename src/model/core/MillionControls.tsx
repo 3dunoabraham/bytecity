@@ -18,21 +18,9 @@ function MillionControls({ state, calls }: any) {
     setCameraKindaLocked(!cameraLocked)
   };
 
-  // const handleCenterButtonClick = () => {
-  //   if (cameraLocked) {
-  //     console.log("asd")
-  //     setCameraKindaLocked(true)
-  //     setCameraPosition(initialCameraPosition);
-  //     setCurrentTarget(new THREE.Vector3(...targetPosition));
-  //   }
-  // };
 
   useFrame(() => {
     if (controlsRef.current && (cameraLocked || cameraKindaLocked)) {
-      // if (cameraPosition == controlsRef.current.object.position) {
-      //   console.log("thesame")
-      // }
-      // console.log("framinnn")
       const currentPosition = controlsRef.current.object.position;
       const newPosition = currentPosition.clone().lerp(
         new THREE.Vector3(...cameraPosition),
@@ -51,38 +39,6 @@ function MillionControls({ state, calls }: any) {
 
   return (
     <group>
-        {/* <>
-          <group position={[0.551, -1.05, -1.8]} rotation={[0, 0, 0]}>
-            <DynaText
-              color={"#994400"}
-              rotation={[0, Math.PI / 2, 0]}
-              onClick={handleBoxClick}
-              text={cameraLocked ? "Unlock Camera" : "Lock Camera"}
-              font={0.12}
-              position={[0, 0, -0.35]}
-            />
-          </group>
-          <group position={[0.7, -1.05, 3.2]} rotation={[0, 0, 0]}>
-            <DynaText
-              color={"#994400"}
-              rotation={[0, Math.PI, 0]}
-              onClick={handleBoxClick}
-              text={cameraLocked ? "Unlock Camera" : "Lock Camera"}
-              font={0.12}
-              position={[0, 0, -0.35]}
-            />
-          </group>
-        </>
-        <>
-          <Box
-            position={[0.5, -0.17, 12.9]}
-            onClick={handleBoxClick}
-            args={[0.5, 0.1, 0.2]}
-          >
-            <meshStandardMaterial color={"#aa6600"} />
-          </Box>
-        </> */}
-
       <group position={[0.5, -0.159, 12.9]} rotation={[0, 0, 0]}>
         <DynaText
           color={"#994400"}
@@ -100,13 +56,6 @@ function MillionControls({ state, calls }: any) {
           >
             <meshStandardMaterial color={"#994400"} />
           </Cylinder>
-          {/* <Cylinder
-            position={[0., -0.2, 12.9]}
-            onClick={handleCenterButtonClick}
-            args={[0.15, 0.15, 0.2, 12, 3]}
-          >
-            <meshStandardMaterial color={"#994400"} />
-          </Cylinder> */}
         </>
       )}
 

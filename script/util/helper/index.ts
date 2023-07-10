@@ -92,7 +92,3 @@ export const getComputedLevels = (config:any)=> {
 }
 
   
-  // Example
-  const timeIn5Minutes = getBrowserTimeIn5Minutes();
-  console.log(timeIn5Minutes); // 19:38
-  
