@@ -3,8 +3,8 @@
 import { useContext, useMemo, useState } from "react";
 import GrowZone1 from "./GrowZone1";
 import { InventoryContext } from "../../../../script/state/context/InventoryContext";
-import GrowZone2 from "./GrowZone2";
-import GrowZone3 from "./GrowZone3";
+// import GrowZone2 from "./GrowZone2";
+// import GrowZone3 from "./GrowZone3";
 
 function GrowZone ({state, calls, store, eraName}:any) {
  
@@ -24,10 +24,34 @@ function GrowZone ({state, calls, store, eraName}:any) {
 
     {!!inv.buildZoneObj[1] && 
       <GrowZone1 position={[0.75,0,-0.75]}
+          FORM_ID={"ETHUSDT3M"}
         {...{
             store: store,
             state:{
               ...state,
+              
+              tokensArrayArray: null,
+              selectedHasArray:false,
+              isSelectedId: false,
+
+              // rpi,
+              // hasAnyToken,
+              // hasAllTokens,
+              // tokensArrayArray,
+              // firstHasArray,
+              // selectedHasArray,
+              // selectedTimeframeIndex,
+              // realProfitCount,
+              // isDowntrend,
+              // token,
+              // timeframe,
+              // form,
+              // isDefaultUser,
+              // // isSelectedId,
+              // profitHistory,
+              // tutoStage,
+              // gameStageAvailability,
+
               form: state.form,
               eraName,
               token:"eth"
@@ -35,15 +59,15 @@ function GrowZone ({state, calls, store, eraName}:any) {
             calls:{
               spliceProfitHistory: calls.spliceProfitHistory,
               toggleGame: calls.toggleTrade,
-              turnOn: calls.turnOn,
-              turnOff: calls.turnOff,
-              join: calls.join,
-              leaveAsset: calls.leave,
+              turnOn: () => calls.turnOn("ETHUSDT3M"),
+              turnOff: () => calls.turnOff("ETHUSDT3M"),
+              join: () => calls.join("ETHUSDT3M"),
+              leaveAsset: () => calls.leaveAsset("ETHUSDT3M"),
             }
           }}/>
       }
 
-      {!!inv.buildZoneObj[2] && 
+      {/* {!!inv.buildZoneObj[2] && 
         <GrowZone2 position={[-0.75,0,0.75]}
           {...{
               store: store,
@@ -56,8 +80,8 @@ function GrowZone ({state, calls, store, eraName}:any) {
               calls:{
                 spliceProfitHistory: calls.spliceProfitHistory,
                 toggleGame: calls.toggleTrade,
-                turnOn: calls.turnOn,
-                turnOff: calls.turnOff,
+                turnOn: () => calls.turnOn("LINKUSDT3M"),
+                turnOff: () => calls.turnOff("LINKUSDT3M"),
                 join: calls.join,
                 leaveAsset: calls.leave,
               }
@@ -77,13 +101,13 @@ function GrowZone ({state, calls, store, eraName}:any) {
                 calls:{
                   spliceProfitHistory: calls.spliceProfitHistory,
                   toggleGame: calls.toggleTrade,
-                  turnOn: calls.turnOn,
-                  turnOff: calls.turnOff,
+                  turnOn: () => calls.turnOn("FTMUSDT3M"),
+                  turnOff: () => calls.turnOff("FTMUSDT3M"),
                   join: calls.join,
                   leaveAsset: calls.leave,
                 }
               }}/>
-          }
+          } */}
   </>)
 }
 

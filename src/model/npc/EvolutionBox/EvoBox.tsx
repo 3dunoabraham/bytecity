@@ -115,7 +115,8 @@ const EvolutionBox = forwardRef(({
     app.audio("neutral","./sfx/turnoff.wav")
     calls.turnOff(form.id)
   }
-  const isOn = useMemo(() => { return form.id in store }, [store])
+  // console.log("store", form.id in store)
+  const isOn = useMemo(() => { return form.id in store }, [form.id, store])
 
   useUnloadHandler(router, clicked,)
 

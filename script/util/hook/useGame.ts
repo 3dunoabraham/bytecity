@@ -61,6 +61,7 @@ export const useGame: any = (initialConfig={form:{id:"BTCUSDT3M"},state:{eraName
   }
   
   const turnBoxOn = (x:string) => {
+    console.log("xxxx", x)
     s__selectedBox(x)
     if (!tutoStage || !tutoStage.lvl) {
       app.alert("neutral","Next Step: Turn nearby humans into inhabitants")
@@ -69,6 +70,7 @@ export const useGame: any = (initialConfig={form:{id:"BTCUSDT3M"},state:{eraName
     updateTokenOrder(x, selectedTimeframeIndex, "state", 1)
   }
   const turnBoxOff = (x:string) => {
+    console.log("xxxx", x)
     s__selectedBox(x)
     updateTokenOrder(x, selectedTimeframeIndex, "state", 0)
   }
@@ -138,6 +140,10 @@ const selectedHasArray = useMemo(()=>{
   return !!tokensArrayArray && !!tokensArrayArray[selectedTimeframeIndex] && !!tokensArrayArray[selectedTimeframeIndex].state
 },[tokensArrayArray, selectedTimeframeIndex])
 
+const firstHasArray = useMemo(()=>{
+  return !!tokensArrayObj["BTCUSDT3M"] && !!tokensArrayObj["BTCUSDT3M"][selectedTimeframeIndex] && !!tokensArrayObj["BTCUSDT3M"][selectedTimeframeIndex].state
+},[tokensArrayObj])
+
 
 
 const isDefaultUser = useMemo(()=> pov_isDefaultUser(rpi),[rpi])
@@ -166,9 +172,7 @@ const timeframe = useMemo(()=>{
 // const tokenColor = useMemo(()=>{
 //   return tokenColors[token]
 // },[token])
-const isSelectedId = useMemo(()=>{
-  return form && form.id == token.toUpperCase()+"USDT"+timeframe.toUpperCase()
-},[form])
+
 
 
 
@@ -342,6 +346,7 @@ const spliceGoodProfitHistory = () => {
       hasAnyToken,
       hasAllTokens,
       tokensArrayArray,
+      firstHasArray,
       selectedHasArray,
       selectedTimeframeIndex,
       realProfitCount,
@@ -350,12 +355,13 @@ const spliceGoodProfitHistory = () => {
       timeframe,
       form,
       isDefaultUser,
-      isSelectedId,
+      // isSelectedId,
       profitHistory,
       tutoStage,
       gameStageAvailability,
     },
     calls: {
+      s__form,
       toggleTrade,
       setTutoStage,
       join: joinBox,    

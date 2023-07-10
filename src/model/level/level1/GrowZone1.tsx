@@ -10,7 +10,6 @@ import { useCopyToClipboard } from "usehooks-ts";
 import EvolutionBox from "@/model/npc/EvolutionBox/EvoBox";
 import FloatingStart from "../../core/FloatingStart";
 import TownTextStart from "./tutorial/TownTextStart";
-import { useGame } from "@/../script/util/hook/useGame";
 import MiniCitySign from "@/model/npc/TradingBox/output/MiniCitySign";
 import { fetchMultipleJsonArray, parseDecimals } from "../../../../script/util/helper";
 import { BINA_API_PRICE_BASEURL, GLOBAL_baseToken } from "../../../../script/constant/game";
@@ -23,7 +22,7 @@ import Goldboard from "@/model/npc/ChartBox/Goldboard";
 import { useAI } from "../../../../script/util/hook/useHooksHelper";
 import { InventoryContext } from "../../../../script/state/context/InventoryContext";
 
-function GrowZone1 ({state, calls, store, position}:any) {
+function GrowZone1 ({state, calls, store, position, FORM_ID}:any) {
   const inv = useContext(InventoryContext)
   
   const app:any = useContext(AppContext)
@@ -82,11 +81,21 @@ function GrowZone1 ({state, calls, store, position}:any) {
     e.stopPropagation()
   }
 
+  const isSelectedId = useMemo(()=>{
+    return state.form && FORM_ID == state.token.toUpperCase()+"USDT"+state.timeframe.toUpperCase()
+  },[state.form])
 
+  // console.log("store", store, "formid", FORM_ID)
+
+  const leaveAsset = (keyname:string) => {
+    console.log("calls.leaveAsset(keyname)")
+    calls.leaveAsset(keyname)
+  }
   return (<>
   
     <group position={position}>
-      <EvolutionBox {...{state, calls:{...calls,...{toggleGame}}, store}}  ref={$evolBox}
+      <EvolutionBox {...{state, calls:{...calls,toggleGame, leaveAsset}, store}} 
+      ref={$evolBox} form={{id:FORM_ID}}
         queryUSDT={queryUSDT}>
 
       </EvolutionBox>
@@ -95,7 +104,7 @@ function GrowZone1 ({state, calls, store, position}:any) {
     
       <group position={position}>
         <TownSign tokensArrayArray={state.tokensArrayArray}
-          state={{queryUSDT,state:state.isSelected, selectedHasArray: state.selectedHasArray}}
+          state={{queryUSDT,isSelectedId, selectedHasArray: state.selectedHasArray}}
           calls={{}}
         />
       </group>
@@ -107,7 +116,7 @@ function GrowZone1 ({state, calls, store, position}:any) {
             calls={{
               app_tip:(msg:string)=>{app.alert("neutral",msg)},
             }}
-            isSelectedId={state.isSelectedId} token={state.token} clicked={clicked}
+            isSelectedId={isSelectedId} token={state.token} clicked={clicked}
           />
         </group>
       }

@@ -27,6 +27,7 @@ const ByteTown = ({eraName="townEra"}:any) => {
   const inv = useContext(InventoryContext)
   const app:any = useContext(AppContext)
   const gameLoop = useGame({state:{eraName},form:{ id:"BTCUSDT3M" }})
+
   // const stageAvailability = useGameStageAvailability()
   const [editMode, s__editMode] = useState(false)
   const removeTransactionCouple = (theIndex:any) => {
@@ -112,6 +113,8 @@ const ByteTown = ({eraName="townEra"}:any) => {
     return false
   }
 
+  
+
   const cubeSize = 1.25
   const zCount = 2
   const xCount = 2
@@ -158,7 +161,7 @@ const ByteTown = ({eraName="townEra"}:any) => {
           store: gameLoop.store,
           state:{
             ...gameLoop.state,
-            form: gameLoop.form,
+            // form: gameLoop.form,
             eraName,
           },
           calls:{
@@ -184,12 +187,16 @@ const ByteTown = ({eraName="townEra"}:any) => {
         }}/>
       </group>
 
-      {!gameLoop.state.selectedHasArray &&  gameLoop.state.hasAnyToken &&  gameLoop.state.tutoStage.lvl >= 3 &&
+      {!gameLoop.state.firstHasArray &&  gameLoop.state.hasAnyToken &&  gameLoop.state.tutoStage.lvl >= 3 &&
         <group scale={1} position={[0,-0.99,0]}>
           <GridFloor cubeSize={cubeSize} xCount={xCount} yCount={yCount} zCount={zCount}
             blockedCoords={gameLoop.state.gameStageAvailability.blockedCoords} calls={{triggerSetBlock}}
           />
-          <group scale={1} position={[0,0.99,0]}>
+        </group>
+      }
+      { gameLoop.state.hasAnyToken &&  gameLoop.state.tutoStage.lvl >= 3 &&
+      <group scale={1} position={[0,-0.99,0]}>
+        <group scale={1} position={[0,0.99,0]}>
                 
             <BuildZone {...{
               eraName,
@@ -202,6 +209,7 @@ const ByteTown = ({eraName="townEra"}:any) => {
               calls:{
                 spliceProfitHistory: gameLoop.calls.spliceProfitHistory,
                 toggleGame: gameLoop.calls.toggleTrade,
+                
                 turnOn: gameLoop.calls.turnOn,
                 turnOff: gameLoop.calls.turnOff,
                 join: gameLoop.calls.join,
@@ -224,13 +232,13 @@ const ByteTown = ({eraName="townEra"}:any) => {
           }}
         />
       }
-
+{/* 
       {gameLoop.state.hasAllTokens && <>
         <Cylinder receiveShadow args={[3.3,3.3,0.15,gameLoop.state.tutoStage.lvl > 4 ? 3+gameLoop.state.tutoStage.lvl : 4]} position={[0, -1.2, 0]}>
           <meshStandardMaterial color={gameLoop.state.tutoStage.lvl > 4 ? "#84BC4E" : "#fff"} />
 
         </Cylinder>
-      </>}
+      </>} */}
       
     </RootScene>
   )

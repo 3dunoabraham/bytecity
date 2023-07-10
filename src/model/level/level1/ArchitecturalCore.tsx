@@ -10,7 +10,6 @@ import { useCopyToClipboard } from "usehooks-ts";
 import EvolutionBox from "@/model/npc/EvolutionBox/EvoBox";
 import FloatingStart from "../../core/FloatingStart";
 import TownTextStart from "./tutorial/TownTextStart";
-import { useGame } from "@/../script/util/hook/useGame";
 import MiniCitySign from "@/model/npc/TradingBox/output/MiniCitySign";
 import { fetchMultipleJsonArray, parseDecimals } from "../../../../script/util/helper";
 import { BINA_API_PRICE_BASEURL, GLOBAL_baseToken } from "../../../../script/constant/game";
@@ -80,11 +79,26 @@ function ArchitecturalCore ({state, calls, store}:any) {
     e.stopPropagation()
   }
 
+  const isSelectedId = useMemo(()=>{
+
+    console.log("state.form")
+    console.log(state.form)
+    if (state.form) {
+      console.log(state.form.id)
+      console.log(state.token.toUpperCase())
+      console.log(state.token.toUpperCase()+"USDT"+state.timeframe.toUpperCase())
+    } else {
+      console.log("no more found")
+    }
+  return state.form && state.form.id == state.token.toUpperCase()+"USDT"+state.timeframe.toUpperCase()
+  },[state.form])
 
   return (<>
   
     <group position={position}>
-      <EvolutionBox {...{state, calls:{...calls,...{toggleGame}}, store}}  ref={$evolBox} queryUSDT={queryUSDT}>
+      <EvolutionBox {...{state:{...state, isSelectedId},
+        calls:{...calls,...{toggleGame}}, store}} 
+       ref={$evolBox} queryUSDT={queryUSDT}>
 
       </EvolutionBox>
     </group>    
@@ -92,7 +106,7 @@ function ArchitecturalCore ({state, calls, store}:any) {
     
       <group position={position}>
         <TownSign tokensArrayArray={state.tokensArrayArray}
-          state={{queryUSDT,state:state.isSelected, selectedHasArray: state.selectedHasArray}}
+          state={{queryUSDT,isSelectedId, selectedHasArray: state.selectedHasArray}}
           calls={{}}
         />
       </group>
@@ -104,7 +118,7 @@ function ArchitecturalCore ({state, calls, store}:any) {
             calls={{
               app_tip:(msg:string)=>{app.alert("neutral",msg)},
             }}
-            isSelectedId={state.isSelectedId} token={state.token} clicked={clicked}
+            isSelectedId={isSelectedId} token={state.token} clicked={clicked}
           />
         </group>
       }
