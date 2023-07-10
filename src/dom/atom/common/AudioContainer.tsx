@@ -20,8 +20,12 @@ function AudioContainer({ s__src, src }: AudioContainerProps) {
   };
   useEffect(() => {
     s__counter(counter + 1)
-    if (counter < 1) return
     const audioElement: any = audioRef.current;
+    if (counter < 1) {
+      if (!!audioElement) return
+      audioElement.volume = 0.1;
+      return 
+    }
 
     const playAudio = () => {
       audioElement?.play();

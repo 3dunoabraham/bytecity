@@ -226,16 +226,16 @@ const handleExistingOrder = (newTradeObj:any): void => {
     if (newProfitCount  > lastProfitCount ) {
      app.audio("neutral","./sound/cassh.wav")
       let pointsNumber = getPointsFromChange(newprofithi[newprofithi.length-1][2].price,newprofithi[newprofithi.length-1][3].price)
-      let points = parseInt(`${pointsNumber}`)
-     app.alert("success",`${points}  new inhabitant(s)!`)
+      // let points = parseInt(`${pointsNumber}`)
+     app.alert("success",`${pointsNumber}  new inhabitant(s)!`)
     } else {
       let pointsNumber = parseFloat(`${newprofithi[newprofithi.length-1]}`)*100
-      let points = parseInt(`${pointsNumber}`)
+      // let points = parseInt(`${pointsNumber}`)
        app.audio("neutral","./sfx/bad.wav")
-       if (points == 0) {
+       if (pointsNumber == 0) {
         app.alert("error","Failed: 0 new inhabitants")
        } else {
-          app.alert("error",`You loss ${points*-1}`+" Human connection(s)!")
+          app.alert("error",`You loss -${pointsNumber}`+" Human connection(s)!")
         }
       }
 
@@ -320,7 +320,18 @@ const spliceGoodProfitHistory = () => {
 }
 
 
+  const gameStageAvailability = useMemo(()=>{
+    let blockedCoords = [0]
 
+    if ("") {
+      
+    }
+
+
+    return {
+      blockedCoords,
+    }
+  },[tokensArrayObj])
 
   return {
     store: tokensArrayObj,
@@ -341,7 +352,8 @@ const spliceGoodProfitHistory = () => {
       isDefaultUser,
       isSelectedId,
       profitHistory,
-      tutoStage
+      tutoStage,
+      gameStageAvailability,
     },
     calls: {
       toggleTrade,

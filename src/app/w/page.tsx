@@ -23,21 +23,31 @@ export default async function Page() {
     <div className='flex-col flex-align-start gap-3 pt-2'>
           {/* {!foundJWT &&  <> <div className='py-2'></div> </>} */}
           
-          <a href="/w" rel="noopener noreferrer" className='nodeco   z-800 pos-rel  flex-center ' title='Byte Town'>
+          {/* <a href="https://webpov.vercel.app" rel="noopener noreferrer" className='nodeco   z-800 pos-rel  flex-center '
+            title='WebPOV'
+          >
             <div className='pt-'>
               <div className="box-shadow-2-b pa-1 pb-0 block bord-r-10" style={{background:"#ffffff"}}>
-                <Image src={"/webpov2.jpg"} alt="bytetown" width={32} height={32} />
+                <Image src={"/webpov2.jpg"} alt="WebPOV" width={32} height={32} />
+              </div>
+            </div>
+          </a> */}
+          
+          <a href="/" rel="noopener noreferrer" className='nodeco   z-800 pos-rel  flex-center ' title="Byte City">
+            <div className='pt-'>
+              <div className="box-shadow-2-b pa-1 block bord-r-10" style={{background:"#ffffff"}}>
+                <Image src={"/bytetown.png"} alt="bytetown" width={32} height={32} />
               </div>
             </div>
           </a>
-          
-          <a href="/" rel="noopener noreferrer" className='nodeco   z-800 pos-rel  flex-center ' title="Byte City">
+{/*           
+          <a href="/" rel="noopener noreferrer" className='nodeco   z-800 pos-rel  flex-center ' title="Byte Town">
             <div className='pt-'>
               <div className="box-shadow-2-b pa-1 block bord-r-10" style={{background:"#ffffff"}}>
                 <Image src={"/bytecity.png"} alt="bytecity" width={32} height={32} />
               </div>
             </div>
-          </a>
+          </a> */}
 
         </div>
     </div>

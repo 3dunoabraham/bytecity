@@ -19,10 +19,16 @@ import GoalPost from "./goal/GoalPost";
 import TownCamera from "./TownCamera";
 import FarFarAway from "./goal/FarFarAway";
 import { ResourcesStore } from "./ResourcesStore";
+import GridFloor from "@/model/npc/ThousandZone/GridFloor";
+import BuildZone from "./BuildZone";
+import { InventoryContext } from "../../../../script/state/context/InventoryContext";
 
 const ByteTown = ({eraName="townEra"}:any) => {
+  const inv = useContext(InventoryContext)
   const app:any = useContext(AppContext)
   const gameLoop = useGame({state:{eraName},form:{ id:"BTCUSDT3M" }})
+  // const stageAvailability = useGameStageAvailability()
+  const [editMode, s__editMode] = useState(false)
   const removeTransactionCouple = (theIndex:any) => {
     gameLoop.calls.spliceProfitHistory(theIndex)
     // alerts and sound here
@@ -88,6 +94,28 @@ const ByteTown = ({eraName="townEra"}:any) => {
     e.stopPropagation()
   }
 
+  const triggerSetBlock = (e:any, index:number) => {
+    console.log("e block", index, "hasAtleastATable", inv.memo.checkInv_tables)
+
+    let hasAvailableTable = inv.memo.checkInv_tables
+    // console.log("inv table count", inv.memo.checkInv_tables.length)
+
+    let isBlocked = gameLoop.state.gameStageAvailability.blockedCoords.includes(index)
+    console.log("isBlocked, hasAvailableTable", isBlocked, hasAvailableTable)
+
+    if (!isBlocked && hasAvailableTable) {
+      console.log("BUILD HERE", index)
+      let zoneData = {index}
+      inv.calls.makeAZone(zoneData)
+    }
+
+    return false
+  }
+
+  const cubeSize = 1.25
+  const zCount = 2
+  const xCount = 2
+  const yCount = 1
   return (
     <RootScene>
 
@@ -143,6 +171,7 @@ const ByteTown = ({eraName="townEra"}:any) => {
           }
         }}/>
       </group>
+
       <group position={[0,0,0]}>
         <FarFarAway {...{
           store: gameLoop.store,
@@ -153,7 +182,36 @@ const ByteTown = ({eraName="townEra"}:any) => {
             removeTransactionCouple,
           }
         }}/>
+      </group>
+
+      {!gameLoop.state.selectedHasArray &&  gameLoop.state.hasAnyToken &&  gameLoop.state.tutoStage.lvl >= 3 &&
+        <group scale={1} position={[0,-0.99,0]}>
+          <GridFloor cubeSize={cubeSize} xCount={xCount} yCount={yCount} zCount={zCount}
+            blockedCoords={gameLoop.state.gameStageAvailability.blockedCoords} calls={{triggerSetBlock}}
+          />
+          <group scale={1} position={[0,0.99,0]}>
+                
+            <BuildZone {...{
+              eraName,
+              store: gameLoop.store,
+              state:{
+                ...gameLoop.state,
+                form: gameLoop.form,
+                eraName,
+              },
+              calls:{
+                spliceProfitHistory: gameLoop.calls.spliceProfitHistory,
+                toggleGame: gameLoop.calls.toggleTrade,
+                turnOn: gameLoop.calls.turnOn,
+                turnOff: gameLoop.calls.turnOff,
+                join: gameLoop.calls.join,
+                leaveAsset: gameLoop.calls.leave,
+              }
+            }}/>
+          </group>
         </group>
+      }
+
 
       {/* box close to pyramid, enable control station */}
       

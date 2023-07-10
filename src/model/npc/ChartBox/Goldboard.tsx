@@ -69,7 +69,8 @@ const Component = forwardRef(({
 
 
   const [myUnix, s__myUnix] = useState(0)
-  
+    //  app.audio("neutral","./sound/slack.wav")
+     // f:\Downloads\slack.wav
   const [q__asd, asd]:any = useQueryPlus({ queryKey: ['asdasd'], 
       refetchOnWindowFocus: false, enabled: false ,
       queryFn: async () =>{

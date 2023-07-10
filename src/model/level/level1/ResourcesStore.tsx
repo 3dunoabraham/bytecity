@@ -109,15 +109,21 @@ export function ResourcesStore ({state, calls, store}:any) {
   }
 
   const hasAtleastABillboard = useMemo(()=>{
+    console.log("hasAtleastABillboard")
     if (inv.usedUnitsArray.length == 0) return
 
     let billboardIndex = inv.usedUnitsArray.findIndex((invUnit:any,index:number) => {
       return invUnit.type == 0
     })
+    console.log("billboardIndex", billboardIndex)
     return billboardIndex != -1
   },[inv.usedUnitsArray])
 
-
+  const triggerOpenStore = (e:any) => {
+     s__isShopOpen(!isShopOpen);
+    app.audio("neutral","./sfx/slack2.wav")
+    e.stopPropagation() 
+  }
 
   return (<>
     {readyForStore && <>
@@ -130,7 +136,7 @@ export function ResourcesStore ({state, calls, store}:any) {
       <group position={[0,-1.2,-1.2]}>
 
         <group position={[0,0,0]}>
-          <group position={[0,0,0.8]} onClick={(e)=>{ s__isShopOpen(!isShopOpen); e.stopPropagation() }}>
+          <group position={[0,0,0.8]} onClick={(e)=>{triggerOpenStore(e)}}>
             <Box args={[0.5,0.45,0.85]} position={[-2.1,0.25,-0.5]} castShadow receiveShadow>
               <meshStandardMaterial color={"#aaaaaa"}/>
             </Box>
@@ -148,7 +154,7 @@ export function ResourcesStore ({state, calls, store}:any) {
           <group position={[-1.95,0.1,0]} ref={$shopItems} scale={[1,1,1]}>
             {theBoxesPosArray.map((aShopItemPos:any,index:number)=>{
               return (<>
-                <group position={[0,0,index*0.22]} onDoubleClick={(e)=>{ triggerBuyItem(e,{},index) }}>
+                <group position={[0,0,index*0.22]} onDoubleClick={(e)=>{ triggerBuyItem(e,{},index) }} key={index}>
                   {index == 0 && <BillboardShopItem /> }
                   {index == 1 && <TableShopItem /> }
                   {index == 2 && <TableLandShopItem /> }
@@ -164,7 +170,7 @@ export function ResourcesStore ({state, calls, store}:any) {
           <group position={[0.4,0.75,-0.4]}  scale={[1,1,1]}>
             {inv.unitsArray.map((aShopItem:any,index:number)=>{
               return (<>
-                <group position={[0,0.1,-index*0.2]} rotation={[0,-Math.PI/2,0]} onDoubleClick={(e)=>{ triggerUseItem(e,aShopItem,index) }}>
+                <group position={[0,0.1,-index*0.2]} rotation={[0,-Math.PI/2,0]} key={index} onDoubleClick={(e)=>{ triggerUseItem(e,aShopItem,index) }}>
                   {aShopItem.type == 0 && <BillboardShopItem /> }
                   {aShopItem.type == 1 && <TableShopItem /> }
                   {aShopItem.type == 2 && <TableLandShopItem /> }
@@ -181,11 +187,10 @@ export function ResourcesStore ({state, calls, store}:any) {
 
 
 
-    
-    {/* CHAPTER X */}
-    {!!store && state.hasAnyToken && !!state.tutoStage && state.tutoStage?.lvl > 3 && hasAtleastABillboard &&
-    // !state.isDefaultUser && !!state.tokensArrayObj[state.selectedToken] && // state.isSelectedTokenDowntrend &&
-    <>
+
+
+  {!!store && state.hasAnyToken && !!state.tutoStage && state.tutoStage?.lvl > 3 && hasAtleastABillboard &&
+  <>
       <group scale={[0.4,0.4,0.4]}  position={[-1.25,0,-0.7]} rotation={[0,Math.PI/2,0]}>
         <Goldboard boundaries={[1,0.1,0.04]} score={{score:0}} timeframe={state.timeframe.toLowerCase() || "1d"}
           position={[0,0,0]} velocityX={0}  theToken={state.token}
