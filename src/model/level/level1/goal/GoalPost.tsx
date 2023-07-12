@@ -67,7 +67,10 @@ function GoalPost ({calls, state}:any) {
                     <DynaText text={parseInt(`${getPointsFromChange(anOrder[2].price,anOrder[3].price) || 0}`) }
                       color={anOrder[1] != "profit" ? "#990000"   : "#090"}
                       // rotation={[0,0,0]}
-                      position={[0,0.01,0.075]} font={0.05}
+                      //font size is determined by size of string or amount or digits of the number
+                      // the larger the value the smaller the text
+                      font={0.06 - ((`${getPointsFromChange(anOrder[2].price,anOrder[3].price)}`).length/100)}
+                      position={[0,0.01,0.075]} 
                     />
                 </group>
               )

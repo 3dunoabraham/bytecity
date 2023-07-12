@@ -27,6 +27,7 @@ function ArchitecturalCore ({state, calls, store}:any) {
   const position = new Vector3(-0.75,0,-0.75)
   const $evolBox: any = useRef(null);
   const [clicked, setClicked] = useState(false)
+  let [beginnerAddCounter, s__beginnerAddCounter] = useState(-1)
   const toggleGame = (boxName:string, tradeData:any)=> {
     if (state.profitHistory.length > 4) {
       return
@@ -48,6 +49,18 @@ function ArchitecturalCore ({state, calls, store}:any) {
       }
       return
     }
+    // console.log("state", state)
+    if ((!!state.tutoStage || state.tutoStage.lvl < 2)) {
+      if (!tradeData.value) {
+        console.log("completed helping new")
+        // s__beginnerAddCounter(beginnerAddCounter)
+        // tradeData.price +=  beginnerAddCounter
+        s__beginnerAddCounter(-1)
+      } else {
+        s__beginnerAddCounter(parseFloat(tradeData.price))
+        console.log("first buy? -> helping new")
+      }
+    }
     calls.toggleGame(boxName, tradeData)
     // alert("toggleGame")
   }
@@ -59,6 +72,14 @@ function ArchitecturalCore ({state, calls, store}:any) {
       let theList = await fetchMultipleJsonArray(([state.token].reduce((acc, aToken) => (
         { ...acc, [aToken]: [`${BINA_API_PRICE_BASEURL}${(aToken + GLOBAL_baseToken).toUpperCase()}`] }
       ), {})))
+      if (beginnerAddCounter >= 0 && (!!state.tutoStage && state.tutoStage.lvl <= 2)) {
+        console.log("helping new", typeof theList[0].price, theList[0].price)
+        theList[0].price = beginnerAddCounter
+        console.log("new price", theList[0].price)
+        s__beginnerAddCounter(beginnerAddCounter+1)
+      } else {
+        console.log("ok", beginnerAddCounter,  state.tutoStage)
+      }
       let prr = parseDecimals(theList[0].price)
       return prr
     }
