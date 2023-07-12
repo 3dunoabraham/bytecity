@@ -37,7 +37,7 @@ const GridBlocks: React.FC<Props> = ({
 
     let parentResult = calls.triggerSetBlock(e, index)
     if (!parentResult) {
-      console.log("!parentResult) {        return")
+      // console.log("!parentResult) {        return")
       return
     }
 

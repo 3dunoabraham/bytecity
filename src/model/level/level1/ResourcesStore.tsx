@@ -109,13 +109,13 @@ export function ResourcesStore ({state, calls, store}:any) {
   }
 
   const hasAtleastABillboard = useMemo(()=>{
-    console.log("hasAtleastABillboard")
+    // console.log("hasAtleastABillboard")
     if (inv.usedUnitsArray.length == 0) return
 
     let billboardIndex = inv.usedUnitsArray.findIndex((invUnit:any,index:number) => {
       return invUnit.type == 0
     })
-    console.log("billboardIndex", billboardIndex)
+    // console.log("billboardIndex", billboardIndex)
     return billboardIndex != -1
   },[inv.usedUnitsArray])
 

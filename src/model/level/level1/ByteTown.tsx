@@ -96,16 +96,16 @@ const ByteTown = ({eraName="townEra"}:any) => {
   }
 
   const triggerSetBlock = (e:any, index:number) => {
-    console.log("e block", index, "hasAtleastATable", inv.memo.checkInv_tables)
+    // console.log("e block", index, "hasAtleastATable", inv.memo.checkInv_tables)
 
     let hasAvailableTable = inv.memo.checkInv_tables
     // console.log("inv table count", inv.memo.checkInv_tables.length)
 
     let isBlocked = gameLoop.state.gameStageAvailability.blockedCoords.includes(index)
-    console.log("isBlocked, hasAvailableTable", isBlocked, hasAvailableTable)
+    // console.log("isBlocked, hasAvailableTable", isBlocked, hasAvailableTable)
 
     if (!isBlocked && hasAvailableTable) {
-      console.log("BUILD HERE", index)
+      // console.log("BUILD HERE", index)
       let zoneData = {index}
       inv.calls.makeAZone(zoneData)
     }

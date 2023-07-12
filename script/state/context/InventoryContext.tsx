@@ -47,7 +47,7 @@ export function InventoryProvider({children}:any) {
         currentUnits.splice(index, 1)
 
         let currentUsedUnits:any = [...usedUnitsArray, shopItem]
-        console.log("shopItem", shopItem)
+        // console.log("shopItem", shopItem)
 
         s__unitsArray(currentUnits)
 
@@ -63,7 +63,7 @@ export function InventoryProvider({children}:any) {
     }
     const DEFAULT_ZONE_OBJ = {}
     const makeAZone = (zoneData:any) => {
-        console.log("zoneData", zoneData)
+        // console.log("zoneData", zoneData)
         if (!availTables) { return }
 
         s__availTables(availTables-1)

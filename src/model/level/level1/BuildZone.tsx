@@ -13,7 +13,7 @@ function GrowZone ({state, calls, store, eraName}:any) {
   // let selectedZone = useState(0)
 
   const hasGrowZone1 = useMemo(()=>{
-    console.log("hasAtleastATablehasAtleastATablehasAtleastATable")
+    // console.log("hasAtleastATablehasAtleastATablehasAtleastATable")
     if (!inv.buildZoneObj[1]) return
     return true
   },[inv.buildZoneObj])
@@ -40,11 +40,11 @@ function GrowZone ({state, calls, store, eraName}:any) {
               spliceProfitHistory: calls.spliceProfitHistory,
               toggleGame: calls.toggleTrade,
               turnOn: () => {
-                console.log(`calls.turnOn("ETHUSDT3M")`)
+                // console.log(`calls.turnOn("ETHUSDT3M")`)
                 calls.turnOn("ETHUSDT3M")
               },
               turnOff: () => {
-                console.log(`calls.turnOff("ETHUSDT3M")`)
+                // console.log(`calls.turnOff("ETHUSDT3M")`)
                 calls.turnOff("ETHUSDT3M")
               },
               join: () => calls.join("ETHUSDT3M"),
@@ -71,11 +71,11 @@ function GrowZone ({state, calls, store, eraName}:any) {
                 spliceProfitHistory: calls.spliceProfitHistory,
                 toggleGame: calls.toggleTrade,
                 turnOn: () => {
-                  console.log(`calls.turnOn("LINKUSDT3M")`)
+                  // console.log(`calls.turnOn("LINKUSDT3M")`)
                   calls.turnOn("LINKUSDT3M")
                 },
                 turnOff: () => {
-                  console.log(`calls.turnOff("LINKUSDT3M")`)
+                  // console.log(`calls.turnOff("LINKUSDT3M")`)
                   calls.turnOff("LINKUSDT3M")
                 },
                 join: () => calls.join("LINKUSDT3M"),
@@ -106,11 +106,11 @@ function GrowZone ({state, calls, store, eraName}:any) {
                 spliceProfitHistory: calls.spliceProfitHistory,
                 toggleGame: calls.toggleTrade,
                 turnOn: () => {
-                  console.log(`calls.turnOn("FTMUSDT3M")`)
+                  // console.log(`calls.turnOn("FTMUSDT3M")`)
                   calls.turnOn("FTMUSDT3M")
                 },
                 turnOff: () => {
-                  console.log(`calls.turnOff("FTMUSDT3M")`)
+                  // console.log(`calls.turnOff("FTMUSDT3M")`)
                   calls.turnOff("FTMUSDT3M")
                 },
                 join: () => calls.join("FTMUSDT3M"),

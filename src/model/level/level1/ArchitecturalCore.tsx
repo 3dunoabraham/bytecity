@@ -81,14 +81,14 @@ function ArchitecturalCore ({state, calls, store}:any) {
 
   const isSelectedId = useMemo(()=>{
 
-    console.log("state.form")
-    console.log(state.form)
+    // console.log("state.form")
+    // console.log(state.form)
     if (state.form) {
-      console.log(state.form.id)
-      console.log(state.token.toUpperCase())
-      console.log(state.token.toUpperCase()+"USDT"+state.timeframe.toUpperCase())
+      // console.log(state.form.id)
+      // console.log(state.token.toUpperCase())
+      // console.log(state.token.toUpperCase()+"USDT"+state.timeframe.toUpperCase())
     } else {
-      console.log("no more found")
+      // console.log("no more found")
     }
   return state.form && state.form.id == state.token.toUpperCase()+"USDT"+state.timeframe.toUpperCase()
   },[state.form])

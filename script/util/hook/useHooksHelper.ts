@@ -121,7 +121,7 @@ export const useAI = (selectedTimeframe:any,copyToClipboard=false) => {
     let newPrompt:any = AIdata
     newPrompt[verbose[selectedTimeframe.toLowerCase()]] = ([...data]).splice(400,499)
     s__AIdata(newPrompt)
-    console.log("Prompt: ", newPrompt)
+    // console.log("Prompt: ", newPrompt)
     if (copyToClipboard) {
       clipbloard__do(AI_BASE + JSON.stringify(newPrompt))
     }

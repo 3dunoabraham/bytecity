@@ -61,7 +61,7 @@ export const useGame: any = (initialConfig={form:{id:"BTCUSDT3M"},state:{eraName
   }
   
   const turnBoxOn = (x:string) => {
-    console.log("turnBoxOn x ", x)
+    // console.log("turnBoxOn x ", x)
     s__selectedBox(x)
     if (!tutoStage || !tutoStage.lvl) {
       app.alert("neutral","Next Step: Turn nearby humans into inhabitants")
@@ -70,7 +70,7 @@ export const useGame: any = (initialConfig={form:{id:"BTCUSDT3M"},state:{eraName
     updateTokenOrder(x, selectedTimeframeIndex, "state", 1)
   }
   const turnBoxOff = (x:string) => {
-    console.log("turnBoxOff x ", x)
+    // console.log("turnBoxOff x ", x)
     s__selectedBox(x)
     updateTokenOrder(x, selectedTimeframeIndex, "state", 0)
   }
@@ -179,12 +179,12 @@ const timeframe = useMemo(()=>{
 
 
 const toggleTrade = async (x:any, y:any) => {
-  console.log("x, y, token")
-  console.log(x, y, token)
-  // if (token != "btc") {
+  // console.log("x, y, token")
+  // console.log(x, y, token)
+  if (x != "btc") {
 
-  //   return
-  // }
+    return
+  }
   if (profitHistory.length > 4) {
     app.alert("error", "Your Life Storage Station is FULL!")
     return alert("New habitants can't migrate, your Life Storage Station is FULL! \n\n Please click the station button to \n add them to your Town Table");

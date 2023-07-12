@@ -88,12 +88,12 @@ function GrowZone1 ({state, calls, store, position, FORM_ID}:any) {
   // console.log("store", store, "formid", FORM_ID)
 
   const leaveAsset = (keyname:string) => {
-    console.log("calls.leaveAsset(keyname)")
+    // console.log("calls.leaveAsset(keyname)")
     calls.leaveAsset(keyname)
   }
 
   // console.log("statestatestatestatestate", state)
-  console.log("state.selectedHasArray", state.selectedHasArray)
+  // console.log("state.selectedHasArray", state.selectedHasArray)
   return (<>
   
     <group position={position}>
