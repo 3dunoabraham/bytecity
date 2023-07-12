@@ -73,12 +73,12 @@ function ArchitecturalCore ({state, calls, store}:any) {
         { ...acc, [aToken]: [`${BINA_API_PRICE_BASEURL}${(aToken + GLOBAL_baseToken).toUpperCase()}`] }
       ), {})))
       if (beginnerAddCounter >= 0 && (!!state.tutoStage && state.tutoStage.lvl <= 2)) {
-        console.log("helping new", typeof theList[0].price, theList[0].price)
+        // console.log("helping new", typeof theList[0].price, theList[0].price)
         theList[0].price = beginnerAddCounter
-        console.log("new price", theList[0].price)
+        // console.log("new price", theList[0].price)
         s__beginnerAddCounter(beginnerAddCounter+1)
       } else {
-        console.log("ok", beginnerAddCounter,  state.tutoStage)
+        // console.log("ok", beginnerAddCounter,  state.tutoStage)
       }
       let prr = parseDecimals(theList[0].price)
       return prr
