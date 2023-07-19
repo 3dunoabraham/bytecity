@@ -63,7 +63,7 @@ function Component({ }) {
               City
             </div>
             <div className="tx-white flex-col" style={{ width: "100px", height: "100px", background: "#ff6d00", border: "2px solid white", position: "absolute", opacity: 0.75, transform: "translateZ(-50px) rotateY(180deg)" }}>
-              demaGbeW {/*  Back */}
+              VoPbeW {/*  Back */}
               <Image src="/webpov.png" alt="webpov" width={50} height={50} />
             </div>
             <div className="tx-bold-8 tx-lg pl-2 tx-white flex-col" style={{ width: "100px", height: "100px", background: "#ff6d00", border: "2px solid white", position: "absolute", opacity: 0.75, transform: "translateX(-50px) rotateY(-90deg)" }}>
@@ -72,7 +72,7 @@ function Component({ }) {
             </div>
             <div className="tx-white tx-lg flex-col" style={{ width: "100px", height: "100px", background: "#ff6d00", border: "2px solid white", position: "absolute", opacity: 0.75, transform: "translateX(50px) rotateY(90deg)" }}>
               beW
-              demaG
+              VoP
             </div>
             <div className="tx-white flex-col" style={{ width: "100px", height: "100px", background: "#ff6d00", border: "2px solid white", position: "absolute", opacity: 0.75, transform: "translateY(-50px) rotateX(90deg)" }}>
               as above {/*  Top */}
@@ -139,7 +139,7 @@ function Component({ }) {
           <a href="/w" rel="noopener noreferrer" className='nodeco opaci-chov--50  z-800 pos-rel  flex-center ' title='Byte Town'>
             <div className='pt- flex-col'>
               <div className="box-shadow-2-b pa-1 pb-0 block bord-r-10" style={{background:"#ffffff"}}>
-                <Image src={"/webpov2.jpg"} alt="bytetown" width={32} height={32} />
+                <Image src={"/bytetown.png"} alt="bytetown" width={32} height={32} />
               </div>
               {/* <span className="tx-white tx-center">Play <br /> Byte Town</span> */}
             </div>
