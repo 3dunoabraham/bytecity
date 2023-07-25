@@ -8,13 +8,9 @@ import { useAuth } from "@/../script/state/context/AuthContext";
 import { AppContext } from "@/../script/state/context/AppContext";
 import { useUnloadHandler } from "@/../script/util/hook/useHooksHelper";
 import RootScene from "@/model/core/RootScene"
-import MetaOrbitControls from "@/model/core/MetaOrbitControls";
-import ByteCityEnv from "@/model/core/StandardSkyEnv";
 import SceneSessionNucleus from "@/model/core/SceneSessionNucleus";
 import MFEnv from "./core/MFEnv";
 import MillionControls from "@/model/core/MillionControls";
-import { Plane } from "@react-three/drei";
-import ThousandZone from "@/model/npc/ThousandZone";
 import GridFloor from "@/model/npc/ThousandZone/GridFloor";
 
 function Level3 ({}) {

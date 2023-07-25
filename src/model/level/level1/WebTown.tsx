@@ -23,7 +23,7 @@ import GridFloor from "@/model/npc/ThousandZone/GridFloor";
 import BuildZone from "./BuildZone";
 import { InventoryContext } from "../../../../script/state/context/InventoryContext";
 
-const ByteTown = ({eraName="townEra"}:any) => {
+const WebTown = ({eraName="townEra"}:any) => {
   const inv = useContext(InventoryContext)
   const app:any = useContext(AppContext)
   const gameLoop = useGame({state:{eraName},form:{ id:"BTCUSDT3M" }})
@@ -244,4 +244,4 @@ const ByteTown = ({eraName="townEra"}:any) => {
   )
 }
 
-export default ByteTown
+export default WebTown

@@ -27,7 +27,7 @@ export function SceneSessionNucleus({included=["local","database","blockchain"],
 
   const setTutoStage = (lvl: any) => s__LS_tutoStage(JSON.stringify({ ...tutoStage, lvl }))
   const triggerLogin = async () => {    
-    let rpiPrompt:any =  prompt("Enter your Byte City Credentials! \n\n < Referral Email : Secret PIN >","") 
+    let rpiPrompt:any =  prompt("Enter your WebCity Credentials! \n\n < Referral Email : Secret PIN >","") 
     if (!rpiPrompt) return
     if (rpiPrompt.split(":").length < 2) return app.alert("error", "Invalid credentials!")   
     app.alert("success", "Validating credentials...")

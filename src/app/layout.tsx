@@ -5,8 +5,8 @@ import AppClientProvider from '@/dom/organ/layout/AppClientProvider'
 import { Analytics } from '@vercel/analytics/react';
 
 export const metadata = {
-  title: 'Byte City',
-  description: 'Web POV | Web Game: Byte City',
+  title: 'WebCity',
+  description: 'Web POV | Web Game: Web City',
 }
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {

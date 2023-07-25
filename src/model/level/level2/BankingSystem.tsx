@@ -4,10 +4,10 @@ import { useContext, useState } from "react";
 
 
 import ChartBox from "@/model/npc/ChartBox";
-import ByteCityLibertyBank from "./npc/ByteCityLibertyBank";
+import WebCityLibertyBank from "./npc/WebCityLibertyBank";
 import ClickToStart from "./tutorial/ClickToStart";
 import MetaOrbitControls from "@/model/core/MetaOrbitControls";
-import ByteCityEnv from "../../core/StandardSkyEnv";
+
 import ConnectPlayerToggle from "./core/ConnectPlayerToggle";
 import ResetLocalStorage from "./core/ResetLocalStorage";
 import { AppContext } from "@/../script/state/context/AppContext";
@@ -68,7 +68,7 @@ function BankingSystem ({state, calls, }:any) {
     {/* CHAPTER 1 */}
     {/* BTC | Bitcoin | Bit Coin */}
     {/* CHAPTER 1 */}
-    <ByteCityLibertyBank tokensArrayObj={state.tokensArrayObj} selectedToken={state.selectedToken}
+    <WebCityLibertyBank tokensArrayObj={state.tokensArrayObj} selectedToken={state.selectedToken}
       toggleTrade={(tokenname:any,data:any)=>{calls.toggleTrade("btc",data)}}
       hasAnyToken={state.hasAnyToken} 
       form={state.form} timeframe={state.form.id.split("USDT")[1]} token="btc" 

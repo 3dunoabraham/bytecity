@@ -1,5 +1,5 @@
-# Gamified Web-Based Application (#webpov) | Byte City
-Byte City is an intuitive platform that optimizes learning and simplifies investing through gamification and automated processes.
+# Gamified Web-Based Application (#webpov) | WebCity
+WebCity is an intuitive platform that optimizes learning and simplifies investing through gamification and automated processes.
 
 
 
@@ -12,7 +12,7 @@ Byte City is an intuitive platform that optimizes learning and simplifies invest
     * [React Three Fibers](https://docs.pmnd.rs/react-three-fiber/getting-started/introduction)
     * [usehooks-ts](https://usehooks.com/)
 * This project uses the following  standard and practices:
-    * For more information on this project, see the [ByteCity Gitbook](https://tresd1.gitbook.io/bitcity/)
+    * For more information on this project, see the [WebCity Gitbook](https://tresd1.gitbook.io/bitcity/)
 
 ---
 
@@ -41,6 +41,6 @@ You can view the app by navigating to [http://localhost:3000](http://localhost:3
 Alternatively, you can view the app by navigating to [https://localhost:3000](https://localhost:3000) in your web browser for ssl simulation.
 
 ### Demo
-Check out a live DEMO at [bytecity.vercel.app](https://bytecity.vercel.app/)
+Check out a live DEMO at [webci.vercel.app](https://webci.vercel.app/)
 
 ---

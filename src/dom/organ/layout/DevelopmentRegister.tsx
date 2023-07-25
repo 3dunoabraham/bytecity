@@ -59,7 +59,7 @@ function Component({ }) {
 
           <div className="pr-100" style={{ width: "20px", height: "20px", transformStyle: "preserve-3d", transform: "rotateX(15deg) rotateY(20deg)", margin: "50px" }}>
             <div className="tx-bold-8 tx-white tx-lx flex-col" style={{ width: "100px", height: "100px", background: "#ff6d00", border: "2px solid white", position: "absolute", opacity: 0.75, transform: "translateZ(50px)" }}>
-              Byte
+              Web
               City
             </div>
             <div className="tx-white flex-col" style={{ width: "100px", height: "100px", background: "#ff6d00", border: "2px solid white", position: "absolute", opacity: 0.75, transform: "translateZ(-50px) rotateY(180deg)" }}>
@@ -96,23 +96,23 @@ function Component({ }) {
 
           <div className="flex-wrap gap-3">
 
-            <a href="https://webpov.gitbook.io/bytecity" target="_blank"
+            <a href="https://webpov.gitbook.io/webcity" target="_blank"
               style={{ color: "#004488" }}
               className=" opaci-chov--50 flex-col px-2 Q_xs_px-1 bg-w-90 bord-r-10 py-3"
             >
               <div className="tx-lgx"><FaBook /></div>
               <div className="tx-xs tx-center Q_xs">docs</div>
               <div className="tx-sm tx-center Q_sm_x">webpov <br /> .gitbook.io/ <br />
-                <b className="tx-mdl">bytecity</b></div>
+                <b className="tx-mdl">webcity</b></div>
             </a>
-            <a href="https://twitter.com/gta_btc" target="_blank"
+            <a href="https://x.com/gta_btc" target="_blank"
               style={{ color: "#004488" }}
               className=" opaci-chov--50 flex-col px-2 Q_xs_px-1 bg-w-90 bord-r-10 py-3"
             >
               <div className="tx-lgx"><FaTwitter /></div>
-              <div className="tx-xs tx-center Q_xs">twitter</div>
-              <div className="tx-sm tx-center Q_sm_x">twitter <br />  .com/ <br />
-                <b className="tx-mdl">bytecty</b></div>
+              <div className="tx-xs tx-center Q_xs">x</div>
+              <div className="tx-sm tx-center Q_sm_x">x <br />  .com/ <br />
+                <b className="tx-mdl">w3bcity</b></div>
 
             </a>
           </div>
@@ -131,17 +131,16 @@ function Component({ }) {
                                 <div className="flex-center box-shadow-2-b pa-1 block bord-r-10" style={{background:"#ffffff"}}
                                     
                                 >
-                                    <Image src={"/bytecity.png"} alt="bytecity" width={32} height={32} />
+                                    <Image src={"/webcity.png"} alt="webcity" width={32} height={32} />
                                     <small className="tx-black">Back</small>
                                 </div>
                             </div>
                             
-          <a href="/w" rel="noopener noreferrer" className='nodeco opaci-chov--50  z-800 pos-rel  flex-center ' title='Byte Town'>
+          <a href="/w" rel="noopener noreferrer" className='nodeco opaci-chov--50  z-800 pos-rel  flex-center ' title='Web Town'>
             <div className='pt- flex-col'>
               <div className="box-shadow-2-b pa-1 pb-0 block bord-r-10" style={{background:"#ffffff"}}>
-                <Image src={"/bytetown.png"} alt="bytetown" width={32} height={32} />
+                <Image src={"/webtown.png"} alt="webtown" width={32} height={32} />
               </div>
-              {/* <span className="tx-white tx-center">Play <br /> Byte Town</span> */}
             </div>
           </a>
                         </div>
@@ -151,7 +150,7 @@ function Component({ }) {
             <div className="flex-center box-shadow-2-b pa-1 block bord-r-10" style={{ background: "#ffffff" }}
 
             >
-              <Image src={"/bytecity.png"} alt="bytecity" width={32} height={32} />
+              <Image src={"/webcity.png"} alt="webcity" width={32} height={32} />
               <small className="tx-black">Back</small>
             </div>
           </div>
@@ -170,7 +169,7 @@ function Component({ }) {
             background: "linear-gradient(180deg, rgb(255,140,6), rgb(200, 111, 0))", transform: "scale(0.9) rotate(-2deg)"
           }}
         >
-          <small className="tx-sm ">Byte City ALPHA</small>
+          <small className="tx-sm ">Web City ALPHA</small>
           <span className="shake-2 tx-shadow-5">
             {"> Register"}
           </span>

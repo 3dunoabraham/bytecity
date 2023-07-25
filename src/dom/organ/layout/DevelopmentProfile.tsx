@@ -46,7 +46,7 @@ function DevelopmentProfile ({foundUser, foundJWT, eraName}:any) {
                     </div>
                     <div className="pr-100" style={{ width: "10px", height: "10px", transformStyle: "preserve-3d", transform:"rotateX(15deg) rotateY(20deg)", margin: "25px" }}>
                         <div className="tx-bold-8 tx-white x flex-col" style={{ width: "50px", height: "50px", background: "#ff6d00", border: "2px solid white", position: "absolute", opacity: 0.75, transform: "translateZ(25px)" }}>
-                            Byte
+                            Web
                             City
                         </div>
                         <div className="tx-white flex-col" style={{ width: "50px", height: "50px", background: "#ff6d00", border: "2px solid white", position: "absolute", opacity: 0.75, transform: "translateZ(-25px) rotateY(180deg)" }}>
@@ -54,11 +54,11 @@ function DevelopmentProfile ({foundUser, foundJWT, eraName}:any) {
                         </div>
                         <div className="tx-bold-8 g pl-2 tx-sm tx-white flex-col" style={{ width: "50px", height: "50px", background: "#ff6d00", border: "2px solid white", position: "absolute", opacity: 0.75, transform: "translateX(-25px) rotateY(-90deg)" }}>
                             Web
-                            Gamed
+                            POV
                         </div>
                         <div className="tx-white g flex-col" style={{ width: "50px", height: "50px", background: "#ff6d00", border: "2px solid white", position: "absolute", opacity: 0.75, transform: "translateX(25px) rotateY(90deg)" }}>
                             beW
-                            demaG
+                            VOP
                         </div>
                         <div className="tx-white flex-col" style={{ width: "50px", height: "50px", background: "#ff6d00", border: "2px solid white", position: "absolute", opacity: 0.75, transform: "translateY(-25px) rotateX(90deg)" }}>
                             as above {/*  Top */}
@@ -79,7 +79,7 @@ function DevelopmentProfile ({foundUser, foundJWT, eraName}:any) {
                             <div className="flex-center box-shadow-2-b pa-1 block bord-r-10" style={{background:"#ffffff"}}
                                 
                             >
-                                <Image src={"/bytecity.png"} alt="bytecity" width={32} height={32} />
+                                <Image src={"/webcity.png"} alt="webcity" width={32} height={32} />
                                 <small className="tx-black">Back</small>
                             </div>
                         </div>
@@ -91,7 +91,7 @@ function DevelopmentProfile ({foundUser, foundJWT, eraName}:any) {
                         <div className="flex-center box-shadow-2-b pa-1 block bord-r-10" style={{background:"#ffffff"}}
                             
                         >
-                            <Image src={"/bytecity.png"} alt="bytecity" width={32} height={32} />
+                            <Image src={"/webcity.png"} alt="webcity" width={32} height={32} />
                             <small className="tx-black">Back</small>
                         </div>
                     </div>
@@ -101,26 +101,26 @@ function DevelopmentProfile ({foundUser, foundJWT, eraName}:any) {
                 <div className="pb-8 px-8 Q_xs_px-2 tx-white flex-col flex-align-end ">
                     <div className="flex-wrap gap-1 ">
 
-                            <a href="https://webpov.gitbook.io/bytecity" target="_blank"
+                            <a href="https://webpov.gitbook.io/webcity" target="_blank"
                                 style={{color:"#004488"}}
                                 className=" opaci-chov--50 flex-col px-2 Q_xs_px-1 bg-w-90 bord-r-10 py-3"
                             >
                                 <div className="tx-lgx"><FaBook /></div>
                                 <div className="tx-xs tx-center Q_xs">docs</div>
                                 <div className="tx-sm tx-center Q_sm_x">webpov <br /> .gitbook.io/ <br />
-                                <b className="tx-mdl">bytecity</b></div>
+                                <b className="tx-mdl">webcity</b></div>
                             </a>
-                        <a href="https://twitter.com/gta_btc" target="_blank"
+                        <a href="https://x.com/w3bcity" target="_blank"
                             style={{color:"#004488"}}
                             className=" opaci-chov--50 flex-col px-2 Q_xs_px-1 bg-w-90 bord-r-10 py-3"
                         >
                             <div className="tx-lgx"><FaTwitter /></div>
-                                <div className="tx-xs tx-center Q_xs">twitter</div>
-                            <div className="tx-sm tx-center Q_sm_x">twitter <br />  .com/ <br />
-                            <b className="tx-mdl">bytecty</b></div>
+                                <div className="tx-xs tx-center Q_xs">x</div>
+                            <div className="tx-sm tx-center Q_sm_x">x <br />  .com/ <br />
+                            <b className="tx-mdl">w3bcity</b></div>
                             
                         </a>
-                        <a href="https://twitter.com/gta_btc" target="_blank"
+                        <a href="https://twitter.com/webpov" target="_blank"
                             style={{color:"#cc44cc"}}
                             className=" opaci-chov--50 flex-col px-2 Q_xs_px-1 bg-w-90 bord-r-10 py-3"
                         >
